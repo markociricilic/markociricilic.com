@@ -22,10 +22,9 @@ export default function Home() {
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
         style={{
-          backgroundImage:
-            'url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wp14013807.jpg-R0GMP9bCUVPW5Qfg2rbLlUeYSGymlM.jpeg")',
-          backgroundPosition: "center 40%",
-          filter: "brightness(0.7) contrast(1.1)",
+          backgroundImage: 'url("/background.jpg")',
+          backgroundPosition: "center center",
+          filter: "brightness(0.8) contrast(1.1)",
         }}
         aria-hidden="true"
       >
@@ -43,4 +42,3 @@ export default function Home() {
     </main>
   )
 }
-
