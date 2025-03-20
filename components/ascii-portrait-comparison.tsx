@@ -9,7 +9,7 @@ export function AsciiPortraitComparison() {
 
   return (
     <div className="space-y-4">
-      <AsciiPortraitCanvas width={100} height={120} contrast={contrast} brightness={brightness} />
+      <AsciiPortraitCanvas width={100} height={300} contrast={contrast} brightness={brightness} />
       <div className="text-center text-xs text-muted-foreground mt-2">ASCII Art Portrait</div>
     </div>
   )

@@ -11,9 +11,9 @@ interface AsciiPortraitCanvasProps {
 
 export function AsciiPortraitCanvas({
   width = 100,
-  height = 120,
-  contrast = 1.6, // Increased from 1.4
-  brightness = 0.8, // Increased from 0.7
+  height = 300, // Increased height to match text content
+  contrast = 1.6,
+  brightness = 0.8,
 }: AsciiPortraitCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -27,21 +27,13 @@ export function AsciiPortraitCanvas({
     // Load the image
     const img = new Image()
     img.crossOrigin = "anonymous"
-    img.src =
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/VAPORGRAM1700118761613.jpg-v2OGwi1U8bnbE2mKnxgFkCNEcVeECp.jpeg"
+    img.src = "/portrait.jpg"
 
     img.onload = () => {
-      // Calculate aspect ratio and apply better cropping
-      const sourceWidth = img.width
-      const sourceHeight = img.height
+      // Calculate aspect ratio to maintain proportions
+      const aspectRatio = img.width / img.height
 
-      // Define crop area (focus on face and upper body)
-      const cropX = sourceWidth * 0.15 // Crop 15% from left
-      const cropY = sourceHeight * 0.1 // Crop 10% from top
-      const cropWidth = sourceWidth * 0.7 // Use 70% of width
-      const cropHeight = sourceHeight * 0.8 // Use 80% of height
-
-      const aspectRatio = cropWidth / cropHeight
+      // Determine dimensions based on the desired height
       const adjustedWidth = Math.floor(height * aspectRatio)
 
       // Create a temporary canvas for image processing
@@ -52,17 +44,17 @@ export function AsciiPortraitCanvas({
       tempCanvas.width = adjustedWidth
       tempCanvas.height = height
 
-      // Draw and process the image with cropping
+      // Draw the full image without cropping
       tempCtx.drawImage(
         img,
-        cropX,
-        cropY,
-        cropWidth,
-        cropHeight, // Source rectangle
+        0,
+        0,
+        img.width,
+        img.height, // Source - full image
         0,
         0,
         adjustedWidth,
-        height, // Destination rectangle
+        height, // Destination - scaled to fit
       )
 
       // Apply contrast and brightness adjustments
@@ -217,4 +209,3 @@ export function AsciiPortraitCanvas({
     </div>
   )
 }
-
