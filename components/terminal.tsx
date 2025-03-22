@@ -374,11 +374,16 @@ export default function Terminal() {
   }, [])
 
   useEffect(() => {
-    // Focus input on mount and when clicking anywhere in the terminal
-    inputRef.current?.focus()
+    // Only focus input on desktop devices
+    if (!isMobile) {
+      inputRef.current?.focus()
+    }
 
     const handleClick = () => {
-      inputRef.current?.focus()
+      // Only focus input on desktop devices
+      if (!isMobile) {
+        inputRef.current?.focus()
+      }
     }
 
     document.addEventListener("click", handleClick)
@@ -402,7 +407,7 @@ export default function Terminal() {
     return () => {
       document.removeEventListener("click", handleClick)
     }
-  }, [])
+  }, [isMobile])
 
   useEffect(() => {
     scrollToBottom()
@@ -610,20 +615,28 @@ export default function Terminal() {
       </div>
 
       <div className="bg-black border border-white/30 rounded-b-md p-2">
-        <form onSubmit={handleSubmit} className="flex items-center">
-          <span className="text-white mr-2">$</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent border-none outline-none font-mono text-white"
-            aria-label="Terminal input"
-            autoComplete="off"
-            spellCheck="false"
-          />
-        </form>
+        {/* Only render the form with input on desktop, or as a non-interactive element on mobile */}
+        {isMobile ? (
+          <div className="flex items-center">
+            <span className="text-white mr-2">$</span>
+            <span className="flex-1 font-mono text-white opacity-70">{input || "tap buttons to navigate"}</span>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex items-center">
+            <span className="text-white mr-2">$</span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="flex-1 bg-transparent border-none outline-none font-mono text-white"
+              aria-label="Terminal input"
+              autoComplete="off"
+              spellCheck="false"
+            />
+          </form>
+        )}
       </div>
 
       <nav className="mt-4 flex flex-wrap justify-center gap-2">
