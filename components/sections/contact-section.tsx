@@ -1,5 +1,5 @@
 import { AsciiArt } from "@/components/ascii-art"
-import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Music } from "lucide-react"
+import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Music, FileText } from "lucide-react"
 
 export function ContactSection() {
   return (
@@ -50,9 +50,16 @@ export function ContactSection() {
             <Music className="h-4 w-4 mr-2 text-primary" />
             spotify.com/user/markociricilic
           </a>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-sm hover:text-primary transition-colors group">
+            <FileText className="h-4 w-4 mr-2 text-primary group-hover:animate-pulse" />
+            <span className="border-b border-dashed border-primary/50 pb-px">Download Resume (PDF)</span>
+          </a>
         </div>
       </div>
     </div>
   )
 }
-

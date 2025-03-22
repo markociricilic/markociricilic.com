@@ -1,4 +1,5 @@
 import { AsciiArt } from "@/components/ascii-art"
+import { ExternalLink, Github, FileText } from "lucide-react"
 
 export function ProjectsSection() {
   return (
@@ -7,72 +8,100 @@ export function ProjectsSection() {
 
       <div className="space-y-6">
       <div className="p-3 border border-primary/20 rounded bg-primary/5">
-        <h3 className="text-primary font-bold">Optimizing 3D Gaussian Splatting for Qualcomm Snapdragon Hardware</h3>
+        <h3 className="text-primary font-bold flex items-center">
+          <a
+            href="https://github.com/markociricilic/3DGS-Snapdragon"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline flex items-center group">
+            Optimizing 3D Gaussian Splatting for Qualcomm Snapdragon Hardware
+            <ExternalLink className="h-3.5 w-3.5 ml-1.5 opacity-70 group-hover:opacity-100" />
+          </a>
+        </h3>
         <pre className="text-xs my-2 text-muted-foreground">
         {`
-  +----------------+                      +----------------+
-  | Gaussian       |                      | Touch          |
-  | Reduction      |                      | Interpreter    |
-  +----------------+                      +----------------+
-        |                                       |
-        |                                       |
-        v                                       |
-  +----------------+                            |
-  | Culling        |<---------------------------+
-  | Module         |                            |
-  +----------------+                            |
-        |                                       |
-        v                                       |
-  +----------------+                            |
-  | Radix          |                            |
-  | Sort           |                            |
-  +----------------+                            |
-        |                                       |
-        v                                       |
-  +----------------+                            |
-  | 3D-2D          |<---------------------------+
-  | Projection     |
-  +----------------+
-        |
-        v
-  +----------------+
-  | Display        |
-  | Unit           |
-  +----------------+
-`}
+        +----------------+                      +----------------+
+        | Gaussian       |                      | Touch          |
+        | Reduction      |                      | Interpreter    |
+        +----------------+                      +----------------+
+              |                                       |
+              |                                       |
+              v                                       |
+        +----------------+                            |
+        | Culling        |<---------------------------+
+        | Module         |                            |
+        +----------------+                            |
+              |                                       |
+              v                                       |
+        +----------------+                            |
+        | Radix          |                            |
+        | Sort           |                            |
+        +----------------+                            |
+              |                                       |
+              v                                       |
+        +----------------+                            |
+        | 3D-2D          |<---------------------------+
+        | Projection     |
+        +----------------+
+              |
+              v
+        +----------------+
+        | Display        |
+        | Unit           |
+        +----------------+
+        `}
         </pre>
         <p className="text-sm mb-2">
           University capstone project focused on implementing and optimizing 3D Gaussian Splatting rendering on the
-          Snapdragon 8 Gen 2 processor. Developed a complete rendering pipeline including Gaussian reduction,
-          culling, sorting, and projection modules to achieve real-time performance on mobile hardware. Implemented
-          using the Vulkan API to maximize hardware utilization and performance.
+          Snapdragon 8 Gen 2 SoC. Developed a complete rendering pipeline including Gaussian reduction, culling, sorting, 
+          projection, and display modules to achieve 20 fps performance on mobile hardware. Also, configured the renderer to use touch input to
+          update the camera view inside the scene. Implemented renderer using Vulkan API to maximize hardware utilization and performance.
         </p>
         <p className="text-xs text-muted-foreground mb-2">
           Technologies: Computer Graphics, 3D Gaussian Splatting, Vulkan, Android SDK, Qualcomm Snapdragon, Touch Interaction
         </p>
+        <div className="flex gap-2 mt-3">
+          <a
+            href="/projects/3d-gaussian-splatting.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs flex items-center text-primary/80 hover:text-primary">
+            <FileText className="h-3 w-3 mr-1" />
+            Project Details
+          </a>
+        </div>
       </div>
 
       <div className="p-3 border border-primary/20 rounded bg-primary/5">
-          <h3 className="text-primary font-bold">Space Object Detection and Interception</h3>
+          <h3 className="text-primary font-bold flex items-center">
+            <a
+              href="https://github.com/markociricilic/MeteorDestroyer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center group">
+              Space Object Detection and Interception System
+              <ExternalLink className="h-3.5 w-3.5 ml-1.5 opacity-70 group-hover:opacity-100" />
+            </a>
+          </h3>
           <pre className="text-xs my-2 text-muted-foreground">
             {`
-  +-------------+     +----------------+     +----------------+
-  | Ultrasonic  |---->| Object         |---->| Trajectory     |
-  | Sensors     |     | Localization   |     | Calculation    |
-  +-------------+     +----------------+     +----------------+
-        |                    |                      |
-        |                    v                      |
-        |             +--------------+              |
-        +------------>| Servo        |<-------------+
-                      | Control      |
-                      +--------------+
-                             |
-                             v
-                      +---------------+
-                      | HDMI          |
-                      | Visualization |
-                      +---------------+
-`}
+            +-------------+     +----------------+     +----------------+
+            | Ultrasonic  |---->| Object         |---->| Trajectory     |
+            | Sensors     |     | Localization   |     | Calculation    |
+            +-------------+     +----------------+     +----------------+
+                  |                    |                      |
+                  |                    v                      |
+                  |             +--------------+              |
+                  +------------>| Servo        |<-------------+
+                                | Control      |
+                                +--------------+
+                                      |
+                                      v
+                                +---------------+
+                                | HDMI          |
+                                | Visualization |
+                                +---------------+
+          `}
           </pre>
           <p className="text-sm mb-2">
             Designed a real-time detection and response system for tracking and intercepting space debris. Used an array
@@ -82,29 +111,48 @@ export function ProjectsSection() {
           <p className="text-xs text-muted-foreground mb-2">
             Technologies: Artix-7 FPGA, SystemVerilog, MicroBlaze, Ultrasonic Sensors, Servo Motors, HDMI
           </p>
+          <div className="flex gap-2 mt-3">
+            <a
+              href="/projects/space-object-detection-interception.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs flex items-center text-primary/80 hover:text-primary">
+              <FileText className="h-3 w-3 mr-1" />
+              Project Details
+            </a>
+          </div>
         </div>
 
         <div className="p-3 border border-primary/20 rounded bg-primary/5">
-          <h3 className="text-primary font-bold">Wireless Communication between STM32</h3>
+          <h3 className="text-primary font-bold flex items-center">
+            <a
+              href="https://github.com/markociricilic/STM32-Wireless-Communication"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center group">
+              Wireless Communication between STM32
+              <ExternalLink className="h-3.5 w-3.5 ml-1.5 opacity-70 group-hover:opacity-100" />
+            </a>
+          </h3>
           <pre className="text-xs my-2 text-muted-foreground">
             {`
-  +-------------+     +----------------+     +----------------+
-  | STM32F4     |---->| USART          |---->| DAC            |
-  | Transmitter |     | Interface      |     | Conversion     |
-  +-------------+     +----------------+     +----------------+
-        |                                            |
-        v                                            v
-  +-------------+                            +----------------+
-  | Wireless    |                            | STM32F4        |
-  | Transmission|--------------------------->| Receiver       |
-  +-------------+                            +----------------+
-                                                    |
-                                                    v
-                                             +----------------+
-                                             | ADC            |
-                                             | Conversion     |
-                                             +----------------+
-`}
+            +-------------+     +----------------+     +----------------+
+            | STM32F4     |---->| USART          |---->| DAC            |
+            | Transmitter |     | Interface      |     | Conversion     |
+            +-------------+     +----------------+     +----------------+
+                  |                                            |
+                  v                                            v
+            +-------------+                            +----------------+
+            | Wireless    |                            | STM32F4        |
+            | Transmission|--------------------------->| Receiver       |
+            +-------------+                            +----------------+
+                                                              |
+                                                              v
+                                                      +----------------+
+                                                      | ADC            |
+                                                      | Conversion     |
+                                                      +----------------+
+          `}
           </pre>
           <p className="text-sm mb-2">
             Implemented wireless communication between two STM32F4 microcontrollers, allowing data transmission up to 20
@@ -117,26 +165,35 @@ export function ProjectsSection() {
         </div>
 
         <div className="p-3 border border-primary/20 rounded bg-primary/5">
-          <h3 className="text-primary font-bold">Melody Improvisation Unit (μ)</h3>
+          <h3 className="text-primary font-bold flex items-center">
+            <a
+              href="https://github.com/markociricilic/MIU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center group">
+              Melody Improvisation Unit (μ)
+              <ExternalLink className="h-3.5 w-3.5 ml-1.5 opacity-70 group-hover:opacity-100" />
+            </a>
+          </h3>
           <pre className="text-xs my-2 text-muted-foreground">
             {`
-  +-------------+     +----------------+     +----------------+
-  | Chord       |---->| FFT            |---->| Frequency      |
-  | Input       |     | Processing     |     | Extraction     |
-  +-------------+     +----------------+     +----------------+
-        |                    |                      |
-        |                    v                      |
-        |             +--------------+              |
-        +------------>| Melody       |<-------------+
-                      | Generation   |
-                      +--------------+
-                             |
-                             v
-                      +---------------+
-                      | Audio         |
-                      | Output        |
-                      +---------------+
-`}
+            +-------------+     +----------------+     +----------------+
+            | Chord       |---->| FFT            |---->| Frequency      |
+            | Input       |     | Processing     |     | Extraction     |
+            +-------------+     +----------------+     +----------------+
+                  |                    |                      |
+                  |                    v                      |
+                  |             +--------------+              |
+                  +------------>| Melody       |<-------------+
+                                | Generation   |
+                                +--------------+
+                                      |
+                                      v
+                                +---------------+
+                                | Audio         |
+                                | Output        |
+                                +---------------+
+          `}
           </pre>
           <p className="text-sm mb-2">
             Developed a system that generates melodies with variations in pitches and rhythms based on input chords. The
@@ -146,29 +203,48 @@ export function ProjectsSection() {
           <p className="text-xs text-muted-foreground mb-2">
             Technologies: Raspberry Pi, Python, FFT Analysis, Digital Signal Processing
           </p>
+          <div className="flex gap-2 mt-3">
+            <a
+              href="/projects/melody-improvisation-unit.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs flex items-center text-primary/80 hover:text-primary">
+              <FileText className="h-3 w-3 mr-1" />
+              Project Details
+            </a>
+          </div>
         </div>
 
         <div className="p-3 border border-primary/20 rounded bg-primary/5">
-          <h3 className="text-primary font-bold">Power Amplifier in Software-Defined Radio</h3>
+          <h3 className="text-primary font-bold flex items-center">
+            <a
+              href="https://github.com/markociricilic/Power-Amplifier-in-Software-Defined-Radio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center group">
+              Power Amplifier in Software-Defined Radio
+              <ExternalLink className="h-3.5 w-3.5 ml-1.5 opacity-70 group-hover:opacity-100" />
+            </a>
+          </h3>
           <pre className="text-xs my-2 text-muted-foreground">
             {`
-  +-------------+     +----------------+     +----------------+
-  | Class-B     |---->| Push-Pull      |---->| Low-Pass       |
-  | Amplifier   |     | Configuration  |     | Filter         |
-  +-------------+     +----------------+     +----------------+
-        |                    |                      |
-        |                    v                      |
-        |             +--------------+              |
-        +------------>| Transformer  |<-------------+
-                      | Coupling     |
-                      +--------------+
-                             |
-                             v
-                      +---------------+
-                      | 50 Ω Load     |
-                      | (Antenna)     |
-                      +---------------+
-`}
+            +-------------+     +----------------+     +----------------+
+            | Class-B     |---->| Push-Pull      |---->| Low-Pass       |
+            | Amplifier   |     | Configuration  |     | Filter         |
+            +-------------+     +----------------+     +----------------+
+                  |                    |                      |
+                  |                    v                      |
+                  |             +--------------+              |
+                  +------------>| Transformer  |<-------------+
+                                | Coupling     |
+                                +--------------+
+                                      |
+                                      v
+                                +---------------+
+                                | 50 Ω Load     |
+                                | (Antenna)     |
+                                +---------------+
+          `}
           </pre>
           <p className="text-sm mb-2">
             Designed a class-B discrete transistor power amplifier with a low-pass filter to drive the software-defined
@@ -181,26 +257,35 @@ export function ProjectsSection() {
         </div>
 
         <div className="p-3 border border-primary/20 rounded bg-primary/5">
-          <h3 className="text-primary font-bold">Enhanced 16-bit 'ARM-like' Processor</h3>
+          <h3 className="text-primary font-bold flex items-center">
+            <a
+              href="https://github.com/markociricilic/CustomEnhancedProcessor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center group">
+              Enhanced 16-bit 'ARM-like' Processor
+              <ExternalLink className="h-3.5 w-3.5 ml-1.5 opacity-70 group-hover:opacity-100" />
+            </a>
+          </h3>
           <pre className="text-xs my-2 text-muted-foreground">
             {`
-  +-------------+     +----------------+     +----------------+
-  | Instruction |---->| Register       |---->| ALU            |
-  | Decoder     |     | File           |     | Operations     |
-  +-------------+     +----------------+     +----------------+
-        |                    |                      |
-        |                    v                      |
-        |             +--------------+              |
-        +------------>| Memory       |<-------------+
-                      | Interface    |
-                      +--------------+
-                             |
-                             v
-                      +---------------+
-                      | I/O           |
-                      | Devices       |
-                      +---------------+
-`}
+            +-------------+     +----------------+     +----------------+
+            | Instruction |---->| Register       |---->| ALU            |
+            | Decoder     |     | File           |     | Operations     |
+            +-------------+     +----------------+     +----------------+
+                  |                    |                      |
+                  |                    v                      |
+                  |             +--------------+              |
+                  +------------>| Memory       |<-------------+
+                                | Interface    |
+                                +--------------+
+                                      |
+                                      v
+                                +---------------+
+                                | I/O           |
+                                | Devices       |
+                                +---------------+
+          `}
           </pre>
           <p className="text-sm mb-2">
             Designed a 16-bit, 8-register processor in Verilog based on the ARM architecture family. Implemented
@@ -216,23 +301,23 @@ export function ProjectsSection() {
           <h3 className="text-primary font-bold">Radio-Controlled Airplane</h3>
           <pre className="text-xs my-2 text-muted-foreground">
             {`
-  +-------------+     +----------------+     +----------------+
-  | Radio       |---->| Channel        |---->| Micro          |
-  | Controller  |     | Assignment     |     | Servos         |
-  +-------------+     +----------------+     +----------------+
-        |                    |                      |
-        |                    v                      |
-        |             +--------------+              |
-        +------------>| ESC          |<-------------+
-                      | Controller   |
-                      +--------------+
-                             |
-                             v
-                      +---------------+
-                      | 3D Printed    |
-                      | Airframe      |
-                      +---------------+
-`}
+            +-------------+     +----------------+     +----------------+
+            | Radio       |---->| Channel        |---->| Micro          |
+            | Controller  |     | Assignment     |     | Servos         |
+            +-------------+     +----------------+     +----------------+
+                  |                    |                      |
+                  |                    v                      |
+                  |             +--------------+              |
+                  +------------>| ESC          |<-------------+
+                                | Controller   |
+                                +--------------+
+                                      |
+                                      v
+                                +---------------+
+                                | 3D Printed    |
+                                | Airframe      |
+                                +---------------+
+          `}
           </pre>
           <p className="text-sm mb-2">
             3D printed a radio-controlled airplane as a high school capstone project. Used four micro servos to control

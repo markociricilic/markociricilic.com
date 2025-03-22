@@ -35,7 +35,9 @@ export function ExperienceSection() {
             <p className="text-xs text-muted-foreground">UTFR University of Toronto Formula Racing, Toronto, ON | August 2022 - April 2023</p>
           </div>
           <ul className="text-sm space-y-1 list-disc pl-4">
-            <li>Aiding the driverless team with hardware development to satisfy the electrical requirements of the FSAE competition</li>
+            <li>Aided the driverless vehicle (DV) team with hardware development to satisfy the various electrical requirements of the FSAE competition</li>
+            <li>Worked on developing the electrical activation of the emergency brakes (EBS)</li>
+            <li>Helped with designing a controller to receive and transmit data over the CAN bus and distribute power to the driverless vehicle's electrical devices</li>
           </ul>
         </div>
 

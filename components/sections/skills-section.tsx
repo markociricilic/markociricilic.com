@@ -30,6 +30,7 @@ export function SkillsSection() {
             <SkillBar name="C" percentage={94} />
             <SkillBar name="C++" percentage={93} />
             <SkillBar name="Python" percentage={82} />
+            <SkillBar name="Perl" percentage={81} />
             <SkillBar name="Perforce" percentage={75} />
             <SkillBar name="ARM Assembly" percentage={72} />
             <SkillBar name="Git" percentage={70} />

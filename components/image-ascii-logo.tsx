@@ -5,7 +5,7 @@ export function ImageAsciiLogo() {
     <div className="bg-black p-2 font-mono text-white">
       <pre className="text-white whitespace-pre overflow-x-auto text-xs sm:text-sm md:text-base">
         {`
-$ echo "MARKO CIRIC"
+$ echo "marko ciric"
 Marko (Džidžan) Ćirić Ilić
 
 $ whoami
@@ -21,4 +21,3 @@ about  education  skills  experience  projects  contact
     </div>
   )
 }
-
