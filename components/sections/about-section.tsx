@@ -1,10 +1,10 @@
-import { AsciiArt } from "@/components/ascii-art"
+// import { AsciiArt } from "@/components/ascii-art"
 import { AsciiPortraitComparison } from "@/components/ascii-portrait-comparison"
 
 export function AboutSection() {
   return (
     <div className="space-y-4">
-      <AsciiArt art="about" />
+      {/* <AsciiArt art="about" /> */}
 
       <div className="flex flex-col md:flex-row gap-6">
         <div className="md:w-2/5">

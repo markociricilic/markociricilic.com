@@ -1,10 +1,10 @@
-import { AsciiArt } from "@/components/ascii-art"
+// import { AsciiArt } from "@/components/ascii-art"
 import { ExternalLink, Github, FileText } from "lucide-react"
 
 export function ProjectsSection() {
   return (
     <div className="space-y-4">
-      <AsciiArt art="projects" />
+      {/* <AsciiArt art="projects" /> */}
 
       <div className="space-y-6">
       <div className="p-3 border border-primary/20 rounded bg-primary/5">

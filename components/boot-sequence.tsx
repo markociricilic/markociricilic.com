@@ -31,11 +31,10 @@ export default function BootSequence() {
         <div className="mb-6 text-center">
           <pre className="text-xs sm:text-sm md:text-base whitespace-pre overflow-x-auto">
             {`
- __  __    _    ____  _  _____  
-|  \\/  |  / \\  |  _ \\| |/ / _ \\ 
-| |\\/| | / _ \\ | |_) | ' / | | |
-| |  | |/ ___ \\|  _ <| . \\ |_| |
-|_|  |_/_/   \\_\\_| \\_\\_|\\_\\___/ 
+ _____         _       
+|     |___ ___| |_ ___ 
+| | | | .'|  _| '_| . |
+|_|_|_|__,|_| |_,_|___|
                                 
 `}
           </pre>

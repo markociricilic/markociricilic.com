@@ -19,7 +19,11 @@ type Command = {
   timestamp: Date
 }
 
-export default function Terminal() {
+interface TerminalProps {
+  onQuit: () => void
+}
+
+export default function Terminal({ onQuit }: TerminalProps) {
   const [input, setInput] = useState("")
   const [commandHistory, setCommandHistory] = useState<Command[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
@@ -112,6 +116,9 @@ export default function Terminal() {
               <li>
                 <span className="text-white font-bold">scan</span> - Run a security scan
               </li>
+              <li>
+                <span className="text-white font-bold">quit</span> - Exit terminal and view Marko's cooking
+              </li>
             </ul>
           </div>
         )
@@ -159,6 +166,18 @@ export default function Terminal() {
             <p className="text-green-500">Scan complete! No threats detected. System secure.</p>
           </div>
         )
+
+        case "quit":
+          // Add a small delay before quitting to show the command in history
+          setTimeout(() => {
+            onQuit()
+          }, 500)
+          return (
+            <div className="space-y-2 text-white">
+              <p>Exiting terminal...</p>
+              <p>Loading cooking gallery. Please wait...</p>
+            </div>
+          )
 
       default:
         setCurrentSection(null)

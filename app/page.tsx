@@ -4,9 +4,11 @@ import { useEffect, useState } from "react"
 import Terminal from "@/components/terminal"
 import BootSequence from "@/components/boot-sequence"
 import { CRTToggle } from "@/components/crt-toggle"
+import { CookingGallery } from "@/components/cooking-gallery"
 
 export default function Home() {
   const [booting, setBooting] = useState(true)
+  const [showTerminal, setShowTerminal] = useState(true)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -37,7 +39,13 @@ export default function Home() {
       </div>
 
       <div className="container mx-auto px-4 py-8 h-screen flex flex-col relative z-10">
-        {booting ? <BootSequence /> : <Terminal />}
+        {booting ? (
+          <BootSequence />
+        ) : showTerminal ? (
+          <Terminal onQuit={() => setShowTerminal(false)} />
+        ) : (
+          <CookingGallery onReturn={() => setShowTerminal(true)} />
+        )}
       </div>
     </main>
   )

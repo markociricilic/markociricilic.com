@@ -1,9 +1,9 @@
-import { AsciiArt } from "@/components/ascii-art"
+// import { AsciiArt } from "@/components/ascii-art"
 
 export function SkillsSection() {
   return (
     <div className="space-y-4">
-      <AsciiArt art="skills" />
+      {/* <AsciiArt art="skills" /> */}
 
       <div className="space-y-6">
         <div>

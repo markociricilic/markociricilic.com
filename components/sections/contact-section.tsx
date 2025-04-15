@@ -1,10 +1,10 @@
-import { AsciiArt } from "@/components/ascii-art"
+// import { AsciiArt } from "@/components/ascii-art"
 import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Music, FileText } from "lucide-react"
 
 export function ContactSection() {
   return (
     <div className="space-y-4">
-      <AsciiArt art="contact" />
+      {/* <AsciiArt art="contact" /> */}
 
       <div className="space-y-6">
         <div className="flex flex-col gap-3">
