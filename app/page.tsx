@@ -19,23 +19,24 @@ export default function ResumePage() {
   }, [isDarkMode])
 
   return (
-    <div className="relative min-h-screen flex pb-16 pt-12">
+    <div className="relative min-h-screen flex flex-col md:flex-row pb-16 pt-12">
       {/* Fixed Top Navigation */}
-      <div className={`fixed top-0 left-0 right-0 z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="relative flex items-center justify-center py-3 px-4 font-mono text-sm">
-          <Link href="/interests" className="absolute left-4 hover:opacity-70 transition-opacity">
-            to marko&apos;s interests →
+      <div className={`fixed top-0 left-0 right-0 z-50 h-12 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
+        <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <Link href="/interests" className="shrink-0 md:absolute md:left-4 hover:opacity-70 transition-opacity whitespace-nowrap">
+            <span className="hidden md:inline">to marko&apos;s interests →</span>
+            <span className="md:hidden">→ interests</span>
           </Link>
-          <div className="flex items-center gap-6">
-            <a href="#about-me" className="hover:opacity-70 transition-opacity">about me</a>
-            <a href="#education" className="hover:opacity-70 transition-opacity">education</a>
-            <a href="#skills" className="hover:opacity-70 transition-opacity">skills</a>
-            <a href="#experience" className="hover:opacity-70 transition-opacity">experience</a>
-            <a href="#projects" className="hover:opacity-70 transition-opacity">projects</a>
+          <div className="flex items-center gap-3 md:gap-6 shrink-0">
+            <a href="#about-me" className="hover:opacity-70 transition-opacity whitespace-nowrap">about me</a>
+            <a href="#education" className="hover:opacity-70 transition-opacity whitespace-nowrap">education</a>
+            <a href="#skills" className="hover:opacity-70 transition-opacity whitespace-nowrap">skills</a>
+            <a href="#experience" className="hover:opacity-70 transition-opacity whitespace-nowrap">experience</a>
+            <a href="#projects" className="hover:opacity-70 transition-opacity whitespace-nowrap">projects</a>
           </div>
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`absolute right-4 p-2 rounded-full transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
+            className={`md:absolute md:right-4 p-2 rounded-full shrink-0 transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
@@ -53,7 +54,7 @@ export default function ResumePage() {
       </div>
 
       <div
-        className={`w-1/2 p-8 font-mono relative z-10 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
+        className={`w-full md:w-1/2 p-4 md:p-8 font-mono relative z-10 order-2 md:order-1 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
       >
         {/* Header */}
         <div className="mb-12">
@@ -675,7 +676,7 @@ export default function ResumePage() {
 
       </div>
 
-      <div className="w-1/2 relative">
+      <div className="hidden md:block md:relative md:w-1/2 md:order-2">
         <Dithering
           style={{ height: "100%", width: "100%" }}
           colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}
@@ -692,8 +693,8 @@ export default function ResumePage() {
       </div>
 
 {/* Fixed Footer Links */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="flex items-center justify-center gap-6 py-3 px-4 font-mono text-sm">
+      <div className={`fixed bottom-0 left-0 right-0 z-50 h-12 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
+        <div className="flex items-center justify-center gap-3 md:gap-6 w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap">
           <a
             href="mailto:markociricilic@gmail.com"
             className="hover:opacity-70 transition-opacity"

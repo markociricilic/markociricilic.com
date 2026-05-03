@@ -24,8 +24,10 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
   const holdDelay = useRef<number | null>(null)
   const holdInterval = useRef<number | null>(null)
   const pointerPosition = useRef<{ x: number; y: number } | null>(null)
+  const swipeStart = useRef<{ x: number; y: number; pointerId: number } | null>(null)
   const centerCardWidth = 280
   const expandedCenterScale = 1.45
+  const SWIPE_THRESHOLD = 40
 
   const clearHoldNavigation = useCallback(() => {
     if (holdDelay.current !== null) {
@@ -187,7 +189,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
       {/* Country Navigation - Only shown if countries prop is provided */}
       {countries && countries.length > 0 && (
         <div className="mb-4">
-          <div className="flex flex-nowrap justify-center gap-1">
+          <div className="flex flex-wrap justify-center gap-1">
             {countries.map((country) => (
               <button
                 key={country}
@@ -211,18 +213,41 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
 
       {/* Carousel Container */}
       <div
-        className="relative"
+        className="relative touch-pan-y"
         onMouseLeave={handleCarouselMouseLeave}
         onPointerMove={updatePointerPosition}
-        onPointerUp={clearHoldNavigation}
-        onPointerCancel={clearHoldNavigation}
+        onPointerDown={(e) => {
+          if (e.pointerType === "touch") {
+            swipeStart.current = { x: e.clientX, y: e.clientY, pointerId: e.pointerId }
+          }
+        }}
+        onPointerUp={(e) => {
+          clearHoldNavigation()
+          if (swipeStart.current && e.pointerId === swipeStart.current.pointerId) {
+            const deltaX = e.clientX - swipeStart.current.x
+            const deltaY = e.clientY - swipeStart.current.y
+            swipeStart.current = null
+            if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY)) {
+              if (deltaX > 0) goToPrevious()
+              else goToNext()
+            } else if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+              const tapped = document.elementFromPoint(e.clientX, e.clientY)
+              const cardEl = tapped?.closest("[data-carousel-position]")
+              if (cardEl) {
+                const pos = Number(cardEl.getAttribute("data-carousel-position"))
+                if (pos !== 0) goToPosition(pos)
+              }
+            }
+          }
+        }}
+        onPointerCancel={() => {
+          swipeStart.current = null
+          clearHoldNavigation()
+        }}
       >
         {/* Cards Container */}
-        <div 
-          className="flex items-center justify-center gap-4 overflow-visible py-4"
-          style={{
-            minHeight: `${centerCardWidth * (4 / 3) * expandedCenterScale + 32}px`,
-          }}
+        <div
+          className="flex items-center justify-center gap-2 md:gap-4 overflow-visible py-4 min-h-[302px] md:min-h-[572px]"
         >
           {visibleItems.map((card) => {
             const isCenter = card.position === 0
@@ -238,19 +263,18 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
                   handleCardPointerEnter(card.position, event.pointerType)
                 }}
                 onPointerDown={(event) => {
-                  event.preventDefault()
+                  if (event.pointerType !== "touch") event.preventDefault()
                   updatePointerPosition(event)
-                  handleCardPointerDown(card.position)
+                  if (event.pointerType !== "touch") handleCardPointerDown(card.position)
                 }}
                 onPointerLeave={(event) => handleCardPointerLeave(card.position, event.pointerType)}
                 onContextMenu={(event) => event.preventDefault()}
                 className={`flex-shrink-0 rounded-lg overflow-hidden ${
                   isDarkMode ? "border border-white/10" : "border border-black/10"
-                } ${isCenter ? "z-20 opacity-100" : ""} ${
-                  isAdjacent ? "z-10 opacity-70" : ""
-                } ${isEdge ? "z-0 opacity-40" : ""}`}
+                } ${isCenter ? "z-20 opacity-100 w-[140px] md:w-[280px]" : ""} ${
+                  isAdjacent ? "z-10 opacity-70 w-[90px] md:w-[180px]" : ""
+                } ${isEdge ? "z-0 opacity-40 w-[60px] md:w-[140px]" : ""}`}
                 style={{
-                  width: isCenter ? `${centerCardWidth}px` : isAdjacent ? "180px" : "140px",
                   transform: `scale(${isCenter ? (isCenterHovered ? expandedCenterScale : 1) : isAdjacent ? 0.9 : 0.8})`,
                   transition: "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease-out",
                   transformOrigin: "center",

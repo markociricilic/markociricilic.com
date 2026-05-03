@@ -1725,24 +1725,25 @@ export default function InterestsPage() {
   }, [isDarkMode])
   
   return (
-    <div className="relative min-h-screen overflow-hidden flex pb-16 pt-12">
+    <div className="relative min-h-screen flex flex-col md:flex-row pb-16 pt-12">
       {/* Fixed Top Navigation */}
-      <div className={`fixed top-0 left-0 right-0 z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="relative flex items-center justify-center py-3 px-4 font-mono text-sm">
-          <Link href="/" className="absolute left-4 hover:opacity-70 transition-opacity">
-            ← back to marko&apos;s portfolio 🌺
+      <div className={`fixed top-0 left-0 right-0 z-50 h-12 [will-change:transform] ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
+        <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <Link href="/" className="shrink-0 md:absolute md:left-4 hover:opacity-70 transition-opacity whitespace-nowrap">
+            <span className="hidden md:inline">← back to marko&apos;s portfolio 🌺</span>
+            <span className="md:hidden">← portfolio</span>
           </Link>
-          <div className="flex items-center gap-6">
-            <a href="#cooking" className="hover:opacity-70 transition-opacity">cooking</a>
-            <a href="#photography" className="hover:opacity-70 transition-opacity">photography</a>
-            <a href="#art" className="hover:opacity-70 transition-opacity">art</a>
-            <a href="#music" className="hover:opacity-70 transition-opacity">music</a>
-            <a href="#fashion" className="hover:opacity-70 transition-opacity">fashion</a>
-            <a href="#films" className="hover:opacity-70 transition-opacity">films</a>
+          <div className="flex items-center gap-3 md:gap-6 shrink-0">
+            <a href="#cooking" className="hover:opacity-70 transition-opacity whitespace-nowrap">cooking</a>
+            <a href="#photography" className="hover:opacity-70 transition-opacity whitespace-nowrap">photography</a>
+            <a href="#art" className="hover:opacity-70 transition-opacity whitespace-nowrap">art</a>
+            <a href="#music" className="hover:opacity-70 transition-opacity whitespace-nowrap">music</a>
+            <a href="#fashion" className="hover:opacity-70 transition-opacity whitespace-nowrap">fashion</a>
+            <a href="#films" className="hover:opacity-70 transition-opacity whitespace-nowrap">films</a>
           </div>
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`absolute right-4 p-2 rounded-full transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
+            className={`md:absolute md:right-4 p-2 rounded-full shrink-0 transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
@@ -1760,7 +1761,7 @@ export default function InterestsPage() {
       </div>
 
       <div
-        className={`w-1/2 p-8 font-mono relative z-10 overflow-y-auto overflow-x-hidden ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
+        className={`w-full md:w-1/2 p-4 md:p-8 font-mono relative z-10 order-2 md:order-1 md:overflow-y-auto md:overflow-x-hidden ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
       >
 
         {/* Header */}
@@ -1852,7 +1853,7 @@ export default function InterestsPage() {
         </div>
       </div>
 
-      <div className="w-1/2 relative">
+      <div className="hidden md:block md:relative md:w-1/2 md:order-2">
         <Dithering
           style={{ height: "100%", width: "100%" }}
           colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}
@@ -1869,8 +1870,8 @@ export default function InterestsPage() {
       </div>
 
       {/* Fixed Footer Links */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="flex items-center justify-center gap-6 py-3 px-4 font-mono text-sm">
+      <div className={`fixed bottom-0 left-0 right-0 z-50 h-12 [will-change:transform] ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
+        <div className="flex items-center justify-center gap-3 md:gap-6 w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap">
           <a
             href="mailto:markociricilic@gmail.com"
             className="hover:opacity-70 transition-opacity"
