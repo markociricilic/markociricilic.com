@@ -1728,14 +1728,17 @@ export default function InterestsPage() {
     <div className="relative flex flex-col h-[100dvh] md:h-auto md:min-h-screen md:flex-row md:pb-16 md:pt-12">
       {/* Fixed Top Navigation */}
       <div className={`h-12 w-full shrink-0 md:fixed md:top-0 md:left-0 md:right-0 md:z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(8px,2.2vw,0.875rem)]">
           <Link href="/" className="shrink-0 md:absolute md:left-4 hover:opacity-70 transition-opacity whitespace-nowrap">
             <span className="hidden md:inline">← back to marko&apos;s portfolio 🌺</span>
             <span className="md:hidden">← portfolio</span>
           </Link>
-          <div className="flex items-center gap-3 md:gap-6 shrink-0">
+          <div className="flex flex-1 items-center justify-evenly md:flex-none md:justify-start md:gap-6">
             <a href="#cooking" className="hover:opacity-70 transition-opacity whitespace-nowrap">cooking</a>
-            <a href="#photography" className="hover:opacity-70 transition-opacity whitespace-nowrap">photography</a>
+            <a href="#photography" className="hover:opacity-70 transition-opacity whitespace-nowrap">
+              <span className="md:hidden">photos</span>
+              <span className="hidden md:inline">photography</span>
+            </a>
             <a href="#art" className="hover:opacity-70 transition-opacity whitespace-nowrap">art</a>
             <a href="#music" className="hover:opacity-70 transition-opacity whitespace-nowrap">music</a>
             <a href="#fashion" className="hover:opacity-70 transition-opacity whitespace-nowrap">fashion</a>
@@ -1743,7 +1746,7 @@ export default function InterestsPage() {
           </div>
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`md:absolute md:right-4 p-2 rounded-full shrink-0 transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
+            className={`md:absolute md:right-4 p-1 md:p-2 rounded-full shrink-0 transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
