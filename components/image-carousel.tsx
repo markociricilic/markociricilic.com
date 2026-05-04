@@ -26,6 +26,8 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
   const holdInterval = useRef<number | null>(null)
   const pointerPosition = useRef<{ x: number; y: number } | null>(null)
   const swipeStart = useRef<{ x: number; y: number; pointerId: number } | null>(null)
+  const isCenterHoveredRef = useRef(false)
+  isCenterHoveredRef.current = isCenterHovered
   const centerCardWidth = 280
   const expandedCenterScale = 1.45
   const SWIPE_THRESHOLD = 40
@@ -114,9 +116,9 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
     setCurrentIndex(index)
   }
 
-  const goToPosition = (position: number) => {
-    setIsCenterHovered(false)
-    setIsCenterExpanded(false)
+  const goToPosition = (position: number, keepExpanded = false, keepHovered = false) => {
+    if (!keepHovered) setIsCenterHovered(false)
+    if (!keepExpanded) setIsCenterExpanded(false)
     setCurrentIndex((prev) => (prev + position + items.length) % items.length)
   }
 
@@ -127,7 +129,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
       return false
     }
 
-    goToPosition(direction)
+    goToPosition(direction, false, isCenterHoveredRef.current)
     return true
   }
 
@@ -158,9 +160,10 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
 
     const direction = position < 0 ? -1 : 1
 
+    setIsCenterHovered(true)
     if (hoverNavigationLocked.current) return
     hoverNavigationLocked.current = true
-    goToPosition(position)
+    goToPosition(position, false, true)
     startHoldNavigation(direction, false)
   }
 
@@ -241,7 +244,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
               const cardEl = tapped?.closest("[data-carousel-position]")
               if (cardEl) {
                 const pos = Number(cardEl.getAttribute("data-carousel-position"))
-                if (pos !== 0) goToPosition(pos)
+                if (pos !== 0) goToPosition(pos, isCenterExpanded)
                 else setIsCenterExpanded(prev => !prev)
               }
             }

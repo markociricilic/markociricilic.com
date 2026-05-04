@@ -22,12 +22,12 @@ export default function ResumePage() {
     <div className="relative min-h-screen flex flex-col md:flex-row pb-16 pt-12">
       {/* Fixed Top Navigation */}
       <div className={`fixed top-0 left-0 right-0 z-50 h-12 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(8px,2.2vw,0.875rem)]">
           <Link href="/interests" className="shrink-0 md:absolute md:left-4 hover:opacity-70 transition-opacity whitespace-nowrap">
             <span className="hidden md:inline">to marko&apos;s interests →</span>
             <span className="md:hidden">→ interests</span>
           </Link>
-          <div className="flex items-center gap-3 md:gap-6 shrink-0">
+          <div className="flex flex-1 items-center justify-evenly md:flex-none md:justify-start md:gap-6">
             <a href="#about-me" className="hover:opacity-70 transition-opacity whitespace-nowrap">about me</a>
             <a href="#education" className="hover:opacity-70 transition-opacity whitespace-nowrap">education</a>
             <a href="#skills" className="hover:opacity-70 transition-opacity whitespace-nowrap">skills</a>
@@ -36,7 +36,7 @@ export default function ResumePage() {
           </div>
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`md:absolute md:right-4 p-2 rounded-full shrink-0 transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
+            className={`md:absolute md:right-4 p-1 md:p-2 rounded-full shrink-0 transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
