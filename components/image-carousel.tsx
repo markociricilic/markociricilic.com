@@ -20,6 +20,7 @@ interface ImageCarouselProps {
 export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isCenterHovered, setIsCenterHovered] = useState(false)
+  const [isCenterExpanded, setIsCenterExpanded] = useState(false)
   const hoverNavigationLocked = useRef(false)
   const holdDelay = useRef<number | null>(null)
   const holdInterval = useRef<number | null>(null)
@@ -62,11 +63,12 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
 
   // Find the first image index for a given country
   const goToCountry = (country: string) => {
-    const index = items.findIndex((item) => 
+    const index = items.findIndex((item) =>
       item.title.toLowerCase().startsWith(country.toLowerCase())
     )
     if (index !== -1) {
       setIsCenterHovered(false)
+      setIsCenterExpanded(false)
       hoverNavigationLocked.current = false
       setCurrentIndex(index)
     }
@@ -91,26 +93,30 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
     return result
   }
 
-  const goToPrevious = () => {
+  const goToPrevious = (keepExpanded = false) => {
     setIsCenterHovered(false)
+    if (!keepExpanded) setIsCenterExpanded(false)
     hoverNavigationLocked.current = false
     setCurrentIndex((prev) => (prev - 1 + items.length) % items.length)
   }
 
-  const goToNext = () => {
+  const goToNext = (keepExpanded = false) => {
     setIsCenterHovered(false)
+    if (!keepExpanded) setIsCenterExpanded(false)
     hoverNavigationLocked.current = false
     setCurrentIndex((prev) => (prev + 1) % items.length)
   }
 
   const goToIndex = (index: number) => {
     setIsCenterHovered(false)
+    setIsCenterExpanded(false)
     hoverNavigationLocked.current = false
     setCurrentIndex(index)
   }
 
   const goToPosition = (position: number) => {
     setIsCenterHovered(false)
+    setIsCenterExpanded(false)
     setCurrentIndex((prev) => (prev + position + items.length) % items.length)
   }
 
@@ -228,14 +234,15 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
             const deltaY = e.clientY - swipeStart.current.y
             swipeStart.current = null
             if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY)) {
-              if (deltaX > 0) goToPrevious()
-              else goToNext()
+              if (deltaX > 0) goToPrevious(isCenterExpanded)
+              else goToNext(isCenterExpanded)
             } else if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
               const tapped = document.elementFromPoint(e.clientX, e.clientY)
               const cardEl = tapped?.closest("[data-carousel-position]")
               if (cardEl) {
                 const pos = Number(cardEl.getAttribute("data-carousel-position"))
                 if (pos !== 0) goToPosition(pos)
+                else setIsCenterExpanded(prev => !prev)
               }
             }
           }
@@ -275,7 +282,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
                   isAdjacent ? "z-10 opacity-70 w-[90px] md:w-[180px]" : ""
                 } ${isEdge ? "z-0 opacity-40 w-[60px] md:w-[140px]" : ""}`}
                 style={{
-                  transform: `scale(${isCenter ? (isCenterHovered ? expandedCenterScale : 1) : isAdjacent ? 0.9 : 0.8})`,
+                  transform: `scale(${isCenter ? ((isCenterHovered || isCenterExpanded) ? expandedCenterScale : 1) : isAdjacent ? 0.9 : 0.8})`,
                   transition: "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease-out",
                   transformOrigin: "center",
                 }}

@@ -1725,9 +1725,9 @@ export default function InterestsPage() {
   }, [isDarkMode])
   
   return (
-    <div className="relative min-h-screen flex flex-col md:flex-row pb-16 pt-12">
+    <div className="relative flex flex-col h-[100dvh] md:h-auto md:min-h-screen md:flex-row md:pb-16 md:pt-12">
       {/* Fixed Top Navigation */}
-      <div className={`fixed top-0 left-0 right-0 z-50 h-12 [will-change:transform] ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
+      <div className={`h-12 w-full shrink-0 md:fixed md:top-0 md:left-0 md:right-0 md:z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
         <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <Link href="/" className="shrink-0 md:absolute md:left-4 hover:opacity-70 transition-opacity whitespace-nowrap">
             <span className="hidden md:inline">← back to marko&apos;s portfolio 🌺</span>
@@ -1761,7 +1761,7 @@ export default function InterestsPage() {
       </div>
 
       <div
-        className={`w-full md:w-1/2 p-4 md:p-8 font-mono relative z-10 order-2 md:order-1 md:overflow-y-auto md:overflow-x-hidden ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
+        className={`flex-1 overflow-y-auto overflow-x-hidden w-full md:flex-none md:w-1/2 p-4 md:p-8 font-mono relative z-10 order-2 md:order-1 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
       >
 
         {/* Header */}
@@ -1870,7 +1870,7 @@ export default function InterestsPage() {
       </div>
 
       {/* Fixed Footer Links */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 h-12 [will-change:transform] ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
+      <div className={`h-12 w-full shrink-0 order-3 md:fixed md:bottom-0 md:left-0 md:right-0 md:z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
         <div className="flex items-center justify-center gap-3 md:gap-6 w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap">
           <a
             href="mailto:markociricilic@gmail.com"
