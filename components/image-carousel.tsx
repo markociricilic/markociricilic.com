@@ -4,7 +4,7 @@ import { type PointerEvent, useCallback, useEffect, useRef, useState } from "rea
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 interface CardItem {
-  id: string
+  id?: string
   title: string
   description?: string
   imageUrl: string
@@ -90,7 +90,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
     const result = []
     for (let i = -2; i <= 2; i++) {
       const index = (currentIndex + i + items.length) % items.length
-      result.push({ ...items[index], position: i })
+      result.push({ ...items[index], _index: index, position: i })
     }
     return result
   }
@@ -266,7 +266,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
 
             return (
               <div
-                key={`${card.id}-${card.position}`}
+                key={`${card._index}-${card.position}`}
                 data-carousel-position={card.position}
                 onPointerEnter={(event) => {
                   updatePointerPosition(event)
