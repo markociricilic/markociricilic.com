@@ -6,8 +6,200 @@ import Link from "next/link"
 
 const Dithering = dynamic(() => import("@paper-design/shaders-react").then(m => ({ default: m.Dithering })), { ssr: false })
 import { ImageCarousel } from "@/components/image-carousel"
+import { MusicPlayer } from "@/components/music-player"
 
-// Sample data for the card stacks - replace imageUrl with your actual images
+// To get a Spotify track ID: open the track on Spotify → Share → Copy link
+// The ID is the part after /track/ and before the ?  e.g. https://open.spotify.com/track/TRACK_ID?si=...
+const musicItems = [
+  {
+    title: "aisatsana [102]",
+    artist: "Aphex Twin",
+    album: "Syro",
+    spotifyTrackId: "5ljMlD10En5rRGZU0cs2Np",
+  },
+  {
+    title: "...",
+    artist: "⣎⡇ꉺლ༽இ•̛)ྀ◞ ༎ຶ ༽ৣৢ؞ৢ؞ؖ ꉺლ",
+    album: "...",
+    spotifyTrackId: "4BGGy5uWeAl7SfAa28Hacv",
+  },
+  {
+    title: "Immigrant",
+    artist: "Sade",
+    album: "Lovers Rock",
+    spotifyTrackId: "2lijdOYNAjF8y7hRJQJNCx",
+  },
+  {
+    title: "Make Me Yours",
+    artist: "Bettye Swann",
+    album: "Make Me Yours",
+    spotifyTrackId: "4vjIH6ddtqnUfGUET1cJaQ",
+  },
+  {
+    title: "Sway",
+    artist: "Bic Runga",
+    album: "Drive",
+    spotifyTrackId: "35PYCZLdGi3gRMdA26dZ59",
+  },
+  {
+    title: "Slow",
+    artist: "Rumer",
+    album: "Seasons Of My Soul",
+    spotifyTrackId: "1OMRoJR1N6xnqCW6m5lQzc",
+  },
+  {
+    title: "I Walk A Little Faster",
+    artist: "Fiona Apple",
+    album: "The Best Is Yet To Come",
+    spotifyTrackId: "0YcNShIOj5rIxzA0yLbMve",
+  },
+  {
+    title: "More Than This",
+    artist: "10,000 Maniacs",
+    album: "Love Among the Ruins",
+    spotifyTrackId: "5v6b9RUk83Z33shcsqt1m3",
+  },
+  {
+    title: "Let Me Live In Your City - Work In Progress",
+    artist: "Paul Simon",
+    album: "There Goes Rhymin' Simon",
+    spotifyTrackId: "0lImSLCWoi9V1PxldVsFYq",
+  },
+  {
+    title: "Packt Like Sardines In a Crushd Tin Box",
+    artist: "Radiohead",
+    album: "Amnesiac",
+    spotifyTrackId: "0tDn82XkoueVV5q9G7OUAv",
+  },
+  {
+    title: "Clementine",
+    artist: "Elliott Smith",
+    album: "Elliott Smith",
+    spotifyTrackId: "1pTwsLvnN8xPULDGzRjnfd",
+  },
+  {
+    title: "Place To Be",
+    artist: "Nick Drake",
+    album: "Pink Moon",
+    spotifyTrackId: "5QUeSXjTMHbq1fW5da2waF",
+  },
+  {
+    title: "Wicked Game",
+    artist: "Chris Isaak",
+    album: "Heart Shaped World",
+    spotifyTrackId: "7w5AOd6HrDIHewHfpABEss",
+  },
+  {
+    title: "Imaginary Folklore",
+    artist: "Nujabes feat. clammbon",
+    album: "2nd Collection",
+    spotifyTrackId: "7xNpCuqDKASx2f64nkhzNm",
+  },
+  {
+    title: "QUOI",
+    artist: "POiSON GiRL FRiEND",
+    album: "MELTING MOMENT",
+    spotifyTrackId: "6xEFdEc2v14roRuwBR3lyn",
+  },
+  {
+    title: "Mad About You",
+    artist: "Hooverphonic",
+    album: "The Magnificent Tree",
+    spotifyTrackId: "5drK2kTE2mrUdV33iHWyrx",
+  },
+  {
+    title: "Bloodsport",
+    artist: "Sneaker Pimps",
+    album: "Bloodsport",
+    spotifyTrackId: "4sLqcpvMrIJUyOs7x6fl5m",
+  },
+  {
+    title: "Violently Happy",
+    artist: "Björk",
+    album: "Debut",
+    spotifyTrackId: "1oyRhrmdRoJj0rUe7b22FS",
+  },
+  {
+    title: "Like A Stone",
+    artist: "Tricky feat. Marta",
+    album: "Fall to Pieces",
+    spotifyTrackId: "154Btwvv4e6YAuqrOlHUb1",
+  },
+  {
+    title: "Lazy Calm",
+    artist: "Cocteau Twins",
+    album: "Victorialand",
+    spotifyTrackId: "6MWnAibO1HAEhlrHoH1kNi",
+  },
+  {
+    title: "Disorder",
+    artist: "Joy Division",
+    album: "Unknown Pleasures",
+    spotifyTrackId: "5fbQCQt91LsVgXusFS0CCD",
+  },
+  {
+    title: "Should I Stay or Should I Go",
+    artist: "The Clash",
+    album: "Combat Rock",
+    spotifyTrackId: "39shmbIHICJ2Wxnk1fPSdz",
+  },
+  {
+    title: "Tonight, Tonight",
+    artist: "Smashing Pumpkins",
+    album: "Mellon Collie and the Infinite Sadness (Deluxe Edition)",
+    spotifyTrackId: "5KahLK67IOhTUSZzW8mb5h",
+  },
+  {
+    title: "How's It Going To Be",
+    artist: "Third Eye Blind",
+    album: "Third Eye Blind",
+    spotifyTrackId: "3Uvx1TO0Kg5HgGPk58lHXv",
+  },
+  {
+    title: "You Could Be More As You Are",
+    artist: "Saâda Bonaire",
+    album: "Saâda Bonaire",
+    spotifyTrackId: "1z4wF1YNe3FphOqyD2eRqY",
+  },
+  {
+    title: "Cities In Dust",
+    artist: "Siouxsie and the Banshees",
+    album: "Tinderbox",
+    spotifyTrackId: "2xq9cLlOPyLoi8kLlR4miz",
+  },
+  {
+    title: "Torn",
+    artist: "Ednaswap",
+    album: "Wacko Magneto",
+    spotifyTrackId: "3Ko0HG4tuWVE7Q9do59z4m",
+  },
+  {
+    title: "Do You Love Me Now?",
+    artist: "The Breeders",
+    album: "Last Splash",
+    spotifyTrackId: "6mI1t5Q6egSw7mTAApiD68",
+  },
+  {
+    title: "Dagger",
+    artist: "Slowdive",
+    album: "Souvlaki",
+    spotifyTrackId: "3MmRfG64qt04Efx9gK9Ec8",
+  },
+  {
+    title: "Scratched",
+    artist: "Etienne de Crécy",
+    album: "Tempovision",
+    spotifyTrackId: "52PCi5DlwcHFknaMyEE9cD",
+  },
+  {
+    title: "Here I Am - Kaskade Remix",
+    artist: "David Morales feat. Kaskade",
+    album: "HERE I AM",
+    spotifyTrackId: "4I9TgYWypLdackFhnfNu2T",
+  },
+]
+
+// Sample data for the card stacks
 const cookingItems = [
   {
     title: "Braised Lamb Shank",
@@ -2363,6 +2555,7 @@ export default function InterestsPage() {
               Favourite Artists: Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean, Playboi Carti
             </p>
           </div>
+          <MusicPlayer items={musicItems} isDarkMode={isDarkMode} />
         </div>
 
         {/* Fashion Section */}
@@ -2386,7 +2579,7 @@ export default function InterestsPage() {
             <h3 className="text-sm font-semibold mb-2">Favourite Films</h3>
             <p className="text-sm mb-3">
               Kill Bill (2003-2004), The Lord of the Rings (2001-2003), City of God (2002), All About Lily Chou-Chou (2001),
-              Memento (2000), Fight Club (1999), The Big Lebowski (1998), Gattaca (1997), Fallen Angels (1995), La Haine (1995),
+              Memento (2000), Fight Club (1999), All About My Mother (1999), The Big Lebowski (1998), Gattaca (1997), Fallen Angels (1995), La Haine (1995),
               Dead Poets Society (1989), Time of the Gypsies (1988), Wings of Desire (1987), Mirror (1975), Blade Runner (1982)
             </p>
           </div>
