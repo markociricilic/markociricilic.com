@@ -619,7 +619,7 @@ export default function ResumePage() {
             GitHub
           </a>
           <a
-            href="/docs/resume.pdf"
+            href="/docs/marko-resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:opacity-70 transition-opacity"
