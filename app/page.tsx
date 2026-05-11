@@ -91,7 +91,7 @@ export default function ResumePage() {
           </p>
 
           <p className="text-sm mb-4">
-            Currently working at Advanced Micro Devices, Inc. (AMD) as a Graphics IP RTL Design Engineer where as a member of the Shader Processor Input (SPI) team, I work to coordinate shader execution across all pipeline stages, manage hardware resource allocation, and optimize the flow of graphics and compute workloads to maximize parallel processing efficiency, for multiple next generation high-performance Radeon and Instinct (MI series) Graphics Cards.
+            Currently working at <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>Advanced Micro Devices, Inc. (AMD)</span> as a <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>Graphics IP RTL Design Engineer</span> where as a member of the <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>Shader Processor Input (SPI) team</span>, I work to coordinate shader execution across all pipeline stages, manage hardware resource allocation, and optimize the flow of graphics and compute workloads to maximize parallel processing efficiency, for multiple next generation high-performance <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>Radeon and Instinct (MI series) Graphics Cards</span>.
           </p>
 
           <p className="text-sm mb-4">
@@ -106,13 +106,13 @@ export default function ResumePage() {
           <div className={`border p-4 mb-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
             <h3 className="text-sm font-semibold mb-2">Personal Bio:</h3>
             <p className="text-sm mb-2">
-              Born in Belgrade, Serbia in 2002 but raised in Vancouver, BC before moving to Toronto, ON for university.
+              Born in <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>Belgrade, Serbia</span> in 2002 but raised in Vancouver, BC before moving to Toronto, ON for university.
             </p>
             <p className="text-sm mb-2">
               I have interests in music, including record and CD collecting, home cooking, sailing, martial arts, specifically karate and judo, hiking, painting with oil pastels, and fashion.
             </p>
             <p className="text-sm mb-2">
-              Thinking about it now, my interests together involve some combination of passion, introspection, creativity, logic, and discipline.
+              Thinking about it now, my interests together involve some combination of <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>passion, introspection, creativity, logic, and discipline</span>.
             </p>
             <p className="text-sm">
               So, it&apos;s perhaps not surprising that I&apos;m pursuing a career in ASIC and RTL design where the field as a whole, also constitutes and requires, in some ways, a combination of these mindsets/skills.
@@ -222,7 +222,8 @@ export default function ResumePage() {
                 <ul className="mt-2 text-sm list-disc list-inside opacity-90 space-y-1">
                   <li>Member of the Shader Processor Input (SPI) sub-system team working as an RTL designer in the Graphics pipeline for multiple next generation high-performance Radeon and Instinct (MI series) Graphics Cards.</li>
                   <li>Focusing on coordinating shader execution across pipeline stages, managing hardware resource allocation, and optimizing the flow of graphics and compute workloads to maximize parallel processing efficiency.</li>
-                  <li>Recipient of the Q4 2025 Spotlight Award.</li>
+                  <li>Collaborating with micro-architecture engineers and the design verification (DV) team to implement new features and optimize performance for AMD's next-generation graphics processors.</li>
+                  <li><span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>Recipient of the Q4 2025 Spotlight Award.</span></li>
                 </ul>
             </div>
 
@@ -324,7 +325,7 @@ export default function ResumePage() {
     | Unit          |
     +---------------+`}</pre>
             <p className="text-sm mb-2">
-              University capstone project focused on implementing and optimizing 3D Gaussian Splatting rendering on the Snapdragon 8 Gen 2 SoC. Developed a complete rendering pipeline including Gaussian reduction, culling, sorting, projection, and display modules to achieve 20 fps performance on mobile hardware. Also, configured the renderer to use touch input to update the camera view inside the scene. Implemented renderer using Vulkan API to maximize hardware utilization and performance.
+              <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>University capstone project</span> focused on implementing and optimizing <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>3D Gaussian Splatting rendering on the Snapdragon 8 Gen 2 SoC</span>. Developed a complete rendering pipeline including Gaussian reduction, culling, sorting, projection, and display modules to achieve <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>20 fps performance</span> on mobile hardware. Also, configured the renderer to use touch input to update the camera view inside the scene. Implemented renderer using <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>Vulkan API</span> to maximize hardware utilization and performance.
             </p>
             <p className="text-xs opacity-70 mb-2">
               Technologies: Computer Graphics, 3D Gaussian Splatting, Vulkan, Android SDK, Qualcomm Snapdragon, Touch Interaction
@@ -371,7 +372,7 @@ export default function ResumePage() {
                         | Visualization |
                         +---------------+`}</pre>
             <p className="text-sm mb-2">
-              Designed a real-time detection and response system for tracking and intercepting space debris. Used an array of ultrasonic sensors to detect objects and calculate their trajectories with custom IP blocks in RTL. Implemented servo-controlled laser targeting and landing position prediction with HDMI visualization.
+              Designed a real-time detection and response system for tracking and intercepting space debris. Used an array of ultrasonic sensors to detect objects and calculate their trajectories with <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>custom IP blocks</span> in RTL. Implemented servo-controlled laser targeting and landing position prediction with <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>HDMI visualization</span>.
             </p>
             <p className="text-xs opacity-70 mb-2">
               Technologies: Artix-7 FPGA, SystemVerilog, MicroBlaze, Ultrasonic Sensors, Servo Motors, HDMI
@@ -418,7 +419,7 @@ export default function ResumePage() {
                                              | Conversion    |
                                              +---------------+`}</pre>
             <p className="text-sm mb-2">
-              Implemented wireless communication between two STM32F4 microcontrollers, allowing data transmission up to 20 meters. Created the interface between the STM32F4 and computer using USART serial communication, with data encoding/decoding through DAC/ADC conversion.
+              Implemented wireless communication between two STM32F4 microcontrollers, allowing for data transmission <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>up to 20 meters</span>. Created the interface between the STM32F4 and computer using <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>USART</span> serial communication, with data encoding/decoding through <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>DAC/ADC</span> conversion.
             </p>
             <p className="text-xs opacity-70">
               Technologies: STM32F4, USART, DAC/ADC, DMA, Hercules SETUP utility
@@ -455,7 +456,7 @@ export default function ResumePage() {
                         | Output        |
                         +---------------+`}</pre>
             <p className="text-sm mb-2">
-              Developed a system that generates melodies with variations in pitches and rhythms based on input chords. The algorithm digitally processes chord inputs, computes FFT to extract dominant frequencies, and generates randomized melodies based on harmonic relationships.
+              Developed a system that generates new melodies with variations in pitches and rhythms based on input chords. The algorithm digitally processes <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>chord inputs</span>, computes FFT to extract <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>dominant frequencies</span>, and generates randomized melodies based on <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>harmonic relationships</span>.
             </p>
             <p className="text-xs opacity-70 mb-2">
               Technologies: Raspberry Pi, Python, FFT Analysis, Digital Signal Processing
@@ -502,7 +503,7 @@ export default function ResumePage() {
                         | (Antenna)     |
                         +---------------+`}</pre>
             <p className="text-sm mb-2">
-              Designed a class-B discrete transistor power amplifier with a low-pass filter to drive the software-defined radio&apos;s antenna. Used transformer coupling and BJTs in a push-pull configuration with a 3rd order LC low-pass filter to pass signals in the 8-16 MHz range.
+              Designed a <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>class-B discrete transistor power amplifier with a low-pass filter</span> to drive the software-defined radio&apos;s antenna. Used transformer coupling and BJTs in a push-pull configuration with a <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>3rd order</span> LC low-pass filter to pass signals in the <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>8-16 MHz range</span>.
             </p>
             <p className="text-xs opacity-70">
               Technologies: NI Multisim, Altium Designer, Python, Oscilloscope, Multimeter
@@ -539,7 +540,7 @@ export default function ResumePage() {
                         | Devices       |
                         +---------------+`}</pre>
             <p className="text-sm mb-2">
-              Designed a 16-bit, 8-register processor in Verilog based on the ARM architecture family. Implemented subroutine and stack functionality, along with connections to external I/O devices. Supported various operations including arithmetic, logical, memory, and branch instructions.
+              Designed a <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>16-bit, 8-register processor</span> in Verilog based on the <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>ARM architecture family</span>. Implemented subroutine and stack functionality, along with connections to <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>external I/O devices</span>. Supported various operations including arithmetic, logical, memory, and branch instructions.
             </p>
             <p className="text-xs opacity-70">
               Technologies: Verilog, Intel Quartus Prime Design Software, ModelSim, ARM Architecture, Hardware Simulation
@@ -566,7 +567,7 @@ export default function ResumePage() {
                         | Airframe      |
                         +---------------+`}</pre>
             <p className="text-sm mb-2">
-              3D printed a radio-controlled airplane as a high school capstone project. Used four micro servos to control the airplane&apos;s direction with each servo corresponding to a channel on the radio control system. Implemented an ESC controller to regulate the motor speed.
+              <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>3D printed</span> a radio-controlled airplane as my <span className="font-bold" style={{ color: isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)" }}>high school capstone project</span>. Used four micro servos to control the airplane&apos;s direction with each servo corresponding to a channel on the radio control system. Implemented an ESC controller to regulate the motor speed.
             </p>
             <p className="text-xs opacity-70">
               Technologies: 3D Printing, Radio Control Systems, Servo Motors, ESC Controllers
