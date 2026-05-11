@@ -1,12 +1,11 @@
 ﻿"use client"
 
-import dynamic from "next/dynamic"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-
-const Dithering = dynamic(() => import("@paper-design/shaders-react").then(m => ({ default: m.Dithering })), { ssr: false })
+import { HibiscusField } from "@/components/hibiscus-field"
 import { ImageCarousel } from "@/components/image-carousel"
 import { MusicPlayer } from "@/components/music-player"
+import { CharlieWalker } from "@/components/charlie-walker"
 
 // To get a Spotify track ID: open the track on Spotify → Share → Copy link
 // The ID is the part after /track/ and before the ?  e.g. https://open.spotify.com/track/TRACK_ID?si=...
@@ -2446,10 +2445,22 @@ const artItems = [
     imageUrl: "/images/interests/art-5.jpg",
     category: "art" as const,
   },
+  {
+    title: "Untitled 6",
+    description: "",
+    imageUrl: "/images/interests/art-6.jpg",
+    category: "art" as const,
+  },
 ]
 
 export default function InterestsPage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
+  const [charY, setCharY] = useState(27)
+  const [charX, setCharX] = useState(75)
+  const [charScale, setCharScale] = useState(0.15)
+  const [isWalking, setIsWalking] = useState(false)
+  const [facingRight, setFacingRight] = useState(true)
+  const walkTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Sync dark class on html element for CSS variable theming
   useEffect(() => {
@@ -2459,7 +2470,28 @@ export default function InterestsPage() {
       document.documentElement.classList.remove('dark')
     }
   }, [isDarkMode])
-  
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsWalking(true)
+      if (walkTimer.current) clearTimeout(walkTimer.current)
+      walkTimer.current = setTimeout(() => setIsWalking(false), 600)
+
+      const progress = window.scrollY /
+        Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      setCharY(27 + progress * 44)
+      setCharScale(0.15 + progress * 1.2)
+      setCharX(75 + Math.sin(progress * Math.PI * 8) * 13)
+      setFacingRight(Math.cos(progress * Math.PI * 8) > 0)
+    }
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (walkTimer.current) clearTimeout(walkTimer.current)
+    }
+  }, [])
+
   return (
     <div className="relative flex flex-col h-[100dvh] md:h-auto md:min-h-screen md:flex-row md:pb-16 md:pt-12">
       {/* Fixed Top Navigation */}
@@ -2564,10 +2596,10 @@ export default function InterestsPage() {
           <div className={`border p-4 mb-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
             <h3 className="text-sm font-semibold mb-2">Style & Brands</h3>
             <p className="text-sm mb-3">
-              Fashion is another form of self-expression for me. I appreciate both streetwear and more avant-garde designers.
+              Fashion is another form of self-expression for me. I dress both thrifted, vintage, streetwear and more avant-garde designers.
             </p>
             <p className="text-sm opacity-70">
-              Favourite Brands: Stüssy, Supreme, Nike, New Balance, Aries Arise, Paloma Wool, Fucking Awesome, Bode, Professor. E, Yohji Yamamoto
+              Favourite Brands: Stüssy, Supreme, New Balance, Aries Arise, Paloma Wool, Fucking Awesome, Acne Studios, Bode, MSGM, Professor. E, Yohji Yamamoto
             </p>
           </div>
         </div>
@@ -2593,20 +2625,24 @@ export default function InterestsPage() {
         </div>
       </div>
 
-      <div className="hidden md:block md:relative md:w-1/2 md:order-2">
-        <Dithering
-          style={{ height: "100%", width: "100%" }}
-          colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}
-          colorFront={isDarkMode ? "hsl(350, 75%, 50%)" : "hsl(220, 100%, 70%)"}
-          shape="cat"
-          type="4x4"
-          pxSize={3}
-          offsetX={0}
-          offsetY={0}
-          scale={0.8}
-          rotation={0}
-          speed={0.1}
-        />
+      <div className="hidden md:block md:w-1/2 md:order-2 md:relative">
+        <div style={{ position: "sticky", top: "48px", width: "100%", height: "calc(100vh - 112px)", overflow: "hidden" }}>
+          <HibiscusField isDarkMode={isDarkMode} />
+        </div>
+        <div
+          className="hidden md:block"
+          style={{
+            position: "fixed",
+            left: `${charX}%`,
+            top: `${charY}vh`,
+            transform: `translateX(-50%) translateY(-50%) scale(${charScale})`,
+            transition: "top 0.18s ease-out, left 0.18s ease-out",
+            zIndex: 10,
+            pointerEvents: "none",
+          }}
+        >
+          <CharlieWalker isWalking={isWalking} facingRight={facingRight} />
+        </div>
       </div>
 
       {/* Fixed Footer Links */}

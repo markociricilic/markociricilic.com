@@ -1,7 +1,7 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 
 const Dithering = dynamic(() => import("@paper-design/shaders-react").then(m => ({ default: m.Dithering })), { ssr: false })
@@ -9,7 +9,6 @@ const Dithering = dynamic(() => import("@paper-design/shaders-react").then(m => 
 export default function ResumePage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
 
-  // Sync dark class on html element for CSS variable theming
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
@@ -192,109 +191,26 @@ export default function ResumePage() {
         <div id="skills" className="mb-12 scroll-mt-16">
           <h2 className="text-sm lowercase mb-4 opacity-70">skills</h2>
 
-          {/* Hardware */}
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold mb-3">Hardware</h3>
-            <div className="space-y-2">
-              {[
-                { name: "ASIC", level: 95 },
-                { name: "FPGA", level: 93 },
-                { name: "RTL Design", level: 92 },
-                { name: "SystemVerilog", level: 92 },
-                { name: "Synopsys VCS", level: 91 },
-                { name: "Synopsys Verdi", level: 90 },
-                { name: "Lint", level: 86 },
-                { name: "Static Timing Analysis", level: 85 },
-                { name: "AMD Vivado Design Suite", level: 80 },
-                { name: "AMD Vitis Unified Software Platform", level: 75 },
-                { name: "Intel Quartus Prime", level: 70 },
-                { name: "ModelSim", level: 66 },
-              ].map((skill) => (
-                <div key={skill.name} className="text-sm">
-                  <div className="flex justify-between mb-0.5">
-                    <span>{skill.name}</span>
-                    <span className="opacity-70">{skill.level}%</span>
-                  </div>
-                  <div className="h-1.5 bg-current/20 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full ${skill.level >= 90
-                        ? "bg-green-500"
-                        : skill.level >= 70
-                          ? "bg-yellow-500"
-                          : "bg-red-500"
-                        }`}
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+          <div className="flex w-full gap-8 text-sm">
+            <div className="flex-1">
+              <h3 className="font-semibold mb-3">Hardware</h3>
+              <div className="flex flex-wrap gap-1.5">
+                {["ASIC", "FPGA", "RTL Design", "SystemVerilog", "Synopsys VCS", "Synopsys Verdi", "Lint", "Static Timing Analysis", "AMD Vivado Design Suite", "AMD Vitis Unified Software Platform", "Intel Quartus Prime", "ModelSim", "RDNA", "3D Graphics"].map((skill) => (
+                  <span key={skill} className={`px-2 py-0.5 text-xs border ${isDarkMode ? "border-white/50" : "border-black/30"}`}>{skill}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex-1">
+              <h3 className="font-semibold mb-3">Software</h3>
+              <div className="flex flex-wrap gap-1.5">
+                {["C", "C++", "Python", "Perl", "Perforce", "ARM Assembly", "Git"].map((skill) => (
+                  <span key={skill} className={`px-2 py-0.5 text-xs border ${isDarkMode ? "border-white/50" : "border-black/30"}`}>{skill}</span>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Software */}
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold mb-3">Software</h3>
-            <div className="space-y-2">
-              {[
-                { name: "C", level: 94 },
-                { name: "C++", level: 93 },
-                { name: "Python", level: 82 },
-                { name: "Perl", level: 81 },
-                { name: "Perforce", level: 78 },
-                { name: "ARM Assembly", level: 72 },
-                { name: "Git", level: 70 },
-              ].map((skill) => (
-                <div key={skill.name} className="text-sm">
-                  <div className="flex justify-between mb-0.5">
-                    <span>{skill.name}</span>
-                    <span className="opacity-70">{skill.level}%</span>
-                  </div>
-                  <div className="h-1.5 bg-current/20 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full ${skill.level >= 90
-                        ? "bg-green-500"
-                        : skill.level >= 70
-                          ? "bg-yellow-500"
-                          : "bg-red-500"
-                        }`}
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Operating Systems */}
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold mb-3">Operating Systems</h3>
-            <div className="space-y-2">
-              {[
-                { name: "Linux", level: 90 },
-                { name: "Windows", level: 87 },
-                { name: "Android", level: 80 },
-                { name: "Unix", level: 72 },
-              ].map((skill) => (
-                <div key={skill.name} className="text-sm">
-                  <div className="flex justify-between mb-0.5">
-                    <span>{skill.name}</span>
-                    <span className="opacity-70">{skill.level}%</span>
-                  </div>
-                  <div className="h-1.5 bg-current/20 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full ${skill.level >= 90
-                        ? "bg-green-500"
-                        : skill.level >= 70
-                          ? "bg-yellow-500"
-                          : "bg-red-500"
-                        }`}
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Experience Section */}
