@@ -119,22 +119,6 @@ export default function ResumePage() {
             </p>
           </div>
 
-          {/* Interests */}
-          <div className={`border p-4 mb-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
-            <h3 className="text-sm font-semibold mb-2">Interests:</h3>
-            <p className="text-sm mb-2">
-              <span className="opacity-70">Favourite Music Artists:</span> Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean, Playboi Carti
-            </p>
-            <p className="text-sm mb-2">
-              <span className="opacity-70">Favourite Films:</span> Kill Bill (2003-2004), The Lord of the Rings (2001-2003), City of God (2002), All About Lily Chou-Chou (2001), Memento (2000), Fight Club (1999), The Big Lebowski (1998), Gattaca (1997), Fallen Angels (1995), La Haine (1995), Dead Poets Society (1989), Time of the Gypsies (1988), Wings of Desire (1987), Mirror (1975), Blade Runner (1982)
-            </p>
-            <p className="text-sm mb-2">
-              <span className="opacity-70">Favourite Animations:</span> serial experiments lain (1998), Samurai Champloo (2004), Trigun (1998), Violet Evergarden (2018), Naruto (2002-2017), The Boy and The Beast (2015), Fantastic Planet (1973)
-            </p>
-            <p className="text-sm">
-              <span className="opacity-70">Favourite Fashion:</span> Stüssy, Supreme, Nike, New Balance, Aries Arise, Paloma Wool, Fucking Awesome, Bode, Professor. E, Yohji Yamamoto
-            </p>
-          </div>
 
           {/* Quick Facts */}
           <div className={`border p-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
