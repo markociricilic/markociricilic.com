@@ -6,6 +6,7 @@ import { LogoStrip } from "@/components/site/horizon"
 // Used on both pages; on the interests page the tags link back to homepage sections.
 export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
   const base = page === "home" ? "" : "/"
+  const interests = page === "interests" ? "" : "/interests/"
 
   return (
     <aside className="art" aria-label="Collage">
@@ -113,6 +114,15 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
       </a>
       <a className="tag desk-only" href={`${base}#project-04`} style={{ top: "88%", left: "60%" }}>
         Melody unit / MIU
+      </a>
+      <a className="tag desk-only" href={`${interests}#photography`} style={{ top: "14%", left: "66%" }}>
+        Photography
+      </a>
+      <a className="tag desk-only" href={`${interests}#cooking`} style={{ top: "46%", left: "4%" }}>
+        Cooking
+      </a>
+      <a className="tag desk-only" href={`${interests}#art`} style={{ top: "32%", left: "39%" }}>
+        Art
       </a>
       <LogoStrip num="26" />
     </aside>
