@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ============================================================
-   Theme tokens — hibiscus red, Afterlab-inspired.
+   Theme tokens — earthy amber/ochre, Afterlab-inspired.
    The theme is set on <html data-theme="light|dark"> by the
    inline script in app/layout.tsx before first paint.
    ============================================================ */
@@ -12,14 +12,14 @@
   --ink: #141414;
   --muted: #6b6b6b;
   --line: #c9c9c9;
-  --accent: #d62839;      /* hibiscus red */
-  --accent-2: #f2867a;    /* coral petal */
-  --accent-deep: #b0162a; /* accent for text on light backgrounds */
+  --accent: #e39b1b;      /* ochre amber */
+  --accent-2: #f3c96a;    /* pale straw */
+  --accent-deep: #8f5400; /* accent for text on light backgrounds */
   --grey: #8a8a8a;
   --panel: #f4f1ec;
   --strip: #0d0d0d;
   --strip-ink: #ffffff;
-  --duo-dark: #3a0a10;
+  --duo-dark: #3b2810;
   --duo-light: #ffffff;
   --photo-bright: 1.35;
   color-scheme: light;
@@ -27,17 +27,17 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     --bg: #0b0b0b; --ink: #f2efe9; --muted: #9a958d; --line: #3a3631;
-    --accent: #ee3a43; --accent-2: #ff9a8f; --accent-deep: #ff6b6b;
-    --panel: #15130f; --strip: #ee3a43; --strip-ink: #0b0b0b;
-    --duo-dark: #000; --duo-light: #ff9a8f; --photo-bright: 0.95;
+    --accent: #f0ac2e; --accent-2: #f7d27a; --accent-deep: #f5bc4c;
+    --panel: #15130f; --strip: #f0ac2e; --strip-ink: #0b0b0b;
+    --duo-dark: #000; --duo-light: #f7d27a; --photo-bright: 0.95;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0b0b; --ink: #f2efe9; --muted: #9a958d; --line: #3a3631;
-  --accent: #ee3a43; --accent-2: #ff9a8f; --accent-deep: #ff6b6b;
-  --panel: #15130f; --strip: #ee3a43; --strip-ink: #0b0b0b;
-  --duo-dark: #000; --duo-light: #ff9a8f; --photo-bright: 0.95;
+  --accent: #f0ac2e; --accent-2: #f7d27a; --accent-deep: #f5bc4c;
+  --panel: #15130f; --strip: #f0ac2e; --strip-ink: #0b0b0b;
+  --duo-dark: #000; --duo-light: #f7d27a; --photo-bright: 0.95;
   color-scheme: dark;
 }
 
@@ -94,6 +94,10 @@ body {
 .shard.h { left: 0; top: 58%; width: 36%; height: 26%; background: radial-gradient(circle, var(--accent-deep) 1.3px, transparent 1.6px) 0 0 / 8px 8px; opacity: .55; clip-path: polygon(0 0, 100% 30%, 70% 100%, 0 100%); }
 .shard.i { left: 26%; top: 40%; width: 18%; height: 14%; background: linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 12px 12px, linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 12px 12px; opacity: .8; }
 .shard.j { left: 46%; bottom: 0; width: 18%; height: 22%; background: var(--accent-2); clip-path: polygon(50% 0, 100% 100%, 0 100%); mix-blend-mode: multiply; }
+
+/* full-colour cut-out of the main figure; same box + crop as .main-photo so it lines up */
+.figure { position: absolute; inset: 0; pointer-events: none; }
+.figure img { width: 100%; height: 100%; object-fit: cover; filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.35)); }
 
 /* photo cut-outs in the collage */
 .cut { position: absolute; overflow: hidden; outline: 1px solid var(--ink); }

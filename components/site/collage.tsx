@@ -50,19 +50,21 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         style={{ right: "6%", bottom: "7%", width: "25%", height: "34%", clipPath: "polygon(0 8%, 100% 0, 100% 100%, 6% 100%)" }}
       />
 
+      {/* Full-colour cut-out of Marko, aligned exactly over the tinted Lisbon photo */}
+      <div className="figure" aria-hidden="true">
+        <img src="/images/collage/marko-lisbon-cutout.webp" alt="" style={{ objectPosition: "62% 35%" }} />
+      </div>
+
       <svg className="overlay" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <line className="dim" x1="40" y1="120" x2="300" y2="120" />
-        <line className="dim" x1="40" y1="114" x2="40" y2="126" />
-        <line className="dim" x1="300" y1="114" x2="300" y2="126" />
-        <text x="140" y="112">0.00 INCHES</text>
         <circle className="dim" cx="352" cy="450" r="16" />
         <line className="dim" x1="328" y1="450" x2="376" y2="450" />
         <line className="dim" x1="352" y1="426" x2="352" y2="474" />
         <line className="dim dash" x1="352" y1="474" x2="352" y2="760" />
         <rect className="dim" x="470" y="300" width="18" height="18" />
         <rect className="dim" x="492" y="300" width="18" height="18" />
-        <polyline className="dim" points="80,700 140,640 220,640" />
-        <text x="150" y="632">LISBOA / 2025</text>
+        <polyline className="dim" points="196,724 214,692 340,692" />
+        <text x="222" y="686">LISBOA / 2025</text>
+        <text x="222" y="706">38.71N 9.14W</text>
         <text x="40" y="780">MARKO.CIRIC.ILIC — BEYOND RTL 002.04</text>
         <path className="dim" d="M120 230 L120 290 M110 240 L130 240 M110 280 L130 280" />
         <text x="134" y="264">1.75</text>
@@ -85,8 +87,6 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
           <line x1="40" y1="40" x2="40" y2="70" />
           <line x1="25" y1="55" x2="55" y2="55" />
         </g>
-        <text x="420" y="200">SPI / GFX IP</text>
-        <rect className="fill" x="404" y="192" width="8" height="8" />
         <text x="30" y="560">↑ 3D-2D PROJECTION</text>
       </svg>
 
