@@ -33,19 +33,19 @@ export function InterestsCollage() {
       ))}
       <img className="ic-cut ic-figure" src="/images/collage/art6-figure.webp" alt="Figure from oil pastel Untitled 6" decoding="async" />
 
-      <a className="tag hot" href="#cooking" style={{ top: "27%", left: "4%" }}>
+      <a className="tag hot" href="#cooking" style={{ top: "23%", left: "31%" }}>
         Cooking
       </a>
-      <a className="tag" href="#art" style={{ top: "30%", left: "70%" }}>
+      <a className="tag" href="#art" style={{ top: "40%", left: "73%" }}>
         Art
       </a>
-      <a className="tag desk-only" href="#photography" style={{ top: "90%", left: "60%" }}>
+      <a className="tag desk-only" href="#photography" style={{ top: "92%", left: "58%" }}>
         Photography
       </a>
-      <a className="tag desk-only" href="#music" style={{ top: "66%", left: "36%" }}>
+      <a className="tag desk-only" href="#music" style={{ top: "47%", left: "33%" }}>
         Music
       </a>
-      <Link className="tag" href="/" style={{ top: "20%", left: "70%" }}>
+      <Link className="tag" href="/" style={{ top: "28%", left: "75%" }}>
         ← Portfolio
       </Link>
       <LogoStrip num="27" />
