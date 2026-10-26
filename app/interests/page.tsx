@@ -5,6 +5,7 @@ import { MusicPlayer } from "@/components/music-player"
 import { Collage } from "@/components/site/collage"
 import { ContactSheet } from "@/components/site/contact-sheet"
 import { RecipeSheets } from "@/components/site/recipe-sheets"
+import { ArtWall } from "@/components/site/art-wall"
 import { FooterBar } from "@/components/site/footer-bar"
 import { Horizon, Logo } from "@/components/site/horizon"
 // import { LogoStrip } from "@/components/site/horizon"
@@ -2497,7 +2498,7 @@ export default function InterestsPage() {
 
             <Section id="art" title="Art" index="03">
               <p className="muted">Predominantly painting with soft oil pastels (from MUNGYO gallery).</p>
-              <ImageCarousel items={artItems} />
+              <ArtWall items={artItems} />
             </Section>
 
             <Section id="music" title="Music" index="04">
