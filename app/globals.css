@@ -218,7 +218,8 @@ body {
 .tl ul { margin: 8px 0 0; padding-left: 16px; font-size: 13px; list-style: square; }
 .tl ul li { margin-bottom: 3px; }
 .tl ul li::marker { color: var(--accent); }
-.award { display: inline-block; margin-top: 8px; font-family: var(--font-px), monospace; font-size: 10px; text-transform: uppercase; background: var(--accent); color: #000; padding: 2px 6px; }
+.awards { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.award { display: inline-block; font-family: var(--font-px), monospace; font-size: 10px; text-transform: uppercase; background: var(--accent); color: #000; padding: 2px 6px; }
 
 /* projects: technical frames with corner ticks */
 .projects { display: grid; gap: 22px; }

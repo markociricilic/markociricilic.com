@@ -483,7 +483,10 @@ export default function ResumePage() {
                     <li>Focusing on coordinating shader execution across pipeline stages, managing hardware resource allocation, and optimizing the flow of graphics and compute workloads to maximize parallel processing efficiency.</li>
                     <li>Collaborating with micro-architecture engineers and the design verification (DV) team to implement new features and optimize performance for AMD&apos;s next-generation graphics processors.</li>
                   </ul>
-                  <span className="award">★ Recipient of the Q4 2025 Spotlight Award</span>
+                  <div className="awards">
+                    <span className="award">★ Recipient of the Q3 2026 Spotlight Award</span>
+                    <span className="award">★ Recipient of the Q4 2025 Spotlight Award</span>
+                  </div>
                 </li>
                 <li>
                   <h3>Graphics IP RTL Design Intern</h3>
