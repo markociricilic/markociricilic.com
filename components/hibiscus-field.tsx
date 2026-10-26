@@ -1,10 +1,12 @@
 "use client"
 
 import { useRef, useEffect } from "react"
+import { useTheme } from "@/components/site/theme"
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v))
 
-export function HibiscusField({ isDarkMode }: { isDarkMode: boolean }) {
+export function HibiscusField() {
+  const { isDark: isDarkMode } = useTheme()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const darkRef = useRef(isDarkMode)
   darkRef.current = isDarkMode
@@ -262,7 +264,7 @@ export function HibiscusField({ isDarkMode }: { isDarkMode: boolean }) {
   return (
     <canvas
       ref={canvasRef}
-      style={{ width: "100%", height: "100%", imageRendering: "pixelated", display: "block" }}
+      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 15%", imageRendering: "pixelated", display: "block" }}
     />
   )
 }

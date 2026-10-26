@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist_Mono, Silkscreen, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider, themeInitScript } from '@/components/site/theme'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const mono = Geist_Mono({ subsets: ['latin', 'latin-ext'], variable: '--font-mono' })
+const pixel = Silkscreen({ subsets: ['latin', 'latin-ext'], weight: '400', variable: '--font-px' })
+const display = Space_Grotesk({ subsets: ['latin', 'latin-ext'], weight: ['300', '700'], variable: '--font-display' })
 
 export const metadata: Metadata = {
   title: 'Marko Ćirić | Portfolio',
-  description: 'Created by Marko',
-  generator: 'v0.app',
+  description: 'Portfolio of Marko Ćirić — RTL design engineer at AMD.',
   icons: {
     icon: [
       {
@@ -35,9 +36,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased bg-background overscroll-none">
-        {children}
+    <html lang="en" className={`${mono.variable} ${pixel.variable} ${display.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

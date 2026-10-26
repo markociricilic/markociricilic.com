@@ -1,11 +1,22 @@
-﻿"use client"
-
-import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { HibiscusField } from "@/components/hibiscus-field"
 import { ImageCarousel } from "@/components/image-carousel"
 import { MusicPlayer } from "@/components/music-player"
-import { CharlieWalker } from "@/components/charlie-walker"
+import { FooterBar } from "@/components/site/footer-bar"
+import { Horizon, Logo, LogoStrip } from "@/components/site/horizon"
+import { PixelPot } from "@/components/site/pixel-pot"
+import { ScrollCharlie } from "@/components/site/scroll-charlie"
+import { Box, Section } from "@/components/site/section"
+import { TopNav } from "@/components/site/top-nav"
+
+const navLinks = [
+  { href: "#cooking", label: "Cooking" },
+  { href: "#photography", label: "Photography", short: "Photos" },
+  { href: "#art", label: "Art" },
+  { href: "#music", label: "Music" },
+  { href: "#fashion", label: "Fashion" },
+  { href: "#films", label: "Films" },
+]
 
 // To get a Spotify track ID: open the track on Spotify → Share → Copy link
 // The ID is the part after /track/ and before the ?  e.g. https://open.spotify.com/track/TRACK_ID?si=...
@@ -2454,233 +2465,108 @@ const artItems = [
 ]
 
 export default function InterestsPage() {
-  const [isDarkMode, setIsDarkMode] = useState(true)
-  const [charY, setCharY] = useState(27)
-  const [charX, setCharX] = useState(75)
-  const [charScale, setCharScale] = useState(0.15)
-  const [isWalking, setIsWalking] = useState(false)
-  const [facingRight, setFacingRight] = useState(true)
-  const walkTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  // Sync dark class on html element for CSS variable theming
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [isDarkMode])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsWalking(true)
-      if (walkTimer.current) clearTimeout(walkTimer.current)
-      walkTimer.current = setTimeout(() => setIsWalking(false), 600)
-
-      const progress = window.scrollY /
-        Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
-      setCharY(27 + progress * 44)
-      setCharScale(0.15 + progress * 1.2)
-      setCharX(75 + Math.sin(progress * Math.PI * 8) * 13)
-      setFacingRight(Math.cos(progress * Math.PI * 8) > 0)
-    }
-    handleScroll()
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-      if (walkTimer.current) clearTimeout(walkTimer.current)
-    }
-  }, [])
-
   return (
-    <div className="relative flex flex-col h-[100dvh] md:h-auto md:min-h-screen md:flex-row md:pb-16 md:pt-12">
-      {/* Fixed Top Navigation */}
-      <div className={`h-12 w-full shrink-0 md:fixed md:top-0 md:left-0 md:right-0 md:z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="relative flex items-center justify-between md:justify-center w-full h-full px-2 md:px-4 font-mono text-[clamp(8px,2.2vw,0.875rem)]">
-          <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`md:absolute md:left-4 p-1 md:p-2 rounded-full shrink-0 transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"}`}
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="5" />
-                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            )}
-          </button>
-          <div className="flex flex-1 items-center justify-evenly md:flex-none md:justify-start md:gap-6">
-            <a href="#cooking" className="hover:opacity-70 transition-opacity whitespace-nowrap">cooking</a>
-            <a href="#photography" className="hover:opacity-70 transition-opacity whitespace-nowrap">
-              <span className="md:hidden">photos</span>
-              <span className="hidden md:inline">photography</span>
-            </a>
-            <a href="#art" className="hover:opacity-70 transition-opacity whitespace-nowrap">art</a>
-            <a href="#music" className="hover:opacity-70 transition-opacity whitespace-nowrap">music</a>
-            <a href="#fashion" className="hover:opacity-70 transition-opacity whitespace-nowrap">fashion</a>
-            <a href="#films" className="hover:opacity-70 transition-opacity whitespace-nowrap">films</a>
+    <>
+      <div className="page">
+        <div className="content">
+          <Horizon src="/images/interests/photography-243.jpg" position="50% 55%" label="BEOGRAD 2026" />
+          <TopNav links={navLinks} cross={{ href: "/", label: "← Portfolio" }} />
+
+          <div className="wrap">
+            <Logo sub="interests/" />
+            <p className="role">Cooking, Photography, Painting and More 🌺</p>
+
+            <Section id="cooking" title="Cooking" index="01">
+              <p className="muted">
+                Experimenting with various cuisines at home, and blending traditional recipes with techniques I&apos;ve picked up from travelling and research.
+              </p>
+              <ImageCarousel items={cookingItems} />
+            </Section>
+
+            <Section id="photography" title="Photography" index="02">
+              <p className="muted">Life outtakes from all my adventures.</p>
+              <ImageCarousel
+                items={photographyItems}
+                countries={["Tunisia", "Costa Rica", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
+              />
+            </Section>
+
+            <Section id="art" title="Art" index="03">
+              <p className="muted">Predominantly painting with soft oil pastels (from MUNGYO gallery).</p>
+              <ImageCarousel items={artItems} />
+            </Section>
+
+            <Section id="music" title="Music" index="04">
+              <Box label="Record collecting & DJing">
+                <p>
+                  I&apos;ve been collecting vinyl records for several years, focusing on electronic music, hip-hop, and alternative genres.
+                  DJing has become a creative outlet that combines my love for music with technical skills.
+                </p>
+                <p className="muted">Favourite Artists: Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean, Playboi Carti</p>
+              </Box>
+              <MusicPlayer items={musicItems} />
+            </Section>
+
+            <Section id="fashion" title="Fashion" index="05">
+              <Box label="Style & brands">
+                <p>
+                  Fashion is another form of self-expression for me. I dress both thrifted, vintage, streetwear and more avant-garde designers.
+                </p>
+                <p className="muted">
+                  Favourite Brands: Stüssy, Supreme, New Balance, Aries Arise, Paloma Wool, Fucking Awesome, Acne Studios, Bode, MSGM, Professor. E, Yohji Yamamoto
+                </p>
+              </Box>
+            </Section>
+
+            <Section id="films" title="Films" index="06">
+              <Box label="Favourite films">
+                <p>
+                  Kill Bill (2003-2004), The Lord of the Rings (2001-2003), City of God (2002), All About Lily Chou-Chou (2001),
+                  Memento (2000), Fight Club (1999), All About My Mother (1999), The Big Lebowski (1998), Gattaca (1997), Fallen Angels (1995), La Haine (1995),
+                  Dead Poets Society (1989), Time of the Gypsies (1988), Wings of Desire (1987), Mirror (1975), Blade Runner (1982)
+                </p>
+              </Box>
+              <Box label="Favourite animations">
+                <p>
+                  serial experiments lain (1998), Samurai Champloo (2004), Trigun (1998), Violet Evergarden (2018),
+                  Naruto (2002-2017), The Boy and The Beast (2015), Fantastic Planet (1973)
+                </p>
+              </Box>
+            </Section>
           </div>
-          <Link href="/" className="shrink-0 md:absolute md:right-4 hover:opacity-70 transition-opacity whitespace-nowrap">
-            <span className="hidden md:inline">← back to marko&apos;s portfolio 🌺</span>
-            <span className="md:hidden">← portfolio</span>
+        </div>
+
+        <aside className="art garden" aria-label="Hibiscus field">
+          <HibiscusField />
+          <PixelPot />
+          <svg className="overlay" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <line className="dim" x1="40" y1="90" x2="260" y2="90" />
+            <line className="dim" x1="40" y1="84" x2="40" y2="96" />
+            <line className="dim" x1="260" y1="84" x2="260" y2="96" />
+            <text x="110" y="82">HIBISCUS FIELD</text>
+            <circle className="dim" cx="470" cy="210" r="14" />
+            <line className="dim" x1="450" y1="210" x2="490" y2="210" />
+            <line className="dim" x1="470" y1="190" x2="470" y2="230" />
+            <line className="dim dash" x1="470" y1="230" x2="470" y2="420" />
+            <text x="40" y="780">MARKO.CIRIC.ILIC — INTERESTS 002.04</text>
+          </svg>
+          <a className="tag hot" href="#cooking" style={{ top: "10%", left: "56%" }}>
+            Hot! Cooking
+          </a>
+          <a className="tag" href="#photography" style={{ top: "24%", left: "8%" }}>
+            Photography
+          </a>
+          <a className="tag desk-only" href="#music" style={{ top: "64%", left: "62%" }}>
+            Records & DJing
+          </a>
+          <Link className="tag" href="/" style={{ top: "84%", left: "10%" }}>
+            ← Portfolio
           </Link>
-        </div>
+          <LogoStrip num="27" />
+        </aside>
       </div>
-
-      <div
-        className={`flex-1 overflow-y-auto overflow-x-hidden w-full md:flex-none md:w-1/2 p-4 md:p-8 font-mono relative z-10 order-2 md:order-1 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
-      >
-
-        {/* Header */}
-        <div className="mb-12">
-          <div className="mb-8">
-            <h1 className="text-lg font-normal">Marko's Interests</h1>
-            <p className="text-sm opacity-70 mt-2">Cooking, Photography, Painting and More</p>
-          </div>
-        </div>
-
-        {/* Cooking Section */}
-        <div id="cooking" className="mb-12 scroll-mt-16">
-          <h2 className="text-sm lowercase mb-4 opacity-70">cooking</h2>
-          <p className="text-sm opacity-70 mb-4">
-            Experimenting with various cuisines at home, and blending traditional recipes with techniques I&apos;ve picked up from travelling and research.
-          </p>
-          <ImageCarousel items={cookingItems} isDarkMode={isDarkMode} />
-        </div>
-
-        {/* Photography Section */}
-        <div id="photography" className="mb-12 scroll-mt-16">
-          <h2 className="text-sm lowercase mb-4 opacity-70">photography</h2>
-          <p className="text-sm opacity-70 mb-4">
-            Life outtakes from all my adventures.
-          </p>
-          <ImageCarousel 
-            items={photographyItems} 
-            isDarkMode={isDarkMode} 
-            countries={["Tunisia", "Costa Rica", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
-          />
-        </div>
-
-        {/* Art Section */}
-        <div id="art" className="mb-12 scroll-mt-16">
-          <h2 className="text-sm lowercase mb-4 opacity-70">art</h2>
-          <p className="text-sm opacity-70 mb-4">
-            Predominantly painting with soft oil pastels (from MUNGYO gallery).
-          </p>
-          <ImageCarousel items={artItems} isDarkMode={isDarkMode} />
-        </div>
-
-        {/* Music Section */}
-        <div id="music" className="mb-12 scroll-mt-16">
-          <h2 className="text-sm lowercase mb-4 opacity-70">music</h2>
-          <div className={`border p-4 mb-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
-            <h3 className="text-sm font-semibold mb-2">Record Collecting & DJing</h3>
-            <p className="text-sm mb-3">
-              I&apos;ve been collecting vinyl records for several years, focusing on electronic music, hip-hop, and alternative genres.
-              DJing has become a creative outlet that combines my love for music with technical skills.
-            </p>
-            <p className="text-sm opacity-70">
-              Favourite Artists: Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean, Playboi Carti
-            </p>
-          </div>
-          <MusicPlayer items={musicItems} isDarkMode={isDarkMode} />
-        </div>
-
-        {/* Fashion Section */}
-        <div id="fashion" className="mb-12 scroll-mt-16">
-          <h2 className="text-sm lowercase mb-4 opacity-70">fashion</h2>
-          <div className={`border p-4 mb-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
-            <h3 className="text-sm font-semibold mb-2">Style & Brands</h3>
-            <p className="text-sm mb-3">
-              Fashion is another form of self-expression for me. I dress both thrifted, vintage, streetwear and more avant-garde designers.
-            </p>
-            <p className="text-sm opacity-70">
-              Favourite Brands: Stüssy, Supreme, New Balance, Aries Arise, Paloma Wool, Fucking Awesome, Acne Studios, Bode, MSGM, Professor. E, Yohji Yamamoto
-            </p>
-          </div>
-        </div>
-
-        {/* Films & Animation Section */}
-        <div id="films" className="mb-12 scroll-mt-16">
-          <h2 className="text-sm lowercase mb-4 opacity-70">films</h2>
-          <div className={`border p-4 mb-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
-            <h3 className="text-sm font-semibold mb-2">Favourite Films</h3>
-            <p className="text-sm mb-3">
-              Kill Bill (2003-2004), The Lord of the Rings (2001-2003), City of God (2002), All About Lily Chou-Chou (2001),
-              Memento (2000), Fight Club (1999), All About My Mother (1999), The Big Lebowski (1998), Gattaca (1997), Fallen Angels (1995), La Haine (1995),
-              Dead Poets Society (1989), Time of the Gypsies (1988), Wings of Desire (1987), Mirror (1975), Blade Runner (1982)
-            </p>
-          </div>
-          <div className={`border p-4 ${isDarkMode ? "border-white/50" : "border-black/30"}`}>
-            <h3 className="text-sm font-semibold mb-2">Favourite Animations</h3>
-            <p className="text-sm">
-              serial experiments lain (1998), Samurai Champloo (2004), Trigun (1998), Violet Evergarden (2018),
-              Naruto (2002-2017), The Boy and The Beast (2015), Fantastic Planet (1973)
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="hidden md:block md:w-1/2 md:order-2 md:relative">
-        <div style={{ position: "sticky", top: "48px", width: "100%", height: "calc(100vh - 112px)", overflow: "hidden" }}>
-          <HibiscusField isDarkMode={isDarkMode} />
-        </div>
-        <div
-          className="hidden md:block"
-          style={{
-            position: "fixed",
-            left: `${charX}%`,
-            top: `${charY}vh`,
-            transform: `translateX(-50%) translateY(-50%) scale(${charScale})`,
-            transition: "top 0.18s ease-out, left 0.18s ease-out",
-            zIndex: 10,
-            pointerEvents: "none",
-          }}
-        >
-          <CharlieWalker isWalking={isWalking} facingRight={facingRight} />
-        </div>
-      </div>
-
-      {/* Fixed Footer Links */}
-      <div className={`h-12 w-full shrink-0 order-3 md:fixed md:bottom-0 md:left-0 md:right-0 md:z-50 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-        <div className="flex items-center justify-center gap-3 md:gap-6 w-full h-full px-2 md:px-4 font-mono text-[clamp(9px,2.4vw,0.875rem)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap">
-          <a
-            href="mailto:markociricilic@gmail.com"
-            className="hover:opacity-70 transition-opacity"
-          >
-            Email
-          </a>
-          <a
-            href="https://www.linkedin.com/in/markociricilic/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:opacity-70 transition-opacity"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="https://github.com/markociricilic"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:opacity-70 transition-opacity"
-          >
-            GitHub
-          </a>
-          <a
-            href="/docs/marko-resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:opacity-70 transition-opacity"
-          >
-            Resume
-          </a>
-          <span className="opacity-70">📍 Toronto, ON</span>
-        </div>
-      </div>
-    </div>
+      <ScrollCharlie />
+      <FooterBar />
+    </>
   )
 }

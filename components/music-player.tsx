@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { ChevronUp, ChevronDown } from "lucide-react"
+import { useTheme } from "@/components/site/theme"
 
 interface MusicItem {
   title: string
@@ -12,10 +13,10 @@ interface MusicItem {
 
 interface MusicPlayerProps {
   items: MusicItem[]
-  isDarkMode: boolean
 }
 
-export function MusicPlayer({ items, isDarkMode }: MusicPlayerProps) {
+export function MusicPlayer({ items }: MusicPlayerProps) {
+  const { isDark: isDarkMode } = useTheme()
   const [currentIndex, setCurrentIndex] = useState(0)
   const swipeStart = useRef<{ x: number; y: number; pointerId: number } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)

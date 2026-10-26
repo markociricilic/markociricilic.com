@@ -2,6 +2,7 @@
 
 import { type PointerEvent, useCallback, useEffect, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useTheme } from "@/components/site/theme"
 
 interface CardItem {
   id?: string
@@ -13,11 +14,11 @@ interface CardItem {
 
 interface ImageCarouselProps {
   items: CardItem[]
-  isDarkMode: boolean
   countries?: string[] // Optional list of countries for navigation (photography)
 }
 
-export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselProps) {
+export function ImageCarousel({ items, countries }: ImageCarouselProps) {
+  const { isDark: isDarkMode } = useTheme()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isCenterHovered, setIsCenterHovered] = useState(false)
   const [isCenterExpanded, setIsCenterExpanded] = useState(false)
@@ -205,9 +206,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
                 onClick={() => goToCountry(country)}
                 className={`px-2 py-1 text-[10px] font-mono rounded transition-all whitespace-nowrap ${
                   activeCountry?.toLowerCase() === country.toLowerCase()
-                    ? isDarkMode 
-                      ? "bg-white text-black" 
-                      : "bg-black text-white"
+                    ? "bg-[var(--accent)] text-black"
                     : isDarkMode 
                       ? "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white" 
                       : "bg-black/10 text-black/70 hover:bg-black/20 hover:text-black"
@@ -318,7 +317,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
       }`}>
         {/* Left Arrow */}
         <button
-          onClick={goToPrevious}
+          onClick={() => goToPrevious(true)}
           className={`p-1 rounded transition-colors ${
             isDarkMode 
               ? "hover:bg-white/10 text-white/70 hover:text-white" 
@@ -345,7 +344,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
 
         {/* Right Arrow */}
         <button
-          onClick={goToNext}
+          onClick={() => goToNext(true)}
           className={`p-1 rounded transition-colors ${
             isDarkMode 
               ? "hover:bg-white/10 text-white/70 hover:text-white" 
@@ -376,7 +375,7 @@ export function ImageCarousel({ items, isDarkMode, countries }: ImageCarouselPro
       {/* Title and Description */}
       <div className="text-center mt-4 mb-2 px-4">
         <span className={`text-xs uppercase tracking-wider ${
-          isDarkMode ? "text-rose-400" : "text-rose-600"
+          "text-[var(--accent-deep)]"
         }`}>
           {currentItem.category}
         </span>

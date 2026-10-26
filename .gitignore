@@ -11,6 +11,7 @@
 /build
 
 # debug
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -25,3 +26,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# local collage work files (not part of the site)
+/collage/
