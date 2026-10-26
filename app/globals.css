@@ -277,7 +277,9 @@ body {
 .csheet { margin-top: 8px; }
 .cs-route-wrap { overflow-x: auto; scrollbar-width: none; margin: 0 -4px; }
 .cs-route-wrap::-webkit-scrollbar { display: none; }
-.cs-route { display: block; width: 100%; min-width: 480px; height: auto; }
+.cs-route { display: block; width: 100%; height: auto; }
+.cs-route-narrow { display: none; }
+@media (max-width: 559px) { .cs-route-wide { display: none; } .cs-route-narrow { display: block; max-width: 420px; margin: 0 auto; } }
 .cs-trace { fill: none; stroke: var(--line); stroke-width: 1.5; }
 .cs-pad { cursor: pointer; outline: none; }
 .cs-pad .cs-hit { fill: transparent; stroke: none; }
