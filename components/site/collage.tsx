@@ -67,8 +67,6 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         <text x="222" y="686">LISBOA / 2025</text>
         <text x="222" y="706">38.71N 9.14W</text>
         <text x="40" y="780">MARKO.CIRIC.ILIC — BEYOND RTL 002.04</text>
-        <path className="dim" d="M120 230 L120 290 M110 240 L130 240 M110 280 L130 280" />
-        <text x="134" y="264">1.75</text>
         {/* IC chip with pins */}
         <rect className="dim" x="238" y="288" width="24" height="22" />
         <path className="dim" d="M232 293 H238 M232 299 H238 M232 305 H238 M262 293 H268 M262 299 H268 M262 305 H268" />
@@ -77,10 +75,6 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         <polyline className="thick" points="420,540 470,520 520,540" />
         <polygon className="fill" points="528,536 540,540 528,546" />
         <path className="dim" d="M300 600 L380 760 L220 760 Z" />
-        <line className="dim" x1="460" y1="660" x2="560" y2="660" />
-        <line className="dim" x1="460" y1="654" x2="460" y2="666" />
-        <line className="dim" x1="560" y1="654" x2="560" y2="666" />
-        <text x="474" y="652">8-16 MHZ</text>
         {/* circuit trace ending in a pad */}
         <path className="dim" d="M30 62 H46 L54 54 H70" />
         <rect className="fill" x="24" y="59" width="6" height="6" />
