@@ -110,7 +110,7 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         ★ AMD Spotlight Awards
       </a>
       <a className="tag desk-only" href={`${base}#about-me`} style={{ top: "27%", left: "30%" }}>
-        2002 / Beograd
+        Origins
       </a>
       <a className="tag desk-only" href={`${base}#project-04`} style={{ top: "88%", left: "60%" }}>
         Melody unit / MIU
