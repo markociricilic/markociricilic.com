@@ -1,11 +1,13 @@
-import Link from "next/link"
-import { HibiscusField } from "@/components/hibiscus-field"
+// import Link from "next/link"
+// import { HibiscusField } from "@/components/hibiscus-field"
 import { ImageCarousel } from "@/components/image-carousel"
 import { MusicPlayer } from "@/components/music-player"
+import { Collage } from "@/components/site/collage"
 import { FooterBar } from "@/components/site/footer-bar"
-import { Horizon, Logo, LogoStrip } from "@/components/site/horizon"
-import { PixelPot } from "@/components/site/pixel-pot"
-import { ScrollCharlie } from "@/components/site/scroll-charlie"
+import { Horizon, Logo } from "@/components/site/horizon"
+// import { LogoStrip } from "@/components/site/horizon"
+// import { PixelPot } from "@/components/site/pixel-pot"
+// import { ScrollCharlie } from "@/components/site/scroll-charlie"
 import { Box, Section } from "@/components/site/section"
 import { TopNav } from "@/components/site/top-nav"
 
@@ -2536,6 +2538,9 @@ export default function InterestsPage() {
           </div>
         </div>
 
+        <Collage page="interests" />
+
+        {/* Previous art panel: hibiscus field, pixel pot and Charlie walking on scroll.
         <aside className="art garden" aria-label="Hibiscus field">
           <HibiscusField />
           <PixelPot />
@@ -2564,8 +2569,9 @@ export default function InterestsPage() {
           </Link>
           <LogoStrip num="27" />
         </aside>
+        */}
       </div>
-      <ScrollCharlie />
+      {/* <ScrollCharlie /> */}
       <FooterBar />
     </>
   )

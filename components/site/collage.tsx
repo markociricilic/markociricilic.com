@@ -2,8 +2,11 @@ import Link from "next/link"
 import { Cut, Duo } from "@/components/site/duo"
 import { LogoStrip } from "@/components/site/horizon"
 
-// Homepage art panel: Lisbon photo, travel cut-outs, shapes and technical line art.
-export function Collage() {
+// Art panel: Lisbon photo, travel cut-outs, shapes and technical line art.
+// Used on both pages; on the interests page the tags link back to homepage sections.
+export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
+  const base = page === "home" ? "" : "/"
+
   return (
     <aside className="art" aria-label="Collage">
       <Duo className="main-photo" src="/images/interests/photography-21.jpg" alt="Marko in Lisbon" position="62% 35%" />
@@ -87,25 +90,31 @@ export function Collage() {
         <text x="30" y="560">↑ 3D-2D PROJECTION</text>
       </svg>
 
-      <a className="tag hot max-sm:!left-[6%] max-sm:!top-[8%]" href="#experience" style={{ top: "16%", left: "58%" }}>
+      <a className="tag hot max-sm:!left-[6%] max-sm:!top-[8%]" href={`${base}#experience`} style={{ top: "16%", left: "58%" }}>
         Hot! AMD SPI
       </a>
-      <a className="tag" href="#projects" style={{ top: "38%", left: "8%" }}>
+      <a className="tag" href={`${base}#projects`} style={{ top: "38%", left: "8%" }}>
         3DGS / Vulkan
       </a>
-      <a className="tag" href="#projects" style={{ top: "62%", left: "56%" }}>
+      <a className="tag" href={`${base}#projects`} style={{ top: "62%", left: "56%" }}>
         FPGA lab
       </a>
-      <Link className="tag" href="/interests" style={{ top: "80%", left: "14%" }}>
-        Interests →
-      </Link>
-      <a className="tag hot desk-only" href="#experience" style={{ top: "50%", left: "22%" }}>
+      {page === "home" ? (
+        <Link className="tag" href="/interests" style={{ top: "80%", left: "14%" }}>
+          Interests →
+        </Link>
+      ) : (
+        <Link className="tag" href="/" style={{ top: "80%", left: "14%" }}>
+          ← Portfolio
+        </Link>
+      )}
+      <a className="tag hot desk-only" href={`${base}#experience`} style={{ top: "50%", left: "22%" }}>
         ★ Spotlight Q4
       </a>
-      <a className="tag desk-only" href="#about-me" style={{ top: "27%", left: "30%" }}>
+      <a className="tag desk-only" href={`${base}#about-me`} style={{ top: "27%", left: "30%" }}>
         002 / Beograd
       </a>
-      <a className="tag desk-only" href="#projects" style={{ top: "88%", left: "60%" }}>
+      <a className="tag desk-only" href={`${base}#projects`} style={{ top: "88%", left: "60%" }}>
         Melody unit / MIU
       </a>
       <LogoStrip num="26" />
