@@ -382,6 +382,7 @@ export default function ResumePage() {
             </p>
 
             <Section id="about-me" title="About me" index="01">
+              {/* Portraits hidden for now (photos kept in public/images):
               <div className="portraits">
                 <figure>
                   <img src="/images/portrait.jpg" alt="Marko Ćirić portrait" />
@@ -392,6 +393,7 @@ export default function ResumePage() {
                   <figcaption>fig. b</figcaption>
                 </figure>
               </div>
+              */}
               <p>Hi! I&apos;m Marko Ćirić. Aspiring computer architect.</p>
               <p>
                 Currently working at <span className="hl">Advanced Micro Devices, Inc. (AMD)</span> as a <span className="hl">Graphics IP RTL Design Engineer</span> where as a member of the <span className="hl">Shader Processor Input (SPI) team</span>, I work to coordinate shader execution across all pipeline stages, manage hardware resource allocation, and optimize the flow of graphics and compute workloads to maximize parallel processing efficiency, for multiple next generation high-performance <span className="hl">Radeon and Instinct (MI series) Graphics Cards</span>.
