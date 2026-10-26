@@ -4,6 +4,7 @@ import { ImageCarousel } from "@/components/image-carousel"
 import { MusicPlayer } from "@/components/music-player"
 import { Collage } from "@/components/site/collage"
 import { ContactSheet } from "@/components/site/contact-sheet"
+import { RecipeSheets } from "@/components/site/recipe-sheets"
 import { FooterBar } from "@/components/site/footer-bar"
 import { Horizon, Logo } from "@/components/site/horizon"
 // import { LogoStrip } from "@/components/site/horizon"
@@ -2483,7 +2484,7 @@ export default function InterestsPage() {
               <p className="muted">
                 Experimenting with various cuisines at home, and blending traditional recipes with techniques I&apos;ve picked up from travelling and research.
               </p>
-              <ImageCarousel items={cookingItems} />
+              <RecipeSheets items={cookingItems} />
             </Section>
 
             <Section id="photography" title="Photography" index="02">

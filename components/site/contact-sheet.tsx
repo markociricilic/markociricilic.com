@@ -1,7 +1,8 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { Flag, FlagShape } from "@/components/site/flags"
+import { PhotoViewer, type ViewerItem } from "@/components/site/photo-viewer"
 
 type Photo = {
   title: string
@@ -50,33 +51,18 @@ export function ContactSheet({ items, countries }: { items: Photo[]; countries: 
   const roll = rolls[active]
 
   const close = useCallback(() => setOpen(null), [])
-  const step = useCallback(
-    (dir: 1 | -1) => setOpen((i) => (i === null ? i : (i + dir + roll.photos.length) % roll.photos.length)),
-    [roll.photos.length],
-  )
-
-  useEffect(() => {
-    if (open === null) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close()
-      if (e.key === "ArrowRight") step(1)
-      if (e.key === "ArrowLeft") step(-1)
-    }
-    document.addEventListener("keydown", onKey)
-    const prev = document.body.style.overflow
-    document.body.style.overflow = "hidden"
-    return () => {
-      document.removeEventListener("keydown", onKey)
-      document.body.style.overflow = prev
-    }
-  }, [open, close, step])
+  const viewerItems: ViewerItem[] = roll.photos.map((p, i) => ({
+    src: p.imageUrl,
+    title: p.title.replace(/^[^:]+:\s*/, ""),
+    label: `▶ ${roll.code}-${String(i + 1).padStart(2, "0")} · ${i + 1}/${roll.photos.length}`,
+    description: p.description,
+  }))
 
   // route: pads zig-zag across, joined like a circuit trace
   const RW = 600
   const pad = (i: number) => ({ x: 22 + (i * (RW - 44)) / (rolls.length - 1), y: i % 2 === 0 ? 26 : 50 })
   const trace = rolls.map((_, i) => `${pad(i).x},${pad(i).y}`).join(" ")
 
-  const current = open === null ? null : roll.photos[open]
 
   return (
     <div className="csheet">
@@ -141,29 +127,7 @@ export function ContactSheet({ items, countries }: { items: Photo[]; countries: 
         })}
       </div>
 
-      {current && open !== null && (
-        <div className="cs-viewer" role="dialog" aria-modal="true" aria-label={current.title} onClick={close}>
-          <figure onClick={(e) => e.stopPropagation()}>
-            <img src={current.imageUrl} alt={current.title} />
-            <figcaption>
-              <span className="cs-vcode">
-                ▶ {roll.code}-{String(open + 1).padStart(2, "0")} · {open + 1}/{roll.photos.length}
-              </span>
-              <strong>{current.title.replace(/^[^:]+:\s*/, "")}</strong>
-              {current.description && <span className="cs-vdesc">{current.description}</span>}
-            </figcaption>
-          </figure>
-          <button className="cs-nav prev" onClick={(e) => (e.stopPropagation(), step(-1))} aria-label="Previous photo">
-            ←
-          </button>
-          <button className="cs-nav next" onClick={(e) => (e.stopPropagation(), step(1))} aria-label="Next photo">
-            →
-          </button>
-          <button className="cs-close" onClick={close} aria-label="Close">
-            Close ✕
-          </button>
-        </div>
-      )}
+      {open !== null && <PhotoViewer items={viewerItems} index={open} onClose={close} onIndex={setOpen} />}
     </div>
   )
 }
