@@ -74,10 +74,6 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         <path className="dim" d="M232 293 H238 M232 299 H238 M232 305 H238 M262 293 H268 M262 299 H268 M262 305 H268" />
         <line className="dim dash" x1="250" y1="310" x2="250" y2="420" />
         <line className="dim dash" x1="250" y1="420" x2="330" y2="420" />
-        <rect className="dim" x="60" y="430" width="14" height="14" />
-        <rect className="fill" x="78" y="430" width="14" height="14" />
-        <rect className="dim" x="96" y="430" width="14" height="14" />
-        <text x="60" y="460">001 002 003</text>
         <polyline className="thick" points="420,540 470,520 520,540" />
         <polygon className="fill" points="528,536 540,540 528,546" />
         <path className="dim" d="M300 600 L380 760 L220 760 Z" />
