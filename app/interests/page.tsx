@@ -3,6 +3,7 @@
 import { ImageCarousel } from "@/components/image-carousel"
 import { MusicPlayer } from "@/components/music-player"
 import { Collage } from "@/components/site/collage"
+import { ContactSheet } from "@/components/site/contact-sheet"
 import { FooterBar } from "@/components/site/footer-bar"
 import { Horizon, Logo } from "@/components/site/horizon"
 // import { LogoStrip } from "@/components/site/horizon"
@@ -2487,7 +2488,7 @@ export default function InterestsPage() {
 
             <Section id="photography" title="Photography" index="02">
               <p className="muted">Life outtakes from all my adventures.</p>
-              <ImageCarousel
+              <ContactSheet
                 items={photographyItems}
                 countries={["Tunisia", "Costa Rica", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
               />

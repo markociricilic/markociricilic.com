@@ -272,3 +272,46 @@ body {
 .sysdiag .sd-edge { fill: none; stroke: var(--muted); stroke-width: 1.25; }
 .sysdiag .sd-head { fill: var(--accent); }
 .sysdiag figcaption { margin-top: 6px; font-family: var(--font-px), monospace; font-size: 9px; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- photography contact sheet (components/site/contact-sheet.tsx) ---------- */
+.csheet { margin-top: 8px; }
+.cs-route-wrap { overflow-x: auto; scrollbar-width: none; margin: 0 -4px; }
+.cs-route-wrap::-webkit-scrollbar { display: none; }
+.cs-route { display: block; width: 100%; min-width: 480px; height: auto; }
+.cs-trace { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.cs-pad { cursor: pointer; outline: none; }
+.cs-pad .cs-hit { fill: transparent; stroke: none; }
+.cs-pad .cs-node { fill: var(--bg); stroke: var(--ink); stroke-width: 1.25; transition: fill .15s; }
+.cs-pad .cs-flag-ring { fill: none; stroke: var(--accent); stroke-width: 2; }
+.cs-pad:hover .cs-node, .cs-pad:focus-visible .cs-node { fill: var(--accent-2); }
+.cs-pad.on .cs-node { fill: var(--accent); stroke: var(--accent-deep); }
+
+.cs-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 6px 0 12px; font-family: var(--font-px), monospace; font-size: 10px; text-transform: uppercase; color: var(--muted); }
+.cs-meta .cs-country { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink); }
+.cs-meta-flag { flex: none; }
+.cs-meta .cs-hint { margin-left: auto; }
+@media (max-width: 520px) { .cs-meta .cs-hint { display: none; } }
+
+.cs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px 10px; }
+@media (max-width: 420px) { .cs-grid { grid-template-columns: repeat(3, 1fr); gap: 8px 6px; } }
+.cs-frame { position: relative; display: block; padding: 5px 5px 0; background: #111; border: 0; cursor: zoom-in; text-align: left; }
+.cs-frame.circled::after { content: ""; position: absolute; inset: -5px; border: 2px solid var(--accent); border-radius: 3px; transform: rotate(-1.2deg); pointer-events: none; }
+.cs-img { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #222; }
+.cs-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.15); transition: filter .25s; }
+.cs-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, var(--duo-light), var(--accent-2) 45%, var(--accent) 85%); mix-blend-mode: multiply; transition: opacity .25s; }
+.cs-frame:hover .cs-img img, .cs-frame:focus-visible .cs-img img { filter: none; }
+.cs-frame:hover .cs-img::after, .cs-frame:focus-visible .cs-img::after { opacity: 0; }
+.cs-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cs-edge { display: flex; justify-content: space-between; padding: 3px 1px 4px; font-family: var(--font-px), monospace; font-size: 8px; color: #e8a73a; letter-spacing: .04em; }
+
+.cs-viewer { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 56px 16px 72px; background: rgba(8, 7, 5, .94); cursor: zoom-out; }
+.cs-viewer figure { margin: 0; max-width: min(92vw, 900px); cursor: default; }
+.cs-viewer img { display: block; max-width: 100%; max-height: 72vh; margin: 0 auto; border: 6px solid #111; }
+.cs-viewer figcaption { display: grid; gap: 4px; margin-top: 10px; color: #f2efe9; font-size: 13px; }
+.cs-viewer .cs-vcode { font-family: var(--font-px), monospace; font-size: 10px; color: #e8a73a; }
+.cs-viewer .cs-vdesc { color: #b9b2a7; font-size: 12px; }
+.cs-nav, .cs-close { position: fixed; background: #111; color: #f2efe9; border: 1px solid #444; font-family: var(--font-px), monospace; font-size: 12px; text-transform: uppercase; cursor: pointer; }
+.cs-nav { top: 50%; transform: translateY(-50%); width: 40px; height: 40px; }
+.cs-nav.prev { left: 12px; } .cs-nav.next { right: 12px; }
+.cs-close { top: 12px; right: 12px; padding: 6px 10px; }
+.cs-nav:hover, .cs-close:hover { border-color: #e8a73a; color: #e8a73a; }
