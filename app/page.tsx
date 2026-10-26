@@ -526,7 +526,7 @@ export default function ResumePage() {
             <Section id="projects" title="Projects" index="05">
               <div className="projects">
                 {projects.map((project, i) => (
-                  <article className="proj" key={project.title}>
+                  <article className="proj" id={`project-${String(i + 1).padStart(2, "0")}`} key={project.title}>
                     <span className="no">P/{String(i + 1).padStart(2, "0")}</span>
                     <h3>
                       {project.github ? (

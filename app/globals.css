@@ -223,7 +223,7 @@ body {
 
 /* projects: technical frames with corner ticks */
 .projects { display: grid; gap: 22px; }
-.proj { position: relative; border: 1px solid var(--line); padding: 16px 14px 14px; }
+.proj { position: relative; border: 1px solid var(--line); padding: 16px 14px 14px; scroll-margin-top: 56px; }
 .proj::before, .proj::after { content: ""; position: absolute; width: 10px; height: 10px; border-color: var(--accent); border-style: solid; }
 .proj::before { top: -4px; left: -4px; border-width: 2px 0 0 2px; }
 .proj::after { bottom: -4px; right: -4px; border-width: 0 2px 2px 0; }

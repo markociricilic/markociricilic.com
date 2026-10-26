@@ -90,14 +90,11 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         <text x="30" y="560">↑ 3D-2D PROJECTION</text>
       </svg>
 
-      <a className="tag hot max-sm:!left-[6%] max-sm:!top-[8%]" href={`${base}#experience`} style={{ top: "16%", left: "58%" }}>
-        Hot! AMD SPI
+      <a className="tag" href={`${base}#project-01`} style={{ top: "38%", left: "8%" }}>
+        3D Gaussian Splatting
       </a>
-      <a className="tag" href={`${base}#projects`} style={{ top: "38%", left: "8%" }}>
-        3DGS / Vulkan
-      </a>
-      <a className="tag" href={`${base}#projects`} style={{ top: "62%", left: "56%" }}>
-        FPGA lab
+      <a className="tag" href={`${base}#project-06`} style={{ top: "62%", left: "56%" }}>
+        16-bit CPU
       </a>
       {page === "home" ? (
         <Link className="tag" href="/interests" style={{ top: "80%", left: "14%" }}>
@@ -109,12 +106,12 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         </Link>
       )}
       <a className="tag hot desk-only" href={`${base}#experience`} style={{ top: "50%", left: "22%" }}>
-        ★ Spotlight Q4
+        ★ AMD Spotlight Awards
       </a>
       <a className="tag desk-only" href={`${base}#about-me`} style={{ top: "27%", left: "30%" }}>
         2002 / Beograd
       </a>
-      <a className="tag desk-only" href={`${base}#projects`} style={{ top: "88%", left: "60%" }}>
+      <a className="tag desk-only" href={`${base}#project-04`} style={{ top: "88%", left: "60%" }}>
         Melody unit / MIU
       </a>
       <LogoStrip num="26" />
