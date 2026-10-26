@@ -41,7 +41,7 @@ export function Logo({ sub }: { sub: string }) {
         <i />
         <i />
       </span>
-      <span className="n">002</span>
+      <span className="n">2002</span>
       <h1 className="word">
         marko<b>ćirić</b>
       </h1>

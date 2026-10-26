@@ -112,7 +112,7 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         ★ Spotlight Q4
       </a>
       <a className="tag desk-only" href={`${base}#about-me`} style={{ top: "27%", left: "30%" }}>
-        002 / Beograd
+        2002 / Beograd
       </a>
       <a className="tag desk-only" href={`${base}#projects`} style={{ top: "88%", left: "60%" }}>
         Melody unit / MIU
