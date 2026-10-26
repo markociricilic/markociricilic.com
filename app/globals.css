@@ -385,3 +385,21 @@ body {
   .aw-label { width: auto; }
   .aw-mat { border-width: 5px; }
 }
+
+/* ---------- interests page collage (components/site/interests-collage.tsx) ---------- */
+.icollage .ic-cut { position: absolute; z-index: 1; height: auto; filter: drop-shadow(3px 5px 0 rgba(0, 0, 0, .35)); pointer-events: none; }
+.icollage .ic-figure { right: 10%; bottom: 2%; height: 72%; width: auto; }
+.icollage .ic-trout { left: 4%; top: 3%; width: 31%; transform: rotate(-6deg); }
+.icollage .ic-pear { left: 44%; top: 3%; width: 24%; transform: rotate(5deg); }
+.icollage .ic-ragu { left: 9%; top: 26%; width: 31%; transform: rotate(4deg); }
+.icollage .ic-curry { left: 3%; top: 49%; width: 31%; transform: rotate(-4deg); }
+.icollage .ic-steak { left: 9%; top: 71%; width: 29%; transform: rotate(6deg); }
+@media (max-width: 1023px) {
+  .icollage .ic-figure { right: auto; left: 50%; bottom: 0; height: 90%; transform: translateX(-50%); }
+  .icollage .ic-trout { left: 2%; top: 6%; width: 27%; }
+  .icollage .ic-ragu { left: 3%; top: 50%; width: 27%; }
+  .icollage .ic-pear { left: auto; right: 6%; top: 5%; width: 21%; }
+  .icollage .ic-curry { left: auto; right: 2%; top: 50%; width: 27%; }
+  .icollage .ic-steak { display: none; }
+  .icollage .tag { display: none; }
+}

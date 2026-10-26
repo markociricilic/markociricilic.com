@@ -2,7 +2,7 @@
 // import { HibiscusField } from "@/components/hibiscus-field"
 import { ImageCarousel } from "@/components/image-carousel"
 import { MusicPlayer } from "@/components/music-player"
-import { Collage } from "@/components/site/collage"
+import { InterestsCollage } from "@/components/site/interests-collage"
 import { ContactSheet } from "@/components/site/contact-sheet"
 import { RecipeSheets } from "@/components/site/recipe-sheets"
 import { ArtWall } from "@/components/site/art-wall"
@@ -2541,7 +2541,7 @@ export default function InterestsPage() {
           </div>
         </div>
 
-        <Collage page="interests" />
+        <InterestsCollage />
 
         {/* Previous art panel: hibiscus field, pixel pot and Charlie walking on scroll.
         <aside className="art garden" aria-label="Hibiscus field">
