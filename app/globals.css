@@ -257,3 +257,16 @@ body {
 .pot { position: absolute; top: 34%; left: -3%; width: 44%; pointer-events: none; filter: brightness(1.05) saturate(1.1); }
 :root[data-theme="dark"] .pot { filter: brightness(0.45) saturate(0.6); }
 @media (max-width: 1023px) { .pot { top: 28%; width: 34%; left: 2%; } }
+
+/* ---------- project system diagrams (components/site/system-diagram.tsx) ---------- */
+.sysdiag { margin: 14px 0; }
+.sysdiag svg { display: block; width: 100%; max-width: 460px; height: auto; overflow: visible; }
+.sysdiag .sd-node rect:first-child { fill: var(--bg); stroke: var(--ink); stroke-width: 1; }
+.sysdiag .sd-node.accent rect:first-child { stroke: var(--accent); stroke-width: 1.5; }
+.sysdiag .sd-tick { fill: var(--line); }
+.sysdiag .sd-node.accent .sd-tick { fill: var(--accent); }
+.sysdiag .sd-label { font-family: var(--font-px), monospace; font-size: 12.5px; text-transform: uppercase; letter-spacing: .03em; fill: var(--ink); }
+.sysdiag .sd-idx { font-family: var(--font-px), monospace; font-size: 9px; fill: var(--muted); }
+.sysdiag .sd-edge { fill: none; stroke: var(--muted); stroke-width: 1.25; }
+.sysdiag .sd-head { fill: var(--accent); }
+.sysdiag figcaption { margin-top: 6px; font-family: var(--font-px), monospace; font-size: 9px; text-transform: uppercase; color: var(--muted); }

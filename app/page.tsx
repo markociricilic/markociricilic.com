@@ -1,4 +1,5 @@
 import { Collage } from "@/components/site/collage"
+import { SystemDiagram, type DiagramSpec } from "@/components/site/system-diagram"
 import { FooterBar } from "@/components/site/footer-bar"
 import { Horizon, Logo } from "@/components/site/horizon"
 import { Box, Section } from "@/components/site/section"
@@ -33,6 +34,8 @@ type Project = {
   github?: string
   details?: string
   diagram: string
+  // drawn SVG diagram; when set it replaces the ASCII one
+  system?: DiagramSpec
   description: React.ReactNode
   tech: string
 }
@@ -42,6 +45,25 @@ const projects: Project[] = [
     title: "Optimizing 3D Gaussian Splatting for Qualcomm Snapdragon Hardware",
     github: "https://github.com/markociricilic/3DGS-Snapdragon",
     details: "/docs/3d-gaussian-splatting.pdf",
+    system: {
+      nodes: [
+        { id: "reduce", label: ["Gaussian", "Reduction"], col: 0, row: 0, accent: true },
+        { id: "touch", label: ["Touch", "Interpreter"], col: 1, row: 0, accent: true },
+        { id: "cull", label: ["Culling", "Module"], col: 0, row: 1 },
+        { id: "sort", label: ["Radix", "Sort"], col: 0, row: 2 },
+        { id: "project", label: ["3D-2D", "Projection"], col: 0, row: 3 },
+        { id: "display", label: ["Display", "Unit"], col: 0, row: 4, accent: true },
+      ],
+      edges: [
+        { from: "reduce", to: "cull" },
+        { from: "cull", to: "sort" },
+        { from: "sort", to: "project" },
+        { from: "project", to: "display" },
+        { from: "touch", to: "cull" },
+        { from: "touch", to: "project" },
+      ],
+      caption: "Fig. 1 — Vulkan rendering pipeline on Snapdragon 8 Gen 2",
+    },
     diagram: `+---------------+          +---------------+
 | Gaussian      |          | Touch         |
 | Reduction     |          | Interpreter   |
@@ -401,7 +423,7 @@ export default function ResumePage() {
                         project.title
                       )}
                     </h3>
-                    <pre>{project.diagram}</pre>
+                    {project.system ? <SystemDiagram spec={project.system} id={`p${i + 1}`} /> : <pre>{project.diagram}</pre>}
                     <p>{project.description}</p>
                     <p className="tech">Technologies: {project.tech}</p>
                     {(project.github || project.details) && (
