@@ -3,7 +3,7 @@ import { Duo } from "@/components/site/duo"
 import { LogoStrip } from "@/components/site/horizon"
 
 // Interests page art panel: Matmata home interior (duotone) with full-colour
-// cut-outs of the "Untitled 6" pastel figure and five home-cooked plates.
+// cut-outs of Marko (atop the Spanish Steps, Rome) and five home-cooked plates.
 const plates = [
   { src: "/images/collage/plate-trout.webp", cls: "ic-trout", alt: "Rainbow trout" },
   { src: "/images/collage/plate-pear.webp", cls: "ic-pear", alt: "Hibiscus poached pear" },
@@ -31,15 +31,15 @@ export function InterestsCollage() {
       {plates.map((p) => (
         <img key={p.cls} className={`ic-cut ic-plate ${p.cls}`} src={p.src} alt={p.alt} loading="lazy" decoding="async" />
       ))}
-      <img className="ic-cut ic-figure" src="/images/collage/art6-figure.webp" alt="Figure from oil pastel Untitled 6" decoding="async" />
+      <img className="ic-cut ic-figure" src="/images/collage/marko-roma-cutout.webp" alt="Marko atop the Spanish Steps in Rome" decoding="async" />
 
       <a className="tag hot" href="#cooking" style={{ top: "23%", left: "31%" }}>
         Cooking
       </a>
-      <a className="tag" href="#art" style={{ top: "40%", left: "73%" }}>
+      <a className="tag" href="#art" style={{ top: "38%", left: "84%" }}>
         Art
       </a>
-      <a className="tag desk-only" href="#photography" style={{ top: "92%", left: "58%" }}>
+      <a className="tag desk-only" href="#photography" style={{ top: "92%", left: "4%" }}>
         Photography
       </a>
       <a className="tag desk-only" href="#music" style={{ top: "47%", left: "33%" }}>
