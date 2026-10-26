@@ -20,9 +20,9 @@ export type DiagramSpec = {
   caption?: string
 }
 
-const COL = 210 // column pitch
-const ROW = 72 // row pitch
-const W = 150 // block size
+const COL = 162 // column pitch
+const ROW = 70 // row pitch
+const W = 132 // block size
 const H = 44
 const PAD = 14
 
@@ -57,7 +57,7 @@ export function SystemDiagram({ spec, id }: { spec: DiagramSpec; id: string }) {
 
   return (
     <figure className="sysdiag">
-      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={spec.caption ?? "System diagram"}>
+      <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} role="img" aria-label={spec.caption ?? "System diagram"}>
         <defs>
           <marker id={marker} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L8,4 L0,8 Z" className="sd-head" />

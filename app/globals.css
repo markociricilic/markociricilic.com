@@ -260,7 +260,8 @@ body {
 
 /* ---------- project system diagrams (components/site/system-diagram.tsx) ---------- */
 .sysdiag { margin: 14px 0; }
-.sysdiag svg { display: block; width: 100%; max-width: 460px; height: auto; overflow: visible; }
+/* natural size on desktop; scales down to fit narrow screens */
+.sysdiag svg { display: block; max-width: 100%; height: auto; overflow: visible; }
 .sysdiag .sd-node rect:first-child { fill: var(--bg); stroke: var(--ink); stroke-width: 1; }
 .sysdiag .sd-node.accent rect:first-child { stroke: var(--accent); stroke-width: 1.5; }
 .sysdiag .sd-tick { fill: var(--line); }

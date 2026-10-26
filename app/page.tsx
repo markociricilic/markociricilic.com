@@ -103,6 +103,24 @@ const projects: Project[] = [
     title: "Space Object Detection and Interception System",
     github: "https://github.com/markociricilic/MeteorDestroyer",
     details: "/docs/space-object-detection.pdf",
+    system: {
+      nodes: [
+        { id: "a", label: ["Ultrasonic", "Sensors"], col: 0, row: 0, accent: true },
+        { id: "b", label: ["Object", "Localization"], col: 1, row: 0 },
+        { id: "c", label: ["Trajectory", "Calculation"], col: 2, row: 0 },
+        { id: "hub", label: ["Servo", "Control"], col: 1, row: 1 },
+        { id: "out", label: ["HDMI", "Visualization"], col: 1, row: 2, accent: true },
+      ],
+      edges: [
+        { from: "a", to: "b" },
+        { from: "b", to: "c" },
+        { from: "a", to: "hub" },
+        { from: "b", to: "hub" },
+        { from: "c", to: "hub" },
+        { from: "hub", to: "out" },
+      ],
+      caption: "Fig. 2 — Detection and interception on an Artix-7 FPGA",
+    },
     diagram: `+--------------+    +---------------+     +---------------+
 | Ultrasonic   |--->| Object        |---->| Trajectory    |
 | Sensors      |    | Localization  |     | Calculation   |
@@ -129,6 +147,25 @@ const projects: Project[] = [
   {
     title: "Wireless Communication between STM32",
     github: "https://github.com/markociricilic/STM32-Wireless-Communication",
+    system: {
+      nodes: [
+        { id: "tx", label: ["STM32F4", "Transmitter"], col: 0, row: 0, accent: true },
+        { id: "usart", label: ["USART", "Interface"], col: 1, row: 0 },
+        { id: "dac", label: ["DAC", "Conversion"], col: 2, row: 0 },
+        { id: "wl", label: ["Wireless", "Transmission"], col: 0, row: 1 },
+        { id: "rx", label: ["STM32F4", "Receiver"], col: 2, row: 1 },
+        { id: "adc", label: ["ADC", "Conversion"], col: 2, row: 2, accent: true },
+      ],
+      edges: [
+        { from: "tx", to: "usart" },
+        { from: "usart", to: "dac" },
+        { from: "tx", to: "wl" },
+        { from: "dac", to: "rx" },
+        { from: "wl", to: "rx" },
+        { from: "rx", to: "adc" },
+      ],
+      caption: "Fig. 3 — Wireless link between two STM32F4 boards",
+    },
     diagram: `+--------------+    +---------------+    +---------------+
 | STM32F4      |--->| USART         |--->| DAC           |
 | Transmitter  |    | Interface     |    | Conversion    |
@@ -156,6 +193,24 @@ const projects: Project[] = [
     title: "Melody Improvisation Unit (μ)",
     github: "https://github.com/markociricilic/MIU",
     details: "/docs/melody-improvisation-unit.pdf",
+    system: {
+      nodes: [
+        { id: "a", label: ["Chord", "Input"], col: 0, row: 0, accent: true },
+        { id: "b", label: ["FFT", "Processing"], col: 1, row: 0 },
+        { id: "c", label: ["Frequency", "Extraction"], col: 2, row: 0 },
+        { id: "hub", label: ["Melody", "Generation"], col: 1, row: 1 },
+        { id: "out", label: ["Audio", "Output"], col: 1, row: 2, accent: true },
+      ],
+      edges: [
+        { from: "a", to: "b" },
+        { from: "b", to: "c" },
+        { from: "a", to: "hub" },
+        { from: "b", to: "hub" },
+        { from: "c", to: "hub" },
+        { from: "hub", to: "out" },
+      ],
+      caption: "Fig. 4 — Chord-to-melody signal chain on a Raspberry Pi",
+    },
     diagram: `+--------------+    +---------------+    +---------------+
 | Chord        |--->| FFT           |--->| Frequency     |
 | Input        |    | Processing    |    | Extraction    |
@@ -182,6 +237,24 @@ const projects: Project[] = [
   {
     title: "Power Amplifier in Software-Defined Radio",
     github: "https://github.com/markociricilic/Power-Amplifier-in-Software-Defined-Radio",
+    system: {
+      nodes: [
+        { id: "a", label: ["Class-B", "Amplifier"], col: 0, row: 0, accent: true },
+        { id: "b", label: ["Push-Pull", "Config"], col: 1, row: 0 },
+        { id: "c", label: ["Low-Pass", "Filter"], col: 2, row: 0 },
+        { id: "hub", label: ["Transformer", "Coupling"], col: 1, row: 1 },
+        { id: "out", label: ["50 Ohm Load", "(Antenna)"], col: 1, row: 2, accent: true },
+      ],
+      edges: [
+        { from: "a", to: "b" },
+        { from: "b", to: "c" },
+        { from: "a", to: "hub" },
+        { from: "b", to: "hub" },
+        { from: "c", to: "hub" },
+        { from: "hub", to: "out" },
+      ],
+      caption: "Fig. 5 — Class-B power amplifier, 8-16 MHz",
+    },
     diagram: `+--------------+    +---------------+    +---------------+
 | Class-B      |--->| Push-Pull     |--->| Low-Pass      |
 | Amplifier    |    | Configuration |    | Filter        |
@@ -208,6 +281,24 @@ const projects: Project[] = [
   {
     title: "Enhanced 16-bit 'ARM-like' Processor",
     github: "https://github.com/markociricilic/CustomEnhancedProcessor",
+    system: {
+      nodes: [
+        { id: "a", label: ["Instruction", "Decoder"], col: 0, row: 0, accent: true },
+        { id: "b", label: ["Register", "File"], col: 1, row: 0 },
+        { id: "c", label: ["ALU", "Operations"], col: 2, row: 0 },
+        { id: "hub", label: ["Memory", "Interface"], col: 1, row: 1 },
+        { id: "out", label: ["I/O", "Devices"], col: 1, row: 2, accent: true },
+      ],
+      edges: [
+        { from: "a", to: "b" },
+        { from: "b", to: "c" },
+        { from: "a", to: "hub" },
+        { from: "b", to: "hub" },
+        { from: "c", to: "hub" },
+        { from: "hub", to: "out" },
+      ],
+      caption: "Fig. 6 — 16-bit, 8-register processor datapath",
+    },
     diagram: `+--------------+    +---------------+    +---------------+
 | Instruction  |--->| Register      |--->| ALU           |
 | Decoder      |    | File          |    | Operations    |
@@ -233,6 +324,24 @@ const projects: Project[] = [
   },
   {
     title: "Radio-Controlled Airplane",
+    system: {
+      nodes: [
+        { id: "a", label: ["Radio", "Controller"], col: 0, row: 0, accent: true },
+        { id: "b", label: ["Channel", "Assignment"], col: 1, row: 0 },
+        { id: "c", label: ["Micro", "Servos"], col: 2, row: 0 },
+        { id: "hub", label: ["ESC", "Controller"], col: 1, row: 1 },
+        { id: "out", label: ["3D Printed", "Airframe"], col: 1, row: 2, accent: true },
+      ],
+      edges: [
+        { from: "a", to: "b" },
+        { from: "b", to: "c" },
+        { from: "a", to: "hub" },
+        { from: "b", to: "hub" },
+        { from: "c", to: "hub" },
+        { from: "hub", to: "out" },
+      ],
+      caption: "Fig. 7 — Radio control and actuation",
+    },
     diagram: `+--------------+    +---------------+    +---------------+
 | Radio        |--->| Channel       |--->| Micro         |
 | Controller   |    | Assignment    |    | Servos        |
