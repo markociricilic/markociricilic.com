@@ -402,7 +402,7 @@ export default function ResumePage() {
                 In the past, I&apos;ve worked at Advanced Micro Devices, Inc. (AMD) as a Graphics IP RTL Design Intern where as a member of the Geometry team, I worked to implement tessellations in hardware, for multiple next generation Radeon Graphics Cards.
               </p>
               <p>
-                With additional computer hardware experiences from university courses and personal projects, I currently focus primarily on the intersection of computer hardware and computer graphics, but have an extended interest in ASICs for AI acceleration as a future career.
+                With additional computer hardware experiences from university courses and personal projects, my current focus is primarily on the intersection of computer hardware and computer graphics.
               </p>
 
               <Box label="Personal bio">
