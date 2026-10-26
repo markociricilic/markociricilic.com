@@ -56,10 +56,10 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
       </div>
 
       <svg className="overlay" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <circle className="dim" cx="352" cy="450" r="16" />
-        <line className="dim" x1="328" y1="450" x2="376" y2="450" />
-        <line className="dim" x1="352" y1="426" x2="352" y2="474" />
-        <line className="dim dash" x1="352" y1="474" x2="352" y2="760" />
+        {/* clock waveform */}
+        <polyline className="dim" points="318,462 318,442 334,442 334,462 350,462 350,442 366,442 366,462 382,462 382,442" />
+        <text x="318" y="434">CLK</text>
+        <line className="dim dash" x1="350" y1="462" x2="350" y2="760" />
         <rect className="dim" x="470" y="300" width="18" height="18" />
         <rect className="dim" x="492" y="300" width="18" height="18" />
         <polyline className="dim" points="196,724 214,692 340,692" />
@@ -68,8 +68,9 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         <text x="40" y="780">MARKO.CIRIC.ILIC — BEYOND RTL 002.04</text>
         <path className="dim" d="M120 230 L120 290 M110 240 L130 240 M110 280 L130 280" />
         <text x="134" y="264">1.75</text>
-        <circle className="dim" cx="250" cy="300" r="10" />
-        <circle className="dim" cx="250" cy="300" r="3" />
+        {/* IC chip with pins */}
+        <rect className="dim" x="238" y="288" width="24" height="22" />
+        <path className="dim" d="M232 293 H238 M232 299 H238 M232 305 H238 M262 293 H268 M262 299 H268 M262 305 H268" />
         <line className="dim dash" x1="250" y1="310" x2="250" y2="420" />
         <line className="dim dash" x1="250" y1="420" x2="330" y2="420" />
         <rect className="dim" x="60" y="430" width="14" height="14" />
@@ -83,10 +84,9 @@ export function Collage({ page = "home" }: { page?: "home" | "interests" }) {
         <line className="dim" x1="460" y1="654" x2="460" y2="666" />
         <line className="dim" x1="560" y1="654" x2="560" y2="666" />
         <text x="474" y="652">8-16 MHZ</text>
-        <g className="dim">
-          <line x1="40" y1="40" x2="40" y2="70" />
-          <line x1="25" y1="55" x2="55" y2="55" />
-        </g>
+        {/* circuit trace ending in a pad */}
+        <path className="dim" d="M30 62 H46 L54 54 H70" />
+        <rect className="fill" x="24" y="59" width="6" height="6" />
         <text x="30" y="560">↑ 3D-2D PROJECTION</text>
       </svg>
 
