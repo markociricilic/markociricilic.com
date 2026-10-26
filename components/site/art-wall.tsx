@@ -11,7 +11,7 @@ type Artwork = {
 
 const MEDIUM = "Soft oil pastel on paper"
 
-// Gallery hang: equal frames on a picture rail, each with a museum label.
+// Gallery wall: equal frames in an aligned grid, each with a museum label.
 export function ArtWall({ items }: { items: Artwork[] }) {
   const [open, setOpen] = useState<number | null>(null)
   const close = useCallback(() => setOpen(null), [])
@@ -29,10 +29,6 @@ export function ArtWall({ items }: { items: Artwork[] }) {
       <div className="aw-grid">
         {items.map((a, i) => (
           <figure key={a.imageUrl} className="aw-piece">
-            <svg className="aw-wire" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">
-              <polyline points="18,20 50,2 82,20" />
-              <circle cx="50" cy="2" r="1.6" />
-            </svg>
             <button className="aw-frame" onClick={() => setOpen(i)} aria-label={`View ${a.title}`}>
               <span className="aw-mat">
                 <img src={a.imageUrl} alt={a.title} loading="lazy" decoding="async" />
