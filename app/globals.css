@@ -387,20 +387,23 @@ body {
 }
 
 /* ---------- interests page collage (components/site/interests-collage.tsx) ---------- */
-.icollage .ic-cut { position: absolute; z-index: 1; height: auto; filter: drop-shadow(3px 5px 0 rgba(0, 0, 0, .35)); pointer-events: none; }
-/* dishes scattered around a smaller figure */
-.icollage .ic-figure { right: 15%; bottom: 0; height: 66%; width: auto; }
-.icollage .ic-trout { left: 3%; top: 4%; width: 30%; transform: rotate(-8deg); }
-.icollage .ic-pear { left: 54%; top: 6%; width: 22%; transform: rotate(9deg); }
-.icollage .ic-ragu { left: 27%; top: 25%; width: 27%; transform: rotate(5deg); }
-.icollage .ic-curry { left: 2%; top: 49%; width: 28%; transform: rotate(-5deg); }
-.icollage .ic-steak { left: 21%; top: 73%; width: 26%; transform: rotate(11deg); }
+.icollage .ic-cut { position: absolute; z-index: 2; height: auto; filter: drop-shadow(3px 5px 0 rgba(0, 0, 0, .35)); pointer-events: none; }
+/* background photo and the aligned cut-out share one crop */
+.icollage .ic-bg img, .icollage .ic-figure-layer img { object-position: 30% 70%; transform: scale(1.22); transform-origin: 30% 72%; }
+.icollage .ic-figure-layer { z-index: 1; }
+.icollage .tag { z-index: 3; }
+/* dishes scattered on the open side of the photo */
+.icollage .ic-pear { left: 2%; top: 3%; width: 19%; transform: rotate(-7deg); }
+.icollage .ic-trout { left: 49%; top: 5%; width: 30%; transform: rotate(8deg); }
+.icollage .ic-ragu { left: 60%; top: 29%; width: 27%; transform: rotate(-5deg); }
+.icollage .ic-curry { left: 47%; top: 54%; width: 29%; transform: rotate(6deg); }
+.icollage .ic-steak { left: 61%; top: 74%; width: 26%; transform: rotate(-10deg); }
 @media (max-width: 1023px) {
-  .icollage .ic-figure { right: auto; left: 50%; bottom: 0; height: 92%; transform: translateX(-50%); }
-  .icollage .ic-trout { left: 1%; top: 4%; width: 25%; }
-  .icollage .ic-ragu { left: 3%; top: 54%; width: 23%; }
-  .icollage .ic-pear { left: auto; right: 5%; top: 4%; width: 19%; }
-  .icollage .ic-curry { left: auto; right: 1%; top: 52%; width: 25%; }
+  .icollage .ic-bg img, .icollage .ic-figure-layer img { object-position: 25% 32%; transform: scale(1.15); transform-origin: 26% 40%; }
+  .icollage .ic-pear { left: 45%; top: 4%; width: 18%; }
+  .icollage .ic-trout { left: auto; right: 4%; top: 3%; width: 25%; }
+  .icollage .ic-ragu { left: 46%; top: 50%; width: 23%; }
+  .icollage .ic-curry { left: auto; right: 2%; top: 48%; width: 26%; }
   .icollage .ic-steak { display: none; }
   .icollage .tag { display: none; }
 }
