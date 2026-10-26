@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist_Mono, Great_Vibes, Silkscreen, Space_Grotesk } from 'next/font/google'
+import { Geist_Mono, Silkscreen, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider, themeInitScript } from '@/components/site/theme'
 import './globals.css'
@@ -7,8 +7,6 @@ import './globals.css'
 const mono = Geist_Mono({ subsets: ['latin', 'latin-ext'], variable: '--font-mono' })
 const pixel = Silkscreen({ subsets: ['latin', 'latin-ext'], weight: '400', variable: '--font-px' })
 const display = Space_Grotesk({ subsets: ['latin', 'latin-ext'], weight: ['300', '700'], variable: '--font-display' })
-// handwritten logo: "Џиџан" needs the Cyrillic subset
-const script = Great_Vibes({ subsets: ['latin', 'cyrillic'], weight: '400', variable: '--font-script' })
 
 export const metadata: Metadata = {
   title: 'Marko Ćirić | Portfolio',
@@ -38,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${mono.variable} ${pixel.variable} ${display.variable} ${script.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${mono.variable} ${pixel.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>

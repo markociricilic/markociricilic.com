@@ -42,8 +42,8 @@ export function Logo({ sub }: { sub: string }) {
         <i />
       </span>
       <span className="n">2002</span>
-      <h1 className="word script" lang="sr" title="Džidžan">
-        Џиџан<span className="sr-only"> — Marko Ćirić</span>
+      <h1 className="word">
+        marko<b>ćirić</b>
       </h1>
       <span className="sub">{sub}</span>
     </div>
