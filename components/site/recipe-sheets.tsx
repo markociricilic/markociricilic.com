@@ -100,10 +100,6 @@ export function RecipeSheets({ items }: { items: Dish[] }) {
                   </tbody>
                 </table>
               </div>
-              <footer className="rs-foot">
-                <span>Rev A</span>
-                <span>Home kitchen · Toronto</span>
-              </footer>
             </article>
           )
         })}
