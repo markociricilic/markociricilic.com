@@ -311,6 +311,7 @@ const cookingItems = [
   {
     title: "Braised Lamb Stew",
     description: "Braised lamb shoulder stew",
+    components: ["Braised lamb shoulder", "Onions", "Beef stock", "Parsley"],
     imageUrl: "/images/interests/cooking-14.jpg",
     category: "cooking" as const,
   },
