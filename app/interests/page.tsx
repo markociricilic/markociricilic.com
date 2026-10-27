@@ -2500,7 +2500,7 @@ export default function InterestsPage() {
                 <p>
                   I&apos;ve been collecting vinyl records and CDs for many years, with a love for electronic music, folk, hip-hop, and alternative genres.
                 </p>
-                <p className="muted">Favourite Artists: Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean, Playboi Carti</p>
+                <p className="muted">Favourite Artists: Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean</p>
               </Box>
               <MusicPlayer items={musicItems} />
             </Section>
