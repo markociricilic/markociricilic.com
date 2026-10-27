@@ -320,7 +320,7 @@ const cookingItems = [
   {
     title: "Chicken Malai Boti Handi",
     description: "Chicken malai boti handi with cheese",
-    components: ["Chicken thighs", "Ginger garlic paste", "Green chilies", "Coriander powder", "Chili flakes", "Cumin powder", "Garam masala", "Black pepper", "Mozzarella", "Yogurt", "Cream", "Kasuri methi", "Fresh coriander"],
+    components: ["Chicken thighs", "Ginger-garlic paste", "Green chilies", "Coriander powder", "Cumin powder", "Garam masala", "Black pepper", "Mozzarella", "Yogurt", "Cream", "Kasuri methi", "Fresh coriander"],
     imageUrl: "/images/interests/cooking-16.jpg",
     category: "cooking" as const,
   },
