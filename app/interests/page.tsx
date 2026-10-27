@@ -264,6 +264,7 @@ const cookingItems = [
   {
     title: "Borscht (Борщ)",
     description: "Ukrainian borscht soup",
+    components: ["Pork shoulder", "Beets", "Cabbage", "Onion", "Carrots", "Potatoes", "Garlic", "Tomato paste", "Bay leaves", "Peppercorns", "Dill"],
     imageUrl: "/images/interests/cooking-7.jpg",
     category: "cooking" as const,
   },  
