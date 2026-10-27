@@ -377,6 +377,7 @@ const cookingItems = [
   {
     title: "Chicken Sandwich",
     description: "Chicken sandwich with baguette bread",
+    components: ["Chicken thighs", "Carrot", "Garlic", "Mayo", "Pomegranate molasses", "Parsley", "Baguette bread"],
     imageUrl: "/images/interests/cooking-24.jpg",
     category: "cooking" as const,
   },
