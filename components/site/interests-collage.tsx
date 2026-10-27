@@ -32,7 +32,7 @@ export function InterestsCollage() {
       </svg>
 
       {plates.map((p) => (
-        <img key={p.cls} className={`ic-cut ic-plate ${p.cls}`} src={p.src} alt={p.alt} loading="lazy" decoding="async" />
+        <img key={p.cls} className={`ic-cut ic-plate ${p.cls}`} src={p.src} alt={p.alt} decoding="async" />
       ))}
       <div className="figure ic-figure-layer" aria-hidden="true">
         <img src="/images/collage/marko-roma-full.webp" alt="" decoding="async" />
