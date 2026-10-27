@@ -2497,7 +2497,7 @@ export default function InterestsPage() {
             </Section>
 
             <Section id="art" title="Art" index="03">
-              <p className="muted">Predominantly painting with soft oil pastels (from MUNGYO gallery).</p>
+              <p className="muted">I like painting with soft oil pastels.</p>
               <ArtWall items={artItems} />
             </Section>
 
