@@ -2456,12 +2456,6 @@ const artItems = [
     category: "art" as const,
   },
   {
-    title: "Untitled 5",
-    description: "",
-    imageUrl: "/images/interests/art-5.jpg",
-    category: "art" as const,
-  },
-  {
     title: "Untitled 6",
     description: "",
     imageUrl: "/images/interests/art-6.jpg",
@@ -2502,10 +2496,9 @@ export default function InterestsPage() {
             </Section>
 
             <Section id="music" title="Music" index="04">
-              <Box label="Record collecting & DJing">
+              <Box label="Record collecting">
                 <p>
-                  I&apos;ve been collecting vinyl records for several years, focusing on electronic music, hip-hop, and alternative genres.
-                  DJing has become a creative outlet that combines my love for music with technical skills.
+                  I&apos;ve been collecting vinyl records and CDs for many years, with a love for electronic music, folk, hip-hop, and alternative genres.
                 </p>
                 <p className="muted">Favourite Artists: Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean, Playboi Carti</p>
               </Box>

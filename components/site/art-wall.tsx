@@ -15,7 +15,8 @@ const MEDIUM = "Soft oil pastel on paper"
 export function ArtWall({ items }: { items: Artwork[] }) {
   const [open, setOpen] = useState<number | null>(null)
   const close = useCallback(() => setOpen(null), [])
-  const no = (i: number) => `No. ${String(i + 1).padStart(2, "0")}`
+  // number from the title ("Untitled 6" -> No. 06), so hiding a piece doesn't renumber the rest
+  const no = (i: number) => `No. ${String(items[i].title.match(/\d+/)?.[0] ?? i + 1).padStart(2, "0")}`
 
   const viewerItems: ViewerItem[] = items.map((a, i) => ({
     src: a.imageUrl,
