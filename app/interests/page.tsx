@@ -367,7 +367,7 @@ const cookingItems = [
     category: "cooking" as const,
   },
   {
-    title: "Grilled Pork Skewers (Шашлык)",
+    title: "Grilled Pork Skewers (Шашлик)",
     description: "Ukrainian grilled pork shoulder skewers",
     imageUrl: "/images/interests/cooking-25.jpg",
     category: "cooking" as const,

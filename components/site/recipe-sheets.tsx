@@ -18,7 +18,7 @@ const thumb = (url: string) => url.replace("/images/interests/", "/images/intere
 // Cuisine shown in the datasheet header, guessed from the dish text.
 function cuisine(d: Dish) {
   const t = `${d.title} ${d.description ?? ""}`.toLowerCase()
-  if (/borscht|борщ|шашлык|ukrainian/.test(t)) return "Ukrainian"
+  if (/borscht|борщ|шашлик|ukrainian/.test(t)) return "Ukrainian"
   if (/balkan|[Ѐ-ӿ]/.test(t)) return "Balkan"
   if (/tteokbokki/.test(t)) return "Korean"
   if (/japanese/.test(t)) return "Japanese"
