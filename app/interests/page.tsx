@@ -347,7 +347,7 @@ const cookingItems = [
   {
     title: "Spaghetti Carbonara",
     description: "Carbonara with spaghetti",
-    components: ["Spaghetti pasta", "Eggs", "Parmigiano Reggiano", "Guanciale", "Cracked black pepper"],
+    components: ["Spaghetti pasta", "Egg yolks", "Parmigiano Reggiano", "Guanciale", "Cracked black pepper"],
     imageUrl: "/images/interests/cooking-21.jpg",
     category: "cooking" as const,
   },
