@@ -243,7 +243,7 @@ const cookingItems = [
   {
     title: "Beef Ragù Pasta",
     description: "Beef ragù with rigatoni pasta",
-    components: ["Rigatoni pasta", "Smoked bacon", "Minced beef", "Red wine", "Tomato sauce", "Onions", "Carrot", "Celery", "Parsley"],
+    components: ["Rigatoni pasta", "Smoked bacon", "Minced beef", "Red wine", "Tomato sauce", "Soffritto", "Parsley"],
     imageUrl: "/images/interests/cooking-4.jpg",
     category: "cooking" as const,
   },
