@@ -250,12 +250,14 @@ const cookingItems = [
   {
     title: "Stuffed Sour Cabbage Rolls (Сарма)",
     description: "Balkan stuffed fermented cabbage rolls with ground beef, ground pork and dried smoked bacon (сланина)",
+    components: ["Fermented cabbage", "Ground beef", "Ground pork", "Dried smoked bacon (сланина)", "Medium-grained rice", "Bay leaves", "Peppercorns", "Onion", "Ground paprika (алева паприка)", "Roux (Запршка)"],
     imageUrl: "/images/interests/cooking-5.jpg",
     category: "cooking" as const,
   },
   {
     title: "Stuffed Bell Peppers (Пуњене Паприке)",
     description: "Balkan stuffed red bell peppers with ground beef and tomato sauce",
+    components: ["Red bell peppers", "Ground beef", "Ground pork", "Medium-grained rice", "Onion", "Garlic", "Tomato sauce", "Ground paprika (алева паприка)", "Roux (Запршка)", "Parsley"],
     imageUrl: "/images/interests/cooking-6.jpg",
     category: "cooking" as const,
   },
@@ -268,6 +270,7 @@ const cookingItems = [
   {
     title: "Pea Stew (Грашак)",
     description: "Balkan pea stew with beef",
+    components: ["Green peas", "Braised beef", "Carrots", "Onion", "Potato", "Beef stock", "Dill"],
     imageUrl: "/images/interests/cooking-8.jpg",
     category: "cooking" as const,
   },
