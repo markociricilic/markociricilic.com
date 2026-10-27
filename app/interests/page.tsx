@@ -322,7 +322,7 @@ const cookingItems = [
   {
     title: "Beef Bourguignon",
     description: "French beef bourguignon stew",
-    components: ["Mashed potatoes", "Braised beef", "Red wine", "Carrots", "Onion", "Parsley"],
+    components: ["Mashed potatoes", "Braised beef", "Red wine", "Mirepoix", "Parsley"],
     imageUrl: "/images/interests/cooking-17.jpg",
     category: "cooking" as const,
   },
