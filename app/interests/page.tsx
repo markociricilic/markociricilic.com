@@ -243,6 +243,7 @@ const cookingItems = [
   {
     title: "Beef Ragù Pasta",
     description: "Beef ragù with rigatoni pasta",
+    components: ["Rigatoni pasta", "Smoked bacon", "Minced beef", "Red wine", "Tomato sauce", "Onions", "Carrot", "Celery", "Parsley"],
     imageUrl: "/images/interests/cooking-4.jpg",
     category: "cooking" as const,
   },
@@ -321,6 +322,7 @@ const cookingItems = [
   {
     title: "Beef Bourguignon",
     description: "French beef bourguignon stew",
+    components: ["Mashed potatoes", "Braised beef", "Red wine", "Carrots", "Onion", "Parsley"],
     imageUrl: "/images/interests/cooking-17.jpg",
     category: "cooking" as const,
   },
@@ -345,18 +347,21 @@ const cookingItems = [
   {
     title: "Spaghetti Carbonara",
     description: "Carbonara with spaghetti",
+    components: ["Spaghetti pasta", "Eggs", "Parmigiano Reggiano", "Guanciale", "Cracked black pepper"],
     imageUrl: "/images/interests/cooking-21.jpg",
     category: "cooking" as const,
   },
   {
     title: "Fettuccine Alfredo With Turkey Meatballs",
     description: "Fettuccine with homemade alfredo sauce and turkey meatballs",
+    components: ["Fettuccine pasta", "Turkey meatballs", "Heavy cream", "Parmigiano Reggiano"],
     imageUrl: "/images/interests/cooking-22.jpg",
     category: "cooking" as const,
   },
   {
     title: "Spicy Italian Sausage Pasta",
     description: "Spicy Italian sausage sauce with rigatoni pasta",
+    components: ["Rigatoni pasta", "Pecorino Romano", "Spicy Italian sausage sauce", "Parsley"],
     imageUrl: "/images/interests/cooking-23.jpg",
     category: "cooking" as const,
   },

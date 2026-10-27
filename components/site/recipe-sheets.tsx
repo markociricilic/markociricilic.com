@@ -8,6 +8,7 @@ import { PhotoViewer, type ViewerItem } from "@/components/site/photo-viewer"
 type Dish = {
   title: string
   description?: string
+  components?: string[] // explicit ingredient list; otherwise split from the description
   imageUrl: string
 }
 
@@ -46,6 +47,7 @@ const flagFor = (c: string) => CUISINES.find(([name]) => name === c)?.[1] ?? "Or
 // "Braised lamb shank in a red wine, beef stock, walnut sauce"
 //   -> ["Braised lamb shank", "Red wine", "Beef stock", "Walnut sauce"]
 function components(d: Dish) {
+  if (d.components) return d.components
   const text = d.description || d.title
   return text
     .split(/\s+with\s+|,\s*|\s+and\s+|\s+in an?\s+/i)
