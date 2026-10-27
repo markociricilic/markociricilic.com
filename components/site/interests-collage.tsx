@@ -11,6 +11,8 @@ const plates = [
   { src: "/images/collage/plate-ragu.webp", cls: "ic-ragu", alt: "Beef ragù pasta" },
   { src: "/images/collage/plate-curry.webp", cls: "ic-curry", alt: "Thai-inspired yellow curry" },
   { src: "/images/collage/plate-steak.webp", cls: "ic-steak", alt: "Steak with creamy peppercorn sauce" },
+  { src: "/images/collage/plate-lamb.webp", cls: "ic-lamb", alt: "Braised lamb shank" },
+  { src: "/images/collage/plate-malai.webp", cls: "ic-malai", alt: "Chicken malai boti handi" },
 ]
 
 export function InterestsCollage() {
@@ -36,19 +38,19 @@ export function InterestsCollage() {
         <img src="/images/collage/marko-roma-full.webp" alt="" decoding="async" />
       </div>
 
-      <a className="tag hot" href="#cooking" style={{ top: "52%", left: "52%" }}>
+      <a className="tag hot" href="#cooking" style={{ top: "40%", left: "62%" }}>
         Cooking
       </a>
-      <a className="tag" href="#art" style={{ top: "28%", left: "50%" }}>
+      <a className="tag" href="#art" style={{ top: "6%", left: "3%" }}>
         Art
       </a>
-      <a className="tag desk-only" href="#photography" style={{ top: "26%", left: "3%" }}>
+      <a className="tag desk-only" href="#photography" style={{ top: "13%", left: "3%" }}>
         Photography
       </a>
-      <a className="tag desk-only" href="#music" style={{ top: "74%", left: "52%" }}>
+      <a className="tag desk-only" href="#music" style={{ top: "84%", left: "77%" }}>
         Music
       </a>
-      <Link className="tag" href="/" style={{ top: "92%", left: "62%" }}>
+      <Link className="tag" href="/" style={{ top: "92%", left: "60%" }}>
         ← Portfolio
       </Link>
       <LogoStrip num="27" />
