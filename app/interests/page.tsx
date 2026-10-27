@@ -2483,7 +2483,7 @@ export default function InterestsPage() {
 
             <Section id="cooking" title="Cooking" index="01">
               <p className="muted">
-                Experimenting with various cuisines at home, and blending traditional recipes with techniques I&apos;ve picked up from travelling and research.
+                Experimenting with various cuisines at home.
               </p>
               <RecipeSheets items={cookingItems} />
             </Section>

@@ -86,6 +86,82 @@ const FLAGS: Record<string, React.ReactNode> = {
     </>
   ),
   Serbia: H3("#c6363c", "#0c4076", "#fff"),
+  Ukraine: (
+    <>
+      <rect width="30" height="10" fill="#0057b7" />
+      <rect y="10" width="30" height="10" fill="#ffd700" />
+    </>
+  ),
+  "South Korea": (
+    <>
+      <rect width="30" height="20" fill="#fff" />
+      <path d="M10.5 10 A4.5 4.5 0 0 1 19.5 10 Z" fill="#cd2e3a" />
+      <path d="M10.5 10 A4.5 4.5 0 0 0 19.5 10 Z" fill="#0047a0" />
+      <circle cx="12.75" cy="10" r="2.25" fill="#cd2e3a" />
+      <circle cx="17.25" cy="10" r="2.25" fill="#0047a0" />
+      {/* trigrams, reduced to three bars in each corner */}
+      <g fill="#000">
+        {[
+          [5, 4.5, 34],
+          [25, 15.5, 34],
+          [25, 4.5, -34],
+          [5, 15.5, -34],
+        ].map(([x, y, r]) => (
+          <g key={`${x}-${y}`} transform={`translate(${x} ${y}) rotate(${r})`}>
+            <rect x="-1.9" y="-2.2" width="3.8" height="0.9" />
+            <rect x="-1.9" y="-0.45" width="3.8" height="0.9" />
+            <rect x="-1.9" y="1.3" width="3.8" height="0.9" />
+          </g>
+        ))}
+      </g>
+    </>
+  ),
+  Japan: (
+    <>
+      <rect width="30" height="20" fill="#fff" />
+      <circle cx="15" cy="10" r="6" fill="#bc002d" />
+    </>
+  ),
+  Thailand: (
+    <>
+      <rect width="30" height="20" fill="#a51931" />
+      <rect y="3.33" width="30" height="13.33" fill="#f4f5f8" />
+      <rect y="6.67" width="30" height="6.67" fill="#2d2a4a" />
+    </>
+  ),
+  India: (
+    <>
+      {H3("#ff9933", "#fff", "#138808")}
+      <circle cx="15" cy="10" r="2.6" fill="none" stroke="#000080" strokeWidth="0.7" />
+      <circle cx="15" cy="10" r="0.6" fill="#000080" />
+    </>
+  ),
+  // not countries: markers for the cooking filter
+  "Eastern Europe": (
+    <>
+      <rect width="30" height="20" fill="#2b2b2b" />
+      <text x="15" y="15.5" textAnchor="middle" fontSize="14" fontWeight="700" fill="#e3a43a" fontFamily="var(--font-px), monospace">
+        EE
+      </text>
+    </>
+  ),
+  Original: (
+    <>
+      <rect width="30" height="20" fill="#e3a43a" />
+      <path d="M15 4 L16.5 8.3 L21 8.3 L17.4 11 L18.8 15.4 L15 12.7 L11.2 15.4 L12.6 11 L9 8.3 L13.5 8.3 Z" fill="#fff" />
+    </>
+  ),
+  All: (
+    <>
+      <rect width="30" height="20" fill="#1a1a1a" />
+      <g fill="#e3a43a">
+        <rect x="5" y="3" width="9" height="6" />
+        <rect x="16" y="3" width="9" height="6" />
+        <rect x="5" y="11" width="9" height="6" />
+        <rect x="16" y="11" width="9" height="6" />
+      </g>
+    </>
+  ),
 }
 
 // Flag placed inside another SVG (e.g. the travel route).

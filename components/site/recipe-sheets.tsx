@@ -1,6 +1,8 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
+import { Flag } from "@/components/site/flags"
+import { FlagRoute } from "@/components/site/flag-route"
 import { PhotoViewer, type ViewerItem } from "@/components/site/photo-viewer"
 
 type Dish = {
@@ -28,6 +30,21 @@ function cuisine(d: Dish) {
   return "Original"
 }
 
+// Filter menu order (roughly west to east), and the flag shown for each cuisine.
+const CUISINES: [string, string][] = [
+  ["French", "France"],
+  ["Italian", "Italy"],
+  ["Balkan", "Serbia"],
+  ["Ukrainian", "Ukraine"],
+  ["Eastern European", "Eastern Europe"],
+  ["Indian", "India"],
+  ["Thai", "Thailand"],
+  ["Korean", "South Korea"],
+  ["Japanese", "Japan"],
+  ["Original", "Original"],
+]
+const flagFor = (c: string) => CUISINES.find(([name]) => name === c)?.[1] ?? "Original"
+
 // "Braised lamb shank in a red wine, beef stock, walnut sauce"
 //   -> ["Braised lamb shank", "Red wine", "Beef stock", "Walnut sauce"]
 function components(d: Dish) {
@@ -46,19 +63,48 @@ function splitTitle(title: string): [string, string | null] {
 }
 
 export function RecipeSheets({ items }: { items: Dish[] }) {
+  // keep each dish's number from the full list, so DISH-007 stays DISH-007 when filtered
+  const dishes = useMemo(() => items.map((d, i) => ({ ...d, num: i + 1, cuisine: cuisine(d) })), [items])
+  const stops = useMemo(
+    () => [
+      { key: "all", flag: "All", name: "All cuisines", label: `All cuisines, ${dishes.length} dishes` },
+      ...CUISINES.map(([name, flag]) => {
+        const n = dishes.filter((d) => d.cuisine === name).length
+        return { key: name, flag, name, label: `${name}, ${n} ${n === 1 ? "dish" : "dishes"}`, n }
+      }).filter((c) => c.n > 0),
+    ],
+    [dishes],
+  )
+  const [active, setActive] = useState(0)
   const [showAll, setShowAll] = useState(false)
   const [open, setOpen] = useState<number | null>(null)
   const close = useCallback(() => setOpen(null), [])
-  const shown = showAll ? items : items.slice(0, INITIAL)
-  const viewerItems: ViewerItem[] = items.map((d, i) => ({
+  const filtered = active === 0 ? dishes : dishes.filter((d) => d.cuisine === stops[active].key)
+  const shown = showAll ? filtered : filtered.slice(0, INITIAL)
+  const viewerItems: ViewerItem[] = filtered.map((d) => ({
     src: d.imageUrl,
     title: d.title,
-    label: `DISH-${String(i + 1).padStart(3, "0")} · ${cuisine(d)}`,
+    label: `DISH-${String(d.num).padStart(3, "0")} · ${d.cuisine}`,
     description: d.description,
   }))
+  const select = (i: number) => {
+    setActive(i)
+    setShowAll(false)
+  }
 
   return (
     <div className="rsheets">
+      <FlagRoute stops={stops} active={active} onSelect={select} ariaLabel="Filter by cuisine" />
+      <div className="cs-meta">
+        <span className="cs-country">
+          <Flag country={stops[active].flag} className="cs-meta-flag" />
+          {stops[active].name}
+        </span>
+        <span>
+          {filtered.length} {filtered.length === 1 ? "dish" : "dishes"}
+        </span>
+        <span className="cs-hint">click to enlarge</span>
+      </div>
       <div className="rs-grid">
         {shown.map((d, i) => {
           const [name, local] = splitTitle(d.title)
@@ -74,8 +120,11 @@ export function RecipeSheets({ items }: { items: Dish[] }) {
               aria-label={`Enlarge photo of ${d.title}`}
             >
               <header className="rs-head">
-                <span>DISH-{String(i + 1).padStart(3, "0")}</span>
-                <span>{cuisine(d)}</span>
+                <span>DISH-{String(d.num).padStart(3, "0")}</span>
+                <span className="rs-cuisine">
+                  <Flag country={flagFor(d.cuisine)} className="rs-flag" />
+                  {d.cuisine}
+                </span>
               </header>
               <div className="rs-photo">
                 <img src={thumb(d.imageUrl)} alt={d.title} loading="lazy" decoding="async" />
@@ -104,9 +153,9 @@ export function RecipeSheets({ items }: { items: Dish[] }) {
           )
         })}
       </div>
-      {items.length > INITIAL && (
+      {filtered.length > INITIAL && (
         <button className="rs-more" onClick={() => setShowAll((v) => !v)}>
-          {showAll ? "Show fewer" : `Show all ${items.length} dishes`}
+          {showAll ? "Show fewer" : `Show all ${filtered.length} dishes`}
         </button>
       )}
       {open !== null && <PhotoViewer items={viewerItems} index={open} onClose={close} onIndex={setOpen} />}
