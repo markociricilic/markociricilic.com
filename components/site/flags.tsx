@@ -137,14 +137,6 @@ const FLAGS: Record<string, React.ReactNode> = {
     </>
   ),
   // not countries: markers for the cooking filter
-  "Eastern Europe": (
-    <>
-      <rect width="30" height="20" fill="#2b2b2b" />
-      <text x="15" y="15.5" textAnchor="middle" fontSize="14" fontWeight="700" fill="#e3a43a" fontFamily="var(--font-px), monospace">
-        EE
-      </text>
-    </>
-  ),
   Original: (
     <>
       <rect width="30" height="20" fill="#e3a43a" />

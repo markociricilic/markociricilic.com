@@ -368,7 +368,7 @@ const cookingItems = [
   },
   {
     title: "Grilled Pork Skewers (Шашлык)",
-    description: "Eastern European grilled pork shoulder skewers",
+    description: "Ukrainian grilled pork shoulder skewers",
     imageUrl: "/images/interests/cooking-25.jpg",
     category: "cooking" as const,
   },
