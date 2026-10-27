@@ -231,6 +231,7 @@ const cookingItems = [
   {
     title: "Thai-inspired Chicken Yellow Curry",
     description: "Thai-inspired chicken yellow curry with coconut milk, rice and vegetables",
+    components: ["Chicken thighs", "Yellow Thai curry paste", "Lemongrass", "Coconut milk", "Onions", "Carrots", "Red Thai chilies", "Fish sauce", "Palm sugar", "Green onion", "Fresh coriander", "Jasmine rice"],
     imageUrl: "/images/interests/cooking-27.jpg",
     category: "cooking" as const,
   },
