@@ -316,7 +316,7 @@ const cookingItems = [
   {
     title: "Japanese Chicken Curry",
     description: "Japanese chicken curry with rice",
-    components: ["Chicken thighs", "Onions", "Carrots", "Potatoes", "Curry block", "Chili flakes", "Green onions", "Jasmine rice"],
+    components: ["Chicken thighs", "Onions", "Carrots", "Potatoes", "S&B Golden Curry block (medium hot)", "Chili flakes", "Green onions", "Jasmine rice"],
     imageUrl: "/images/interests/cooking-15.jpg",
     category: "cooking" as const,
   },
