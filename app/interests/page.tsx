@@ -238,7 +238,7 @@ const cookingItems = [
   {
     title: "Chicken Bean Stew",
     description: "Bean stew with chicken",
-    components: ["Chicken thighs", "White kidney beans", "Onions", "Carrot", "Ground paprika (Алева паприка)", "Peppercorns", "Bay leaves", "Roux (Запршка)", "Parsley"],
+    components: ["Chicken thighs", "White kidney beans", "Onions", "Carrot", "Ground paprika", "Peppercorns", "Bay leaves", "Roux", "Parsley"],
     imageUrl: "/images/interests/cooking-3.jpg",
     category: "cooking" as const,
   },
