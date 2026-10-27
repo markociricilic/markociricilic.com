@@ -303,7 +303,7 @@ const cookingItems = [
   {
     title: "Rosé Tteokbokki",
     description: "Rosé tteokbokki with chicken",
-    components: ["Garae-tteok (가래떡)", "Onion", "Garlic", "Gochujang (고추장)", "Gochugaru (고춧가루)", "Palm sugar", "Soy sauce", "Milk", "Heavy cream", "Mozzarella", "Green onions", "Sesame seeds"],
+    components: ["Garae-tteok (가래떡)", "Chicken thighs", "Onion", "Garlic", "Gochujang (고추장)", "Gochugaru (고춧가루)", "Palm sugar", "Soy sauce", "Milk", "Heavy cream", "Mozzarella", "Green onions", "Sesame seeds"],
     imageUrl: "/images/interests/cooking-13.jpg",
     category: "cooking" as const,
   },
