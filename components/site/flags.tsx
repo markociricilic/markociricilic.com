@@ -26,6 +26,18 @@ const FLAGS: Record<string, React.ReactNode> = {
       <circle cx="16.4" cy="10" r="1.3" fill="#e70013" />
     </>
   ),
+  // nine stripes with a white cross on blue in the canton
+  Greece: (
+    <>
+      <rect width="30" height="20" fill="#0d5eaf" />
+      {[1, 3, 5, 7].map((k) => (
+        <rect key={k} y={(k * 20) / 9} width="30" height={20 / 9} fill="#fff" />
+      ))}
+      <rect width="11.11" height="11.11" fill="#0d5eaf" />
+      <rect x="4.44" width="2.22" height="11.11" fill="#fff" />
+      <rect y="4.44" width="11.11" height="2.22" fill="#fff" />
+    </>
+  ),
   "Costa Rica": (
     <>
       <rect width="30" height="20" fill="#002b7f" />

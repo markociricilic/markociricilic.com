@@ -740,6 +740,12 @@ const photographyItems = [
     category: "photography" as const,
   },
   {
+    title: "Greece 2015: Istron Bay",
+    description: "Pebble beach in a steep cove of Mirabello Bay near the village of Istro, in eastern Crete",
+    imageUrl: "/images/interests/photography-365.jpg",
+    category: "photography" as const,
+  },
+  {
     title: "Costa Rica 2016: Classic Costa Rican Breakfast ",
     description: "A classic Costa Rican desayuno típico — gallo pinto, fried eggs, fried sweet plantain, toast, fresh cheese, and orange juice — served at Restaurante Mi Casa in La Fortuna",
     imageUrl: "/images/interests/photography-310.jpg",
@@ -947,6 +953,48 @@ const photographyItems = [
     title: "France 2018: Kazimir Malevich",
     description: "The White Horse (Man and Horse), 1930–31, by Kazimir Malevich, at the Centre Pompidou",
     imageUrl: "/images/interests/photography-363.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Greece 2018: Kassiopi",
+    description: "Kassiopi's harbour seen over an orange grove, with the mountains of Albania across the Corfu Strait",
+    imageUrl: "/images/interests/photography-366.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Greece 2018: Bataria Beach",
+    description: "Clear water over white rocks at Bataria Beach, below the headland of Kassiopi in northeast Corfu",
+    imageUrl: "/images/interests/photography-367.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Greece 2018: WWI Serbian Soldiers Mausoleum on Vido",
+    description: "Built in 1938 for the Serbian soldiers who died on Vido after the army's retreat across Albania in the winter of 1915–16",
+    imageUrl: "/images/interests/photography-368.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Greece 2018: Vido Island",
+    description: "Pine-shaded coast of Vido, a small island off Corfu Town, looking across the strait to the mainland",
+    imageUrl: "/images/interests/photography-369.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Greece 2018: Old Fortress of Corfu",
+    description: "Venetian fortress on a double-peaked headland, with its lighthouse and the British-built Church of St George, a Doric temple, at the water's edge",
+    imageUrl: "/images/interests/photography-370.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Greece 2018: Maitland Rotunda",
+    description: "Ionic rotunda in the Spianada, built in 1816 in honour of Sir Thomas Maitland, the first British Lord High Commissioner of the Ionian Islands",
+    imageUrl: "/images/interests/photography-371.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Greece 2018: Serbian Museum of Corfu",
+    description: "One-string gusle with a body made from a soldier's helmet, beside a bugle, a canteen and a mess tin from the Serbian army's First World War exile on Corfu",
+    imageUrl: "/images/interests/photography-372.jpg",
     category: "photography" as const,
   },
   {
@@ -2628,7 +2676,7 @@ export default function InterestsPage() {
               <p className="muted">Life outtakes from all my adventures.</p>
               <ContactSheet
                 items={photographyItems}
-                countries={["Tunisia", "Costa Rica", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
+                countries={["Tunisia", "Greece", "Costa Rica", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
               />
             </Section>
 

@@ -14,6 +14,7 @@ type Photo = {
 // Two-letter frame codes printed on the film edge, per country.
 const CODES: Record<string, string> = {
   Tunisia: "TN",
+  Greece: "GR",
   "Costa Rica": "CR",
   Chile: "CL",
   Peru: "PE",
