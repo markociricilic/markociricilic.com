@@ -34,6 +34,7 @@ const CIRCLED = new Set([19, 21, 56, 78, 104, 147, 183, 186, 197, 243, 244])
 
 const thumb = (url: string) => url.replace("/images/interests/", "/images/interests/thumbs/")
 const photoNumber = (url: string) => Number(url.match(/photography-(\d+)\./)?.[1] ?? -1)
+const yearOf = (p: Photo, country: string) => p.title.slice(country.length).match(/\d{4}/)?.[0] ?? ""
 
 export function ContactSheet({ items, countries }: { items: Photo[]; countries: string[] }) {
   // group photos by the country their title starts with ("Italy 2025: ...")
@@ -41,7 +42,8 @@ export function ContactSheet({ items, countries }: { items: Photo[]; countries: 
     () =>
       countries.map((country) => {
         const photos = items.filter((p) => p.title.startsWith(country))
-        const year = photos[0]?.title.slice(country.length).match(/\d{4}/)?.[0] ?? ""
+        // a country visited more than once lists each year: "2018 · 2025"
+        const year = [...new Set(photos.map((p) => yearOf(p, country)))].join(" · ")
         return { country, code: CODES[country] ?? country.slice(0, 2).toUpperCase(), year, photos }
       }),
     [items, countries],
@@ -98,7 +100,7 @@ export function ContactSheet({ items, countries }: { items: Photo[]; countries: 
               </span>
               <span className="cs-edge">
                 <span>▶ {code}</span>
-                <span>{roll.year}</span>
+                <span>{yearOf(p, roll.country)}</span>
               </span>
             </button>
           )
