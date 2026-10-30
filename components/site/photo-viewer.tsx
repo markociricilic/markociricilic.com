@@ -1,12 +1,49 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+
+export type Poem = {
+  note: string
+  plaques: {
+    original: string
+    english: string
+    verses: { original: [string, string]; english: [string, string] }[]
+  }[]
+}
 
 export type ViewerItem = {
   src: string
   title: string
   label: string // small line above the title, e.g. "▶ IT-11 · 11/73"
   description?: string
+  poem?: Poem
+}
+
+// A poem in its original language, with a button that swaps it to English.
+function PoemText({ poem }: { poem: Poem }) {
+  const [english, setEnglish] = useState(false)
+  const lang = english ? "english" : "original"
+  return (
+    <div className="cs-poem">
+      <button className="cs-poem-btn" onClick={() => setEnglish(!english)} aria-pressed={english}>
+        {english ? "Show original" : "Translate to English"}
+      </button>
+      <div lang={english ? "en" : "ota"} dir={english ? "ltr" : "rtl"} className={english ? "cs-poem-text" : "cs-poem-text original"}>
+        {poem.plaques.map((plaque) => (
+          <div key={plaque.english} className="cs-plaque">
+            <span className="cs-plaque-date">{plaque[lang]}</span>
+            {plaque.verses.map((verse) => (
+              <p key={verse.english[0]}>
+                <span>{verse[lang][0]}</span>
+                <span>{verse[lang][1]}</span>
+              </p>
+            ))}
+          </div>
+        ))}
+      </div>
+      <span className="cs-poem-note">{poem.note}</span>
+    </div>
+  )
 }
 
 // Full-size photo overlay with prev/next, arrow keys and Esc.
@@ -49,6 +86,7 @@ export function PhotoViewer({
           <span className="cs-vcode">{item.label}</span>
           <strong>{item.title}</strong>
           {item.description && <span className="cs-vdesc">{item.description}</span>}
+          {item.poem && <PoemText key={item.src} poem={item.poem} />}
         </figcaption>
       </figure>
       {items.length > 1 && (

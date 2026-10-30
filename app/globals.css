@@ -312,6 +312,18 @@ body {
 .cs-viewer figcaption { display: grid; gap: 4px; margin-top: 10px; color: #f2efe9; font-size: 13px; }
 .cs-viewer .cs-vcode { font-family: var(--font-px), monospace; font-size: 10px; color: #e8a73a; }
 .cs-viewer .cs-vdesc { color: #b9b2a7; font-size: 12px; }
+.cs-viewer:has(.cs-poem) { overflow-y: auto; }
+.cs-poem { display: grid; gap: 10px; margin-top: 8px; padding-inline: 44px; justify-items: start; }
+.cs-poem-btn { padding: 6px 10px; background: #111; color: #f2efe9; border: 1px solid #444; font-family: var(--font-px), monospace; font-size: 11px; text-transform: uppercase; cursor: pointer; }
+.cs-poem-btn:hover, .cs-poem-btn:focus-visible { border-color: #e8a73a; color: #e8a73a; }
+.cs-poem-text { display: grid; gap: 14px; width: 100%; color: #e8e3da; font-size: 13px; line-height: 1.5; }
+.cs-poem-text.original { font-family: "Noto Naskh Arabic", "Scheherazade New", "Traditional Arabic", "Times New Roman", serif; font-size: 18px; line-height: 1.8; }
+.cs-plaque { display: grid; gap: 6px; }
+.cs-plaque-date { color: #e8a73a; font-size: 12px; }
+.cs-poem-text.original .cs-plaque-date { font-size: 16px; }
+.cs-plaque p { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 20px; margin: 0; }
+@media (max-width: 640px) { .cs-plaque p { grid-template-columns: 1fr; } }
+.cs-poem-note { color: #8f887d; font-size: 11px; }
 .cs-nav, .cs-close { position: fixed; background: #111; color: #f2efe9; border: 1px solid #444; font-family: var(--font-px), monospace; font-size: 12px; text-transform: uppercase; cursor: pointer; }
 .cs-nav { top: 50%; transform: translateY(-50%); width: 40px; height: 40px; }
 .cs-nav.prev { left: 12px; } .cs-nav.next { right: 12px; }

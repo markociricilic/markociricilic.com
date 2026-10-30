@@ -13,6 +13,7 @@ import { Horizon, Logo } from "@/components/site/horizon"
 // import { ScrollCharlie } from "@/components/site/scroll-charlie"
 import { Box, Section } from "@/components/site/section"
 import { TopNav } from "@/components/site/top-nav"
+import { VISEGRAD_POEM } from "@/components/site/visegrad-poem"
 
 const navLinks = [
   { href: "#cooking", label: "Cooking" },
@@ -1061,6 +1062,115 @@ const photographyItems = [
     title: "Greece 2018: Serbian Museum of Corfu",
     description: "One-string gusle with a body made from a soldier's helmet, beside a bugle, a canteen and a mess tin from the Serbian army's First World War exile on Corfu",
     imageUrl: "/images/interests/photography-372.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Hills above Višegrad",
+    description: "Hills on the way into Višegrad, in eastern Bosnia and Herzegovina",
+    imageUrl: "/images/interests/photography-439.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Church of Saint Lazar",
+    description: "Serbian Orthodox church in Andrićgrad, the stone town in Višegrad and opened in 2014",
+    imageUrl: "/images/interests/photography-440.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Church Entrance",
+    description: "Entrance to the Church of Saint Lazar, with a mosaic above the door",
+    imageUrl: "/images/interests/photography-442.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Ivo Andrić",
+    description: "Statue of Ivo Andrić, author of \"The Bridge on the Drina\" and winner of the 1961 Nobel Prize in Literature",
+    imageUrl: "/images/interests/photography-441.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Buregdžinica Furuna",
+    description: "Menu at a burek shop in Višegrad, selling burek, krompiruša, sirnica, zeljanica and sweet pies",
+    imageUrl: "/images/interests/photography-443.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Careva Džamija",
+    description: "The Careva džamija, or Emperor's Mosque, in Višegrad",
+    imageUrl: "/images/interests/photography-444.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Višegrad at Night",
+    description: "Lights of the town reflected on the Drina river",
+    imageUrl: "/images/interests/photography-446.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Bridge Inscription",
+    description: "Verses by the poet Muhamed Karamusić Nihadi on two marble plaques at the kapia, the widened middle of the Mehmed Paša Sokolović Bridge",
+    imageUrl: "/images/interests/photography-445.jpg",
+    category: "photography" as const,
+    poem: VISEGRAD_POEM,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Bridge at Night",
+    description: "The Mehmed Paša Sokolović Bridge at night over the Drina river",
+    imageUrl: "/images/interests/photography-447.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Mehmed Paša Sokolović Bridge",
+    description: "Completed in 1577 by the Ottoman court architect Mimar Sinan, one of the greatest architects and engineers of the classical Ottoman period, and a UNESCO World Heritage Site since 2007",
+    imageUrl: "/images/interests/photography-448.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Arches on the Drina",
+    description: "The bridge's arches mirrored in the Drina",
+    imageUrl: "/images/interests/photography-450.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Me at the Bridge",
+    description: "Me by the Mehmed Paša Sokolović Bridge",
+    imageUrl: "/images/interests/photography-451.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Fishing on the Drina",
+    description: "Two fishermen on the Drina in Višegrad",
+    imageUrl: "/images/interests/photography-449.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Rzav River",
+    description: "The Rzav River in the gorge near Dobrun Monastery",
+    imageUrl: "/images/interests/photography-452.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Dobrun Monastery",
+    description: "Serbian Orthodox monastery in the Rzav gorge, founded around 1343 by Duke Pribil and his sons Stefan and Petar, and dedicated to the Dormition of the Virgin",
+    imageUrl: "/images/interests/photography-453.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Monastery Fountain",
+    description: "Stone fountain with a mosaic of the Virgin Mary at Dobrun Monastery",
+    imageUrl: "/images/interests/photography-454.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Monastery Konak",
+    description: "Residence in the grounds of Dobrun Monastery",
+    imageUrl: "/images/interests/photography-455.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Bosnia and Herzegovina 2021: Monastery Church",
+    description: "Entrance to the monastery church, painted with the Dormition of the Virgin",
+    imageUrl: "/images/interests/photography-456.jpg",
     category: "photography" as const,
   },
   {
@@ -3072,7 +3182,7 @@ export default function InterestsPage() {
               <p className="muted">Life outtakes from all my adventures.</p>
               <ContactSheet
                 items={photographyItems}
-                countries={["United States", "Tunisia", "Greece", "Costa Rica", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
+                countries={["United States", "Tunisia", "Greece", "Costa Rica", "Bosnia and Herzegovina", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
               />
             </Section>
 

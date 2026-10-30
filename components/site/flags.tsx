@@ -53,6 +53,17 @@ const FLAGS: Record<string, React.ReactNode> = {
       <rect y="4.44" width="11.11" height="2.22" fill="#fff" />
     </>
   ),
+  "Bosnia and Herzegovina": (
+    <>
+      <rect width="30" height="20" fill="#002395" />
+      <path d="M8 0 H24 V20 Z" fill="#fecb00" />
+      <g fill="#fff">
+        {[1.5, 4.5, 7.5, 10.5, 13.5, 16.5, 19.5].map((y) => (
+          <circle key={y} cx={5 + y * 0.8} cy={y} r="0.9" />
+        ))}
+      </g>
+    </>
+  ),
   "Costa Rica": (
     <>
       <rect width="30" height="20" fill="#002b7f" />

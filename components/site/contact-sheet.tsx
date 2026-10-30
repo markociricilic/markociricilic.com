@@ -3,12 +3,13 @@
 import { useCallback, useMemo, useState } from "react"
 import { Flag } from "@/components/site/flags"
 import { FlagRoute } from "@/components/site/flag-route"
-import { PhotoViewer, type ViewerItem } from "@/components/site/photo-viewer"
+import { PhotoViewer, type Poem, type ViewerItem } from "@/components/site/photo-viewer"
 
 type Photo = {
   title: string
   description?: string
   imageUrl: string
+  poem?: Poem
 }
 
 // Two-letter frame codes printed on the film edge, per country.
@@ -17,6 +18,7 @@ const CODES: Record<string, string> = {
   Tunisia: "TN",
   Greece: "GR",
   "Costa Rica": "CR",
+  "Bosnia and Herzegovina": "BA",
   Chile: "CL",
   Peru: "PE",
   Ecuador: "EC",
@@ -61,6 +63,7 @@ export function ContactSheet({ items, countries }: { items: Photo[]; countries: 
     title: p.title.replace(/^[^:]+:\s*/, ""),
     label: `▶ ${roll.code}-${String(i + 1).padStart(2, "0")} · ${i + 1}/${roll.photos.length}`,
     description: p.description,
+    poem: p.poem,
   }))
 
   return (
