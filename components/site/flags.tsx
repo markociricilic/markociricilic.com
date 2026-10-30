@@ -17,6 +17,21 @@ const V3 = (a: string, b: string, c: string) => (
 )
 
 const FLAGS: Record<string, React.ReactNode> = {
+  // thirteen stripes; the stars are reduced to a grid of dots
+  "United States": (
+    <>
+      <rect width="30" height="20" fill="#b22234" />
+      {[1, 3, 5, 7, 9, 11].map((k) => (
+        <rect key={k} y={(k * 20) / 13} width="30" height={20 / 13} fill="#fff" />
+      ))}
+      <rect width="13" height="10.77" fill="#3c3b6e" />
+      <g fill="#fff">
+        {[1.8, 4.6, 7.4, 10.2].flatMap((x) =>
+          [1.8, 4.2, 6.6, 9].map((y) => <circle key={`${x}-${y}`} cx={x} cy={y} r="0.55" />),
+        )}
+      </g>
+    </>
+  ),
   Tunisia: (
     <>
       <rect width="30" height="20" fill="#e70013" />
