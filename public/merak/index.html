@@ -231,7 +231,7 @@
 <script src="vendor/topojson-client.min.js"></script>
 <script src="vendor/globe.gl.min.js"></script>
 <script type="module">
-import { paintGlobe, hudRing } from "./paint.js"
+import { paintGlobe, paintCloseup, hudRing } from "./paint.js"
 
 // ---- the trip: born in Serbia, then the photography order, then back home ----
 const STOPS = [
@@ -336,6 +336,8 @@ function buildTrip() {
 }
 // the stop's flag stands in for its own city's marker
 const flagOn = (st) => STOPS.indexOf(st) === active && (!activeCity || activeCity.place === st.place)
+// flags sit near the ground when zoomed in on a city, or the camera ends up below them
+const flagHeight = (st) => (activeCity ? 0.004 : flagOn(st) ? 0.22 : 0.07)
 
 // ---- globe ----
 const stage = $("stage"), el = $("globe")
@@ -343,23 +345,23 @@ const globe = Globe()(el)
   .backgroundColor("rgba(0,0,0,0)")
   .showAtmosphere(true).atmosphereColor("#f0ac2e").atmosphereAltitude(0.13)
   .pointLat("lat").pointLng("lng")
-  .pointRadius((d) => (flagOn(d) ? 0.24 : 0.14))
-  .pointAltitude((d) => (flagOn(d) ? 0.22 : 0.07))
+  .pointRadius((d) => (activeCity ? 0.05 : flagOn(d) ? 0.24 : 0.14))
+  .pointAltitude((d) => flagHeight(d))
   .pointColor((d) => (flagOn(d) ? "#fff3cf" : "#f0ac2e"))
   .pointsTransitionDuration(600)
   .arcStartLat((d) => d.from.lat).arcStartLng((d) => d.from.lng)
   .arcEndLat((d) => d.to.lat).arcEndLng((d) => d.to.lng)
   .arcAltitudeAutoScale(0.45)
-  .arcStroke((d) => (d.i === tripPos - 1 ? 0.8 : 0.4))
+  .arcStroke((d) => (activeCity ? 0.1 : d.i === tripPos - 1 ? 0.8 : 0.4))
   .arcColor((d) => (d.i === tripPos - 1 ? ["#f0ac2e", "#fff3cf"] : d.i < visitedPos ? "rgba(240,172,46,.85)" : "rgba(240,172,46,.2)"))
   .arcDashLength((d) => (d.i === tripPos - 1 ? 0.35 : d.i < visitedPos ? 1 : 0.02))
   .arcDashGap((d) => (d.i === tripPos - 1 ? 0.06 : d.i < visitedPos ? 0 : 0.015))
   .arcDashAnimateTime((d) => (d.i === tripPos - 1 ? 1100 : 0))
   .ringLat("lat").ringLng("lng")
   .ringColor(() => (t) => `rgba(247,210,122,${0.95 * (1 - t)})`)
-  .ringMaxRadius(3.2).ringPropagationSpeed(2).ringRepeatPeriod(900)
+  .ringMaxRadius((d) => (d.city ? 0.6 : 3.2)).ringPropagationSpeed((d) => (d.city ? 0.5 : 2)).ringRepeatPeriod(900)
   .htmlLat("lat").htmlLng("lng")
-  .htmlAltitude((d) => (d.city ? 0.004 : flagOn(d) ? 0.22 : 0.07))
+  .htmlAltitude((d) => (d.city ? 0.004 : flagHeight(d)))
   .htmlTransitionDuration(600)
   .htmlElement((d) => {
     const n = document.createElement("div")
@@ -424,7 +426,77 @@ function overlay(t) {
   const pov = globe.pointOfView()
   hudRing(ic, cx, cy, R, t, pov.lng)
   stage.classList.toggle("zoomed", pov.altitude < ZOOM_IN)
+  updateCloseup(pov, t)
   requestAnimationFrame(overlay)
+}
+
+// ---- close-up: a sharp patch of map laid over the globe when zoomed in ----
+const CLOSEUP_ALT = 0.28 // camera height below which the patch shows
+const CLOSEUP_LAT = 9 // degrees of map above and below the patch's centre
+const CLOSEUP_SNAP = 3 // patch centres snap to a grid, so they can be reused
+const CLOSEUP_KEEP = 6
+const closeups = new Map()
+let worldMap = null, closeupNow = null, closeupAt = 0, globeMesh = null
+
+function makeCloseup(lat, lng) {
+  const aspect = Math.max(1, stage.clientWidth / stage.clientHeight)
+  const north = lat + CLOSEUP_LAT, south = lat - CLOSEUP_LAT
+  let half = (CLOSEUP_LAT * aspect * 1.15) / Math.cos((lat * Math.PI) / 180)
+  half = Math.min(half, 60)
+  const west = Math.max(-180, lng - half), east = Math.min(180, lng + half)
+  const limit = Math.min(4096, globe.renderer().capabilities.maxTextureSize)
+  const K = Math.min(64, limit / (east - west), limit / (north - south))
+  const canvas = paintCloseup(worldMap, ATLAS, [west, south, east, north], K)
+  const map = new mat.map.constructor(canvas)
+  map.colorSpace = mat.map.colorSpace
+  map.anisotropy = globe.renderer().capabilities.getMaxAnisotropy()
+  map.needsUpdate = true
+  const material = new mat.constructor({ map, shininess: 0 })
+  const r = (d) => (d * Math.PI) / 180
+  // same layout as the globe's sphere: longitude runs from -180 at phi 0, latitude from the north pole
+  const shape = new globeMesh.geometry.constructor(globe.getGlobeRadius() * 1.0008, 64, 48, r(west + 180), r(east - west), r(90 - north), r(north - south))
+  const mesh = new globeMesh.constructor(shape, material)
+  mesh.rotation.copy(globeMesh.rotation)
+  mesh.visible = false
+  globeMesh.parent.add(mesh)
+  return mesh
+}
+function updateCloseup(pov, t) {
+  if (!worldMap || !mat.map) return
+  if (!globeMesh) globe.scene().traverse((o) => { if (o.material === mat) globeMesh = o })
+  if (!globeMesh) return
+  const near = pov.altitude < CLOSEUP_ALT && Math.abs(pov.lat) < 72
+  if (!near) {
+    if (closeupNow) closeupNow.visible = false
+    closeupNow = null
+    return
+  }
+  // the view must stay inside the patch, so the grid gets wider towards the poles
+  const lat = Math.round(pov.lat / CLOSEUP_SNAP) * CLOSEUP_SNAP
+  const stepLng = CLOSEUP_SNAP / Math.cos((lat * Math.PI) / 180)
+  const lng = Math.round(pov.lng / stepLng) * stepLng
+  const key = `${lat}|${lng.toFixed(2)}|${stage.clientWidth}x${stage.clientHeight}`
+  if (closeupNow && closeupNow.key === key) return
+  let mesh = closeups.get(key)
+  if (!mesh) {
+    if (t - closeupAt < 150) return // no repainting every frame while the camera moves
+    mesh = makeCloseup(lat, lng)
+    mesh.key = key
+    closeups.set(key, mesh)
+    for (const [k, old] of closeups) {
+      if (closeups.size <= CLOSEUP_KEEP) break
+      if (old === closeupNow) continue
+      old.parent.remove(old); old.geometry.dispose(); old.material.map.dispose(); old.material.dispose()
+      closeups.delete(k)
+    }
+    closeupAt = t
+  } else {
+    // most recently used goes last, so the oldest is removed first
+    closeups.delete(key); closeups.set(key, mesh)
+  }
+  if (closeupNow) closeupNow.visible = false
+  mesh.visible = true
+  closeupNow = mesh
 }
 
 // ---- route: flags strung on a circuit trace, the reached part lit ----
@@ -539,8 +611,12 @@ function refreshGlobe() {
   MARKERS.forEach((c) => c.el && c.el.classList.toggle("on", c === activeCity))
 }
 
+const CITY_ALT = 0.15 // camera height when looking at a city
+const LONG_HOP = 800 // km; further than this the camera climbs, flies, then comes back down
+let descent = null
 // without a city, shows the whole country; alt is the camera height over the city
-function go(i, ms = 1600, focus, alt = 0.6) {
+function go(i, ms = 1600, focus, alt = CITY_ALT) {
+  clearTimeout(descent)
   active = (i + STOPS.length) % STOPS.length
   activeCity = focus || null
   tripPos = focus ? TRIP.indexOf(focus) : TRIP.findIndex((c) => c.stop === active)
@@ -548,18 +624,23 @@ function go(i, ms = 1600, focus, alt = 0.6) {
   visitedPos = Math.max(visitedPos, tripPos)
   expanded = false
   const st = STOPS[active], small = stage.clientWidth < 600
-  if (focus) globe.pointOfView({ lat: focus.lat, lng: focus.lng, altitude: alt + (small ? 0.4 : 0) }, ms)
+  if (focus) globe.pointOfView({ lat: focus.lat, lng: focus.lng, altitude: alt + (small ? 0.1 : 0) }, ms)
   else globe.pointOfView({ lat: st.lat - 6, lng: st.lng, altitude: (playing ? 1.75 : 1.95) + (small ? 0.9 : 0) }, ms)
   refreshGlobe()
   drawRoute()
   drawRoll()
   drawHud()
+  $("play").textContent = playing ? "Stop" : playLabel()
 }
 const showCity = (c) => go(c.stop, 1200, c)
-// fly to a city on the trip, higher up the further the hop
-function goTrip(p, ms = 1600) {
+const playLabel = () => (tripPos === 0 ? "Play the trip" : "Continue the trip")
+// fly to a city on the trip, climbing first if it's far away
+function goTrip(p, ms = 1100) {
   const c = TRIP[(p + TRIP.length) % TRIP.length]
-  go(c.stop, ms, c, Math.min(1.75, Math.max(0.5, km(activeCity || STOPS[active], c) / 2600)))
+  const dist = km(activeCity || STOPS[active], c)
+  if (dist < LONG_HOP) return go(c.stop, ms, c)
+  go(c.stop, ms, c, Math.min(1.75, dist / 2600))
+  descent = setTimeout(() => globe.pointOfView({ lat: c.lat, lng: c.lng, altitude: CITY_ALT + (stage.clientWidth < 600 ? 0.1 : 0) }, 800), ms)
 }
 
 // ---- first-visit trip ----
@@ -572,20 +653,16 @@ function intro(big, small, hold = 1800) {
 }
 function playTrip() {
   playing = true
-  visitedTo = 0
-  visitedPos = 0
   $("play").textContent = "Stop"
-  goTrip(0, 1800)
-  intro("Departing Beograd", `${STOPS.length - 1} countries · ${TRIP.length} cities · back home`, 2300)
-  let p = 0
+  let p = tripPos
   const step = () => {
     if (!playing) return
     p++
     if (p < TRIP.length) {
-      // quick hops inside a country, a longer flight between countries
-      const sameCountry = TRIP[p].stop === TRIP[p - 1].stop
-      goTrip(p, sameCountry ? 1100 : 1900)
-      timer = setTimeout(step, sameCountry ? 1600 : 3000)
+      // quick hops between nearby cities, a longer flight to far ones
+      const long = km(TRIP[p - 1], TRIP[p]) >= LONG_HOP
+      goTrip(p, long ? 1500 : 1100)
+      timer = setTimeout(step, long ? 3200 : 1600)
     } else {
       visitedTo = STOPS.length
       visitedPos = TRIP.length
@@ -594,13 +671,26 @@ function playTrip() {
       stopTrip()
     }
   }
-  timer = setTimeout(step, 2700)
+  if (p === 0) {
+    // from home the trip starts over; anywhere else it carries on from there
+    visitedTo = 0
+    visitedPos = 0
+    goTrip(0, 1800)
+    intro("Departing Beograd", `${STOPS.length - 1} countries · ${TRIP.length} cities · back home`, 2300)
+    timer = setTimeout(step, 2700)
+  } else if (activeCity) {
+    timer = setTimeout(step, 400)
+  } else {
+    // a whole country is on show: start at its first city
+    goTrip(p, 1500)
+    timer = setTimeout(step, 3200)
+  }
   try { localStorage.setItem("merak.seen", "1") } catch (e) {}
 }
 function stopTrip() {
   playing = false
   clearTimeout(timer)
-  $("play").textContent = "Play the trip"
+  $("play").textContent = playLabel()
 }
 $("play").onclick = () => (playing ? stopTrip() : playTrip())
 $("prev").onclick = () => { stopTrip(); goTrip(tripPos - 1) }
@@ -641,6 +731,7 @@ Promise.all([
   document.fonts.load("26px Silkscreen").catch(() => {}),
 ]).then(([data, topo]) => {
   rolls = data
+  worldMap = topo
   buildTrip()
   go(0, 0)
   // paint after first frame so the page shows immediately

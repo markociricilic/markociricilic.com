@@ -18,7 +18,7 @@ function mask(W, H, draw) {
   const cv = document.createElement("canvas")
   cv.width = W
   cv.height = H
-  const c = cv.getContext("2d")
+  const c = cv.getContext("2d", { willReadFrequently: true })
   c.fillStyle = "#fff"
   draw(c)
   return c.getImageData(0, 0, W, H).data
@@ -120,6 +120,72 @@ export function paintGlobe(topo, visited, { W = 4096, H = 2048 } = {}) {
   // 6. scanlines; they curve with the sphere like a CRT
   ctx.fillStyle = "rgba(0,0,0,0.22)"
   for (let y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 1.5)
+  return cv
+}
+
+// The globe texture goes soft up close, so zooming in repaints just the area in view
+// from the map's outlines, K pixels per degree. Same look, finer LED cells, fixed to a
+// lat/lng grid so neighbouring close-ups line up.
+const CELL_DEG = 0.2
+let shapes = null
+export function paintCloseup(topo, visited, [west, south, east, north], K) {
+  if (!shapes) {
+    const countries = topojson.feature(topo, topo.objects.countries).features
+    shapes = {
+      land: { type: "FeatureCollection", features: countries },
+      on: { type: "FeatureCollection", features: countries.filter((f) => visited.has(f.properties.name)) },
+      coast: topojson.mesh(topo, topo.objects.countries, (a, b) => a === b),
+      borders: topojson.mesh(topo, topo.objects.countries, (a, b) => a !== b),
+    }
+  }
+  const W = Math.round((east - west) * K), H = Math.round((north - south) * K)
+  const cv = document.createElement("canvas")
+  cv.width = W
+  cv.height = H
+  const ctx = cv.getContext("2d")
+  const rad = Math.PI / 180, S = K / rad
+  const proj = d3.geoEquirectangular().scale(S).translate([-west * rad * S, north * rad * S]).clipExtent([[0, 0], [W, H]]).precision(0.1)
+  const geo = d3.geoPath(proj, ctx)
+  const toX = (lng) => (lng - west) * K, toY = (lat) => (north - lat) * K
+  const first = (v) => Math.ceil(v / CELL_DEG) * CELL_DEG
+
+  ctx.fillStyle = BG
+  ctx.fillRect(0, 0, W, H)
+  ctx.fillStyle = "rgba(240,172,46,0.07)"
+  for (let lat = first(south); lat < north; lat += CELL_DEG) for (let lng = first(west); lng < east; lng += CELL_DEG) ctx.fillRect(toX(lng) - 1, toY(lat) - 1, 2, 2)
+  ctx.lineWidth = 1.2
+  ctx.strokeStyle = LINE
+  ctx.beginPath(); geo(d3.geoGraticule().step([15, 15])()); ctx.stroke()
+
+  ctx.fillStyle = DARK_LAND
+  ctx.beginPath(); geo(shapes.land); ctx.fill()
+  const lit = mask(W, H, (c) => { c.beginPath(); d3.geoPath(proj, c)(shapes.on); c.fill() })
+  const cell = CELL_DEG * K * 0.62
+  for (let lat = first(south); lat < north; lat += CELL_DEG) {
+    for (let lng = first(west); lng < east; lng += CELL_DEG) {
+      const x = Math.round(toX(lng)), y = Math.round(toY(lat))
+      if (x < 0 || y < 0 || x >= W || y >= H || lit[(y * W + x) * 4] < 128) continue
+      // colour from the cell's position, so it's the same in every close-up
+      const k = rng(Math.round(lat * 5) * 7919 + Math.round(lng * 5) * 104729 + 1)()
+      ctx.fillStyle = k < 0.12 ? "#fff3cf" : k < 0.55 ? STRAW : AMBER
+      ctx.fillRect(x - cell / 2, y - cell / 2, cell, cell)
+    }
+  }
+
+  // the glow is wide see-through strokes: shadowBlur takes seconds on a canvas this big
+  ctx.lineJoin = "round"
+  ctx.strokeStyle = "rgba(240,172,46,0.5)"
+  ctx.lineWidth = 1.5
+  ctx.beginPath(); geo(shapes.borders); ctx.stroke()
+  ctx.beginPath(); geo(shapes.coast)
+  ctx.strokeStyle = "rgba(240,172,46,0.14)"; ctx.lineWidth = 9; ctx.stroke()
+  ctx.strokeStyle = "rgba(240,172,46,0.85)"; ctx.lineWidth = 2; ctx.stroke()
+  ctx.beginPath(); geo(shapes.on)
+  ctx.strokeStyle = "rgba(247,210,122,0.16)"; ctx.lineWidth = 11; ctx.stroke()
+  ctx.strokeStyle = STRAW; ctx.lineWidth = 2.4; ctx.stroke()
+
+  ctx.fillStyle = "rgba(0,0,0,0.18)"
+  for (let y = 0; y < H; y += 6) ctx.fillRect(0, y, W, 2)
   return cv
 }
 
