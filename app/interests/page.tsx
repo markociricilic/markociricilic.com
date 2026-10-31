@@ -395,6 +395,26 @@ const cookingItems = [
     imageUrl: "/images/interests/cooking-26.jpg",
     category: "cooking" as const,
   },
+  {
+    title: "Griz (Гриз)",
+    description: "Griz, a Balkan semolina porridge with milk, sugar and vanilla, topped with cinnamon and raspberry jam",
+    components: ["Semolina", "Milk", "Sugar", "Vanilla", "Cinnamon", "Raspberry jam"],
+    imageUrl: "/images/interests/cooking-43.jpg",
+    category: "cooking" as const,
+  },
+  {
+    title: "Thanksgiving Chicken",
+    description: "Roast chicken with caramelized onion, roasted carrots, roasted potatoes and beets glazed with pomegranate molasses, and a lettuce and Granny Smith apple salad tossed with an olive oil, maple syrup, apple cider vinegar and Dijon mustard vinaigrette, and covered in breadcrumbs toasted in butter and toasted walnuts",
+    components: ["Roast chicken", "Caramelized onion", "Roasted carrots", "Roasted potatoes and beets with pomegranate molasses", "Lettuce", "Olive oil/Maple syrup/Apple cider vinegar/Dijon mustard vinaigrette", "Toasted breadcrumbs in butter", "Toasted walnuts", "Granny Smith apples"],
+    imageUrl: "/images/interests/cooking-44.jpg",
+    category: "cooking" as const,
+  },
+  {
+    title: "Pork Ribs",
+    description: "Pork ribs with mashed potatoes, broccolini and green onions",
+    imageUrl: "/images/interests/cooking-46.jpg",
+    category: "cooking" as const,
+  },
 ]
 
 const photographyItems = [
