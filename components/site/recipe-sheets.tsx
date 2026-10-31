@@ -24,18 +24,22 @@ function cuisine(d: Dish) {
   if (/tteokbokki/.test(t)) return "Korean"
   if (/japanese/.test(t)) return "Japanese"
   if (/thai/.test(t)) return "Thai"
-  if (/malai|handi/.test(t)) return "Indian"
+  if (/jerk chicken/.test(t)) return "Jamaican"
+  if (/barbari|muhammar/.test(t)) return "Gulf"
+  if (/malai|handi|butter chicken/.test(t)) return "Indian"
   if (/bourguignon|french/.test(t)) return "French"
   if (/pasta|ragù|rigatoni|spaghetti|fettuccine|carbonara|italian/.test(t)) return "Italian"
   return "Original"
 }
 
-// Filter menu order (roughly west to east), and the flag shown for each cuisine.
+// Filter menu order, and the flag shown for each cuisine.
 const CUISINES: [string, string][] = [
   ["French", "France"],
   ["Italian", "Italy"],
   ["Balkan", "Serbia"],
   ["Ukrainian", "Ukraine"],
+  ["Jamaican", "Jamaica"],
+  ["Gulf", "United Arab Emirates"],
   ["Indian", "India"],
   ["Thai", "Thailand"],
   ["Korean", "South Korea"],

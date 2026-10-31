@@ -167,6 +167,19 @@ const FLAGS: Record<string, React.ReactNode> = {
       <rect y="6.67" width="30" height="6.67" fill="#2d2a4a" />
     </>
   ),
+  Jamaica: (
+    <>
+      <rect width="30" height="20" fill="#009b3a" />
+      <path d="M0 0 L15 10 L0 20 Z M30 0 L15 10 L30 20 Z" fill="#000" />
+      <path d="M0 0 L30 20 M30 0 L0 20" stroke="#fed100" strokeWidth="2.6" />
+    </>
+  ),
+  "United Arab Emirates": (
+    <>
+      {H3("#00732f", "#fff", "#000")}
+      <rect width="8" height="20" fill="#ff0000" />
+    </>
+  ),
   India: (
     <>
       {H3("#ff9933", "#fff", "#138808")}
