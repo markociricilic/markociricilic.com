@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>merak — travel log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600&family=Silkscreen&family=Space+Grotesk:wght@300;700&display=swap" />
+<style>
+  :root {
+    --bg: #0b0b0b; --ink: #f2efe9; --muted: #9a958d; --line: #3a3631;
+    --accent: #f0ac2e; --accent-2: #f7d27a; --panel: #15130f;
+    --px: "Silkscreen", monospace; --display: "Space Grotesk", sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; color: var(--ink); font-family: var(--mono); font-size: 13px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  body { overflow: hidden; background: var(--bg); }
+  /* CRT scanlines and a vignette over everything */
+  body::after { content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(0,0,0,.45)); }
+  button { font: inherit; color: inherit; }
+
+  .app { display: grid; grid-template-columns: minmax(360px, 450px) 1fr; height: 100vh; }
+  .col { position: relative; display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--line); }
+  .col-scroll { flex: 1; overflow-y: auto; padding: 26px 28px 28px 26px; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+
+  /* wordmark, like the main site's logo, with the odd glitch */
+  .logo { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+  .logo .dots { display: inline-grid; grid-template-columns: repeat(3, 5px); gap: 2px; align-self: center; }
+  .logo .dots i { width: 5px; height: 5px; background: var(--accent); }
+  .logo .dots i:nth-child(1), .logo .dots i:nth-child(2), .logo .dots i:nth-child(4) { visibility: hidden; }
+  .logo .word { font-family: var(--display); font-size: 54px; letter-spacing: -0.04em; line-height: 1; font-weight: 300; margin: 0; animation: glitch 7s infinite steps(1); }
+  .logo .word b { font-weight: 700; color: var(--accent); }
+  .logo .n { font-family: var(--px); font-size: 10px; color: var(--muted); }
+  @keyframes glitch {
+    0%, 93%, 100% { text-shadow: none; transform: none; }
+    94% { text-shadow: -2px 0 #ff2bd6, 2px 0 #2be8ff; transform: translateX(1px); }
+    95% { text-shadow: 3px 0 #ff2bd6, -3px 0 #2be8ff; transform: translateX(-2px) skewX(-6deg); }
+    96% { text-shadow: -1px 0 #ff2bd6, 1px 0 #2be8ff; transform: none; }
+  }
+  .def { margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+  .def b { font-weight: 600; color: var(--accent-2); }
+  .lead { margin: 6px 0 0; font-family: var(--display); font-size: 18px; line-height: 1.3; }
+
+  /* section headers: "▪ ROUTE ┄┄┄ 14 STOPS" */
+  .sec { display: flex; align-items: center; gap: 10px; margin: 30px 0 12px; }
+  .sec .ico { width: 14px; height: 14px; border: 1px solid var(--ink); display: grid; place-items: center; flex: none; }
+  .sec .ico::after { content: ""; width: 6px; height: 6px; background: var(--accent); }
+  .sec h2 { margin: 0; font-family: var(--px); font-weight: 400; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; }
+  .sec .rule { flex: 1; height: 7px; border-bottom: 1px solid var(--line); background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 12px) bottom / 100% 5px no-repeat; }
+  .sec .idx { font-family: var(--px); font-size: 10px; color: var(--accent); }
+
+  /* route: flags strung on a circuit trace */
+  .route svg { display: block; width: 100%; max-width: 440px; height: auto; overflow: visible; }
+  .trace { fill: none; stroke: var(--line); stroke-width: 1.5; }
+  .trace.lit { stroke: var(--accent); stroke-width: 2; filter: drop-shadow(0 0 3px var(--accent)); }
+  .pad { cursor: pointer; outline: none; }
+  .pad .hit { fill: transparent; }
+  .pad .node { fill: var(--bg); stroke: var(--ink); stroke-width: 1.25; transition: fill .15s; }
+  .pad:hover .node, .pad:focus-visible .node { fill: var(--accent-2); }
+  .pad.done .node { fill: #6b4a12; stroke: var(--accent); }
+  .pad.on .node { fill: var(--accent); stroke: var(--accent-2); filter: drop-shadow(0 0 4px var(--accent)); }
+  .pad .ring { fill: none; stroke: var(--accent); stroke-width: 2; }
+  .pad .home { font-family: var(--px); font-size: 7px; fill: var(--accent); text-transform: uppercase; }
+
+  .meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font-family: var(--px); font-size: 10px; text-transform: uppercase; color: var(--muted); }
+  .meta .country { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: var(--ink); }
+  .meta .stopno { margin-left: auto; color: var(--accent); }
+  .place { margin: 4px 0 14px; font-size: 11px; color: var(--muted); }
+
+  /* contact sheet, as in the photography section on the main site */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 10px; }
+  .frame { position: relative; display: block; padding: 5px 5px 0; background: #111; border: 0; cursor: zoom-in; text-align: left; }
+  .frame .img { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #222; }
+  .frame img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.15); transition: filter .25s; }
+  .frame .img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, #f7d27a, #f7d27a 45%, #f0ac2e 85%); mix-blend-mode: multiply; transition: opacity .25s; }
+  .frame:hover img, .frame:focus-visible img { filter: none; }
+  .frame:hover .img::after, .frame:focus-visible .img::after { opacity: 0; }
+  .frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .frame .edge { display: flex; justify-content: space-between; padding: 3px 1px 4px; font-family: var(--px); font-size: 8px; color: #e8a73a; letter-spacing: .04em; }
+  .more { display: grid; place-items: center; border: 1px dashed var(--line); background: transparent; font-family: var(--px); font-size: 11px; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+  .more:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* globe stage */
+  .stage { position: relative; min-width: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, #17120a, var(--bg) 70%); }
+  .stage canvas.layer { position: absolute; inset: 0; pointer-events: none; }
+  #halo { z-index: 0; }
+  #globe { position: absolute; inset: 0; z-index: 1; }
+  #ink { z-index: 2; }
+  .hud { position: absolute; z-index: 3; pointer-events: none; font-family: var(--px); font-size: 10px; text-transform: uppercase; color: var(--muted); }
+  .hud b { color: var(--accent); font-weight: 400; }
+  .hud.tl { top: 20px; left: 24px; }
+  .hud.tl .live::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 6px; background: #ff3b3b; box-shadow: 0 0 6px #ff3b3b; animation: blink 1.2s infinite steps(1); }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hud.tr { top: 18px; right: 24px; text-align: right; }
+  .hud.tr .city { font-family: var(--display); font-size: 28px; font-weight: 300; letter-spacing: -0.02em; text-transform: none; color: var(--ink); }
+  .hud.bl { bottom: 22px; left: 24px; right: 320px; }
+  .hud .leg { font-family: var(--display); font-size: 30px; font-weight: 300; letter-spacing: -0.03em; text-transform: none; color: var(--ink); line-height: 1.05; margin: 4px 0 2px; }
+  .hud .leg span { color: var(--accent); }
+  .controls { position: absolute; z-index: 3; right: 24px; bottom: 22px; display: flex; gap: 8px; }
+  .btn { padding: 7px 12px; border: 1px solid #444; background: #111; font-family: var(--px); font-size: 11px; text-transform: uppercase; cursor: pointer; transition: border-color .15s, color .15s; }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.hot { background: var(--accent); border-color: var(--accent); color: #0b0b0b; box-shadow: 0 0 12px rgba(240,172,46,.45); }
+  .btn.hot:hover { background: var(--accent-2); color: #0b0b0b; }
+
+  /* flag pins on the globe */
+  /* globe.gl centres each element on its point, so the elements are zero-size anchors
+     and the visible parts hang off them */
+  .pin { width: 0; height: 0; position: relative; }
+  .pin .in { position: absolute; left: 0; bottom: 0; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; pointer-events: auto; cursor: pointer; }
+  .pin .card { line-height: 0; outline: 1px solid rgba(255,255,255,.35); transition: transform .25s; }
+  .pin .stake { width: 1px; height: 9px; background: var(--accent); box-shadow: 0 0 4px var(--accent); }
+  .pin .name { margin-bottom: 5px; font-family: var(--px); font-size: 9px; text-transform: uppercase; color: var(--accent-2); background: rgba(11,11,11,.85); padding: 2px 6px; border: 1px solid var(--accent); white-space: nowrap; display: none; }
+  .pin.on .card { transform: scale(1.45); outline: 2px solid var(--accent); }
+  .pin.on .name { display: block; }
+  .pin:hover .name { display: block; }
+  /* city markers: hidden until you zoom in */
+  .city-pin { display: none; position: relative; width: 8px; height: 8px; pointer-events: auto; cursor: pointer; }
+  .zoomed .city-pin { display: block; }
+  .zoomed .pin .name { display: block; }
+  .city-pin i { display: block; width: 8px; height: 8px; box-sizing: border-box; background: var(--bg); border: 1.5px solid var(--accent-2); box-shadow: 0 0 6px var(--accent); }
+  .city-pin span { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-family: var(--px); font-size: 9px; text-transform: uppercase; color: var(--accent-2); white-space: nowrap; text-shadow: 0 0 4px #000, 0 0 8px #000; }
+  .city-pin:hover i { background: var(--accent); }
+  .city-pin:hover span { color: #fff; }
+
+  .intro { position: absolute; z-index: 4; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 16px 28px 18px; background: rgba(11,11,11,.88); border: 1px solid var(--line); text-align: center; transition: opacity .5s; }
+  .intro::before, .intro::after { content: ""; position: absolute; width: 12px; height: 12px; border-color: var(--accent); border-style: solid; }
+  .intro::before { top: -4px; left: -4px; border-width: 2px 0 0 2px; }
+  .intro::after { bottom: -4px; right: -4px; border-width: 0 2px 2px 0; }
+  .intro .big { font-family: var(--display); font-size: 34px; font-weight: 300; letter-spacing: -0.03em; }
+  .intro .small { margin-top: 4px; font-family: var(--px); font-size: 10px; text-transform: uppercase; color: var(--accent); }
+  .intro.hide { opacity: 0; pointer-events: none; }
+
+  .lb { position: fixed; inset: 0; z-index: 50; display: none; place-items: center; padding: 56px 16px 72px; background: rgba(8,7,5,.95); }
+  .lb.open { display: grid; }
+  .lb figure { margin: 0; max-width: min(92vw, 1000px); }
+  .lb img { display: block; max-width: 100%; max-height: 72vh; margin: 0 auto; border: 6px solid #111; }
+  .lb figcaption { display: grid; gap: 4px; margin-top: 10px; }
+  .lb .lbl { font-family: var(--px); font-size: 10px; color: #e8a73a; }
+  .lb .ttl { font-family: var(--display); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+  .lb p { margin: 0; font-size: 12px; color: #b9b2a7; max-width: 70ch; }
+  .lb .x { position: fixed; top: 12px; right: 12px; }
+  .lb .nav { position: fixed; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; padding: 0; }
+  .lb .nav.p { left: 12px; } .lb .nav.n { right: 12px; }
+
+  .foot { padding: 10px 26px 12px; display: flex; gap: 16px; border-top: 1px solid var(--line); font-family: var(--px); font-size: 9.5px; text-transform: uppercase; color: var(--muted); }
+  .foot a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+  @media (max-width: 900px) {
+    body { overflow: auto; }
+    .app { display: flex; flex-direction: column; height: auto; }
+    .col { border-right: 0; }
+    .stage { order: -1; height: 64vh; min-height: 400px; border-bottom: 1px solid var(--line); }
+    .col-scroll { overflow: visible; padding: 18px 16px 24px; }
+    .hud.bl { right: 16px; left: 16px; bottom: 62px; }
+    .hud .leg { font-size: 24px; }
+    .hud.tr { display: none; }
+    .hud.tl { left: 16px; }
+    .controls { left: 16px; right: 16px; bottom: 16px; justify-content: space-between; }
+    .foot { padding: 10px 16px 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="col">
+    <div class="col-scroll">
+      <div class="logo"><span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></span><h1 class="word">mer<b>a</b>k</h1><span class="n">/ travel log · 2026</span></div>
+      <p class="def"><b>merak</b> (n.) — the quiet joy you find in small things.</p>
+      <p class="lead">Life outtakes from all my adventures, one stop at a time.</p>
+
+      <div class="sec"><span class="ico"></span><h2>Route</h2><span class="rule"></span><span class="idx" id="routeCount"></span></div>
+      <div class="route" id="route"></div>
+
+      <div class="sec"><span class="ico"></span><h2>Roll</h2><span class="rule"></span><span class="idx" id="rollIdx"></span></div>
+      <div class="meta">
+        <span class="country" id="country"></span>
+        <span id="year"></span>
+        <span id="frames"></span>
+        <span id="cities"></span>
+        <span class="stopno" id="stopno"></span>
+      </div>
+      <p class="place" id="place"></p>
+      <div class="grid" id="grid"></div>
+    </div>
+    <div class="foot">
+      <a href="/interests/#photography">← Back to photography</a>
+      <span>Toronto, ON</span>
+    </div>
+  </section>
+
+  <section class="stage" id="stage">
+    <canvas class="layer" id="halo"></canvas>
+    <div id="globe"></div>
+    <canvas class="layer" id="ink"></canvas>
+    <div class="hud tl"><span class="live">Live · merak.sys</span><br />drag to spin · zoom in for cities</div>
+    <div class="hud tr"><div class="city" id="city"></div><span id="coords"></span></div>
+    <div class="hud bl">
+      <div id="legLabel"></div>
+      <div class="leg" id="legRoute"></div>
+      <div id="legKm"></div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="prev" aria-label="Previous stop">← Prev</button>
+      <button class="btn hot" id="play">Play the trip</button>
+      <button class="btn" id="next" aria-label="Next stop">Next →</button>
+    </div>
+    <div class="intro hide" id="intro"><div class="big" id="introBig"></div><div class="small" id="introSmall"></div></div>
+  </section>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <button class="btn x" id="lbX">Close ×</button>
+  <button class="btn nav p" id="lbP">←</button>
+  <button class="btn nav n" id="lbN">→</button>
+  <figure><img id="lbImg" alt="" /><figcaption><div class="lbl" id="lbLbl"></div><div class="ttl" id="lbTitle"></div><p id="lbDesc"></p></figcaption></figure>
+</div>
+
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script src="vendor/globe.gl.min.js"></script>
+<script type="module">
+import { paintGlobe, hudRing } from "./paint.js"
+
+// ---- the trip: born in Serbia, then the photography order, then back home ----
+const STOPS = [
+  { country: "Serbia", code: "RS", place: "Beograd", lat: 44.79, lng: 20.45, home: true },
+  { country: "United States", code: "US", place: "San Francisco", lat: 37.77, lng: -122.42 },
+  { country: "Tunisia", code: "TN", place: "Mahdia", lat: 35.50, lng: 11.06 },
+  { country: "Greece", code: "GR", place: "Kérkyra", lat: 39.62, lng: 19.92 },
+  { country: "Costa Rica", code: "CR", place: "Manuel Antonio", lat: 9.39, lng: -84.14 },
+  { country: "Bosnia and Herzegovina", code: "BA", place: "Višegrad", lat: 43.78, lng: 19.29 },
+  { country: "Chile", code: "CL", place: "Santiago", lat: -33.45, lng: -70.67 },
+  { country: "Peru", code: "PE", place: "Lima", lat: -12.05, lng: -77.04 },
+  { country: "Ecuador", code: "EC", place: "Montañita", lat: -1.83, lng: -80.75 },
+  { country: "Portugal", code: "PT", place: "Porto", lat: 41.15, lng: -8.61 },
+  { country: "Spain", code: "ES", place: "Sevilla", lat: 37.39, lng: -5.98 },
+  { country: "France", code: "FR", place: "Marseille", lat: 43.30, lng: 5.37 },
+  { country: "Monaco", code: "MC", place: "Monte-Carlo", lat: 43.74, lng: 7.42 },
+  { country: "Italy", code: "IT", place: "Genova", lat: 44.41, lng: 8.93 },
+  { country: "Vatican City", code: "VA", place: "Città del Vaticano", lat: 41.90, lng: 12.45 },
+  { country: "Germany", code: "DE", place: "München", lat: 48.14, lng: 11.58 },
+  { country: "Scotland", code: "SC", place: "Ayr", lat: 55.46, lng: -4.63 },
+]
+// every city the photos were taken in; shown as markers once you zoom in
+const CITIES = [
+  ["Serbia", "Beograd", 44.79, 20.45],
+  ["United States", "Līhuʻe", 21.97, -159.37], ["United States", "Hāʻena", 22.22, -159.56], ["United States", "Mountain View", 37.39, -122.08], ["United States", "Anaheim", 33.81, -117.92], ["United States", "Los Angeles", 34.10, -118.33],
+  ["United States", "Santa Monica", 34.01, -118.50], ["United States", "Washington, D.C.", 38.90, -77.04], ["United States", "Half Moon Bay", 37.46, -122.43], ["United States", "San Francisco", 37.77, -122.42], ["United States", "Alcatraz", 37.83, -122.42],
+  ["United States", "San Jose", 37.32, -121.95], ["United States", "Stanford", 37.42, -122.17], ["United States", "Garrapata", 36.46, -121.92], ["United States", "Carmel-by-the-Sea", 36.54, -121.93], ["United States", "New York", 40.73, -74.00],
+  ["Tunisia", "Mahdia", 35.50, 11.06], ["Tunisia", "El Jem", 35.30, 10.71], ["Tunisia", "Sidi Bou Said", 36.87, 10.35], ["Tunisia", "Kairouan", 35.68, 10.10],
+  ["Tunisia", "Matmata", 33.54, 9.97], ["Tunisia", "Douz", 33.46, 9.02], ["Tunisia", "Chott el Djerid", 33.70, 8.43], ["Tunisia", "Tozeur", 33.92, 8.13], ["Tunisia", "Chebika", 34.32, 7.94],
+  ["Greece", "Istro", 35.12, 25.74], ["Greece", "Kérkyra", 39.62, 19.92], ["Greece", "Vido", 39.64, 19.93], ["Greece", "Kassiopi", 39.79, 19.92],
+  ["Costa Rica", "Manuel Antonio", 9.39, -84.14], ["Costa Rica", "La Fortuna", 10.47, -84.64], ["Costa Rica", "Guatuso", 10.67, -84.82],
+  ["Bosnia and Herzegovina", "Višegrad", 43.78, 19.29], ["Bosnia and Herzegovina", "Dobrun", 43.76, 19.40],
+  ["Chile", "Santiago", -33.45, -70.67], ["Chile", "San Pedro de Atacama", -22.91, -68.20], ["Chile", "Arica", -18.48, -70.32],
+  ["Peru", "Lima", -12.05, -77.04], ["Peru", "Cusco", -13.53, -71.97], ["Peru", "Ollantaytambo", -13.26, -72.26], ["Peru", "Machu Picchu", -13.16, -72.54], ["Peru", "Vinicunca", -13.87, -71.30],
+  ["Ecuador", "Montañita", -1.83, -80.75],
+  ["Portugal", "Porto", 41.15, -8.61], ["Portugal", "Lisboa", 38.72, -9.14],
+  ["Spain", "Sevilla", 37.39, -5.98], ["Spain", "Córdoba", 37.88, -4.78], ["Spain", "Madrid", 40.42, -3.70], ["Spain", "Barcelona", 41.39, 2.17],
+  ["France", "Paris", 48.86, 2.35], ["France", "Marseille", 43.30, 5.37], ["France", "Nice", 43.70, 7.27], ["France", "Menton", 43.77, 7.50],
+  ["Monaco", "Monte-Carlo", 43.74, 7.42],
+  ["Italy", "Genova", 44.41, 8.93], ["Italy", "Milano", 45.46, 9.19], ["Italy", "Firenze", 43.77, 11.26], ["Italy", "Roma", 41.90, 12.50],
+  ["Vatican City", "Città del Vaticano", 41.90, 12.45],
+  ["Germany", "München", 48.14, 11.58], ["Germany", "Dachau", 48.26, 11.43], ["Germany", "Berlin", 52.52, 13.40],
+  ["Scotland", "Ayr", 55.46, -4.63],
+].map(([country, place, lat, lng]) => ({ city: true, country, place, lat, lng }))
+// the stop's own city already has its flag pin
+const MARKERS = CITIES.filter((c) => !STOPS.some((s) => s.place === c.place))
+const ZOOM_IN = 1.2 // camera altitude below which cities show
+
+const ATLAS = new Set(["Serbia", "United States of America", "Tunisia", "Greece", "Costa Rica", "Bosnia and Herz.", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican", "Germany", "United Kingdom"])
+
+const H3 = (a, b, c) => `<rect width="30" height="6.67" fill="${a}"/><rect y="6.67" width="30" height="6.67" fill="${b}"/><rect y="13.33" width="30" height="6.67" fill="${c}"/>`
+const V3 = (a, b, c) => `<rect width="10" height="20" fill="${a}"/><rect x="10" width="10" height="20" fill="${b}"/><rect x="20" width="10" height="20" fill="${c}"/>`
+const FLAGS = {
+  Serbia: H3("#c6363c", "#0c4076", "#fff"),
+  "United States": `<rect width="30" height="20" fill="#b22234"/>${[1, 3, 5, 7, 9, 11].map((k) => `<rect y="${(k * 20) / 13}" width="30" height="${20 / 13}" fill="#fff"/>`).join("")}<rect width="13" height="10.77" fill="#3c3b6e"/><g fill="#fff">${[1.8, 4.6, 7.4, 10.2].flatMap((x) => [1.8, 4.2, 6.6, 9].map((y) => `<circle cx="${x}" cy="${y}" r="0.55"/>`)).join("")}</g>`,
+  Greece: `<rect width="30" height="20" fill="#0d5eaf"/>${[1, 3, 5, 7].map((k) => `<rect y="${(k * 20) / 9}" width="30" height="${20 / 9}" fill="#fff"/>`).join("")}<rect width="11.11" height="11.11" fill="#0d5eaf"/><rect x="4.44" width="2.22" height="11.11" fill="#fff"/><rect y="4.44" width="11.11" height="2.22" fill="#fff"/>`,
+  Tunisia: `<rect width="30" height="20" fill="#e70013"/><circle cx="15" cy="10" r="5.5" fill="#fff"/><circle cx="15.6" cy="10" r="3.8" fill="#e70013"/><circle cx="16.8" cy="10" r="3.1" fill="#fff"/><circle cx="16.4" cy="10" r="1.3" fill="#e70013"/>`,
+  "Costa Rica": `<rect width="30" height="20" fill="#002b7f"/><rect y="3.33" width="30" height="13.33" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#ce1126"/>`,
+  "Bosnia and Herzegovina": `<rect width="30" height="20" fill="#002395"/><path d="M8 0 H24 V20 Z" fill="#fecb00"/><g fill="#fff">${[1.5, 4.5, 7.5, 10.5, 13.5, 16.5, 19.5].map((y) => `<circle cx="${5 + y * 0.8}" cy="${y}" r="0.9"/>`).join("")}</g>`,
+  Chile: `<rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#d52b1e"/><rect width="10" height="10" fill="#0039a6"/><path d="M5 2.2 L5.9 4.9 L8.7 4.9 L6.4 6.6 L7.3 9.2 L5 7.6 L2.7 9.2 L3.6 6.6 L1.3 4.9 L4.1 4.9 Z" fill="#fff"/>`,
+  Peru: V3("#d91023", "#fff", "#d91023"),
+  Ecuador: `<rect width="30" height="10" fill="#ffd100"/><rect y="10" width="30" height="5" fill="#034ea2"/><rect y="15" width="30" height="5" fill="#ed1c24"/>`,
+  Portugal: `<rect width="12" height="20" fill="#006600"/><rect x="12" width="18" height="20" fill="#ff0000"/><circle cx="12" cy="10" r="4" fill="#ffcc00"/><circle cx="12" cy="10" r="2.2" fill="#ff0000"/>`,
+  Spain: `<rect width="30" height="20" fill="#aa151b"/><rect y="5" width="30" height="10" fill="#f1bf00"/>`,
+  France: V3("#002395", "#fff", "#ed2939"),
+  Monaco: `<rect width="30" height="10" fill="#ce1126"/><rect y="10" width="30" height="10" fill="#fff"/>`,
+  Italy: V3("#009246", "#fff", "#ce2b37"),
+  "Vatican City": `<rect width="15" height="20" fill="#ffe000"/><rect x="15" width="15" height="20" fill="#fff"/><circle cx="22.5" cy="10" r="2.4" fill="none" stroke="#b8a04a" stroke-width="1"/>`,
+  Germany: H3("#000", "#dd0000", "#ffce00"),
+  Scotland: `<rect width="30" height="20" fill="#005eb8"/><path d="M0 0 L30 20 M30 0 L0 20" stroke="#fff" stroke-width="3.2"/>`,
+}
+const flagSvg = (c, w = 21) => `<svg width="${w}" height="${(w * 2) / 3}" viewBox="0 0 30 20" aria-hidden="true">${FLAGS[c]}</svg>`
+
+const km = (a, b) => {
+  const R = 6371, r = Math.PI / 180
+  const dLat = (b.lat - a.lat) * r, dLng = (b.lng - a.lng) * r
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLng / 2) ** 2
+  return Math.round(2 * R * Math.asin(Math.sqrt(h)))
+}
+const LEGS = STOPS.map((s, i) => ({ from: s, to: STOPS[(i + 1) % STOPS.length], i }))
+const fmt = (n) => n.toLocaleString("en-US")
+
+let rolls = {}
+let active = 0
+let playing = false
+let timer = null
+let visitedTo = 0 // furthest stop reached; legs up to here are lit
+function $(id) { return document.getElementById(id) }
+
+// ---- globe ----
+const stage = $("stage"), el = $("globe")
+const globe = Globe()(el)
+  .backgroundColor("rgba(0,0,0,0)")
+  .showAtmosphere(true).atmosphereColor("#f0ac2e").atmosphereAltitude(0.13)
+  .pointLat("lat").pointLng("lng")
+  .pointRadius((d) => (STOPS.indexOf(d) === active ? 0.24 : 0.14))
+  .pointAltitude((d) => (STOPS.indexOf(d) === active ? 0.22 : 0.07))
+  .pointColor((d) => (STOPS.indexOf(d) === active ? "#fff3cf" : "#f0ac2e"))
+  .pointsTransitionDuration(600)
+  .arcStartLat((d) => d.from.lat).arcStartLng((d) => d.from.lng)
+  .arcEndLat((d) => d.to.lat).arcEndLng((d) => d.to.lng)
+  .arcAltitudeAutoScale(0.45)
+  .arcStroke((d) => (d.i === active - 1 ? 0.8 : 0.4))
+  .arcColor((d) => (d.i === active - 1 ? ["#f0ac2e", "#fff3cf"] : d.i < visitedTo ? "rgba(240,172,46,.85)" : "rgba(240,172,46,.2)"))
+  .arcDashLength((d) => (d.i === active - 1 ? 0.35 : d.i < visitedTo ? 1 : 0.02))
+  .arcDashGap((d) => (d.i === active - 1 ? 0.06 : d.i < visitedTo ? 0 : 0.015))
+  .arcDashAnimateTime((d) => (d.i === active - 1 ? 1100 : 0))
+  .ringLat("lat").ringLng("lng")
+  .ringColor(() => (t) => `rgba(247,210,122,${0.95 * (1 - t)})`)
+  .ringMaxRadius(3.2).ringPropagationSpeed(2).ringRepeatPeriod(900)
+  .htmlLat("lat").htmlLng("lng")
+  .htmlAltitude((d) => (d.city ? 0.004 : STOPS.indexOf(d) === active ? 0.22 : 0.07))
+  .htmlTransitionDuration(600)
+  .htmlElement((d) => {
+    const n = document.createElement("div")
+    if (d.city) {
+      n.className = "city-pin"
+      n.innerHTML = `<i></i><span>${d.place}</span>`
+      n.title = `${d.place}, ${d.country}`
+      n.onclick = () => { stopTrip(); go(STOPS.findIndex((s) => s.country === d.country), 1200, d) }
+      return n
+    }
+    const i = STOPS.indexOf(d)
+    n.className = "pin"
+    n.innerHTML = `<div class="in"><div class="name">${d.home ? "home · " : ""}${d.place}</div><div class="card">${flagSvg(d.country, 16)}</div><div class="stake"></div></div>`
+    n.onclick = () => { stopTrip(); go(i) }
+    d.el = n
+    return n
+  })
+
+// black until the painted texture is ready
+const mat = globe.globeMaterial()
+mat.color.set("#060606")
+mat.shininess = 0
+globe.controls().enableDamping = true
+globe.controls().autoRotate = false
+globe.pointOfView({ lat: 30, lng: 10, altitude: 2.5 })
+
+// flat, even light so the LED map reads like a screen
+if (typeof globe.lights === "function") globe.lights().forEach((l) => { if (l.isAmbientLight) l.intensity = 2.2; if (l.isDirectionalLight) l.intensity = 0.6 })
+
+function fit() {
+  const w = stage.clientWidth, h = stage.clientHeight
+  globe.width(w).height(h)
+  for (const c of [$("halo"), $("ink")]) { c.width = w * devicePixelRatio; c.height = h * devicePixelRatio; c.style.width = w + "px"; c.style.height = h + "px" }
+}
+addEventListener("resize", () => { fit(); drawRoute() })
+
+// globe radius on screen, for the reticle and the glow behind it
+function screenRadius() {
+  const cam = globe.camera(), R = globe.getGlobeRadius()
+  const d = cam.position.length()
+  return (stage.clientHeight / 2) * (R / Math.sqrt(Math.max(d * d - R * R, 1))) / Math.tan((cam.fov * Math.PI) / 360)
+}
+function overlay(t) {
+  const dpr = devicePixelRatio, w = stage.clientWidth, h = stage.clientHeight
+  const R = screenRadius(), cx = w / 2, cy = h / 2
+  // glow and faint range rings behind the globe
+  const hc = $("halo").getContext("2d")
+  hc.setTransform(dpr, 0, 0, dpr, 0, 0)
+  hc.clearRect(0, 0, w, h)
+  const g = hc.createRadialGradient(cx, cy, R * 0.9, cx, cy, R * 1.6)
+  g.addColorStop(0, "rgba(240,172,46,.16)"); g.addColorStop(1, "rgba(240,172,46,0)")
+  hc.fillStyle = g; hc.fillRect(0, 0, w, h)
+  hc.strokeStyle = "rgba(240,172,46,.07)"
+  hc.lineWidth = 1
+  for (let k = 1; k <= 4; k++) { hc.beginPath(); hc.arc(cx, cy, R + 60 + k * 70, 0, Math.PI * 2); hc.stroke() }
+  hc.beginPath(); hc.moveTo(0, cy); hc.lineTo(w, cy); hc.moveTo(cx, 0); hc.lineTo(cx, h); hc.stroke()
+  // reticle
+  const ic = $("ink").getContext("2d")
+  ic.setTransform(dpr, 0, 0, dpr, 0, 0)
+  ic.clearRect(0, 0, w, h)
+  const pov = globe.pointOfView()
+  hudRing(ic, cx, cy, R, t, pov.lng)
+  stage.classList.toggle("zoomed", pov.altitude < ZOOM_IN)
+  requestAnimationFrame(overlay)
+}
+
+// ---- route: flags strung on a circuit trace, the reached part lit ----
+function drawRoute() {
+  const n = STOPS.length
+  const W = 388, perRow = Math.ceil(n / 2), edge = W - 8
+  const pad = (i) => {
+    const row = i < perRow ? 0 : 1
+    const col = row === 0 ? i : perRow - 1 - (i - perRow)
+    const x = 22 + (col * (W - 52)) / (perRow - 1)
+    const zig = col % 2 === 0
+    return { x, y: row === 0 ? (zig ? 34 : 56) : (zig ? 116 : 138), above: row === 0 ? zig : !zig }
+  }
+  const pts = STOPS.map((_, i) => pad(i))
+  const trace = (a, b) => {
+    let d = ""
+    for (let i = a; i <= b; i++) {
+      if (i === perRow && i > a) d += ` H${edge} V${pts[i].y}`
+      d += `${i === a ? "M" : " L"}${pts[i].x},${pts[i].y}`
+    }
+    return d
+  }
+  let s = `<svg viewBox="0 0 ${W} 166" role="group" aria-label="Choose a stop">`
+  s += `<path class="trace" d="${trace(0, n - 1)}"/>`
+  if (visitedTo > 0) s += `<path class="trace lit" d="${trace(0, Math.min(visitedTo, n - 1))}"/>`
+  STOPS.forEach((st, i) => {
+    const p = pts[i]
+    const fy = p.above ? p.y - 25 : p.y + 11
+    const cls = ["pad", i === active ? "on" : "", i <= visitedTo && i !== active ? "done" : ""].join(" ")
+    s += `<g class="${cls}" data-i="${i}" tabindex="0" role="button" aria-pressed="${i === active}" aria-label="${st.country}">`
+    s += `<title>${st.country} · ${st.place}</title>`
+    s += `<rect class="hit" x="${p.x - 18}" y="${p.above ? p.y - 32 : p.y - 8}" width="36" height="40"/>`
+    s += `<rect class="node" x="${p.x - 6}" y="${p.y - 6}" width="12" height="12"/>`
+    s += `<g transform="translate(${p.x - 10.5} ${fy})">${flagSvg(st.country, 21)}<rect width="21" height="14" fill="none" stroke="rgba(255,255,255,.3)"/></g>`
+    if (i === active) s += `<rect class="ring" x="${p.x - 13}" y="${fy - 2.5}" width="26" height="19"/>`
+    if (st.home) s += `<text class="home" x="${p.x}" y="${p.above ? fy - 6 : fy + 25}" text-anchor="middle">home</text>`
+    s += `</g>`
+  })
+  $("route").innerHTML = s + "</svg>"
+  $("route").querySelectorAll(".pad").forEach((g) => {
+    const i = +g.dataset.i
+    g.onclick = () => { stopTrip(); go(i) }
+    g.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); stopTrip(); go(i) } }
+  })
+  $("routeCount").textContent = `${n} stops`
+}
+
+// ---- roll ----
+const SHOW = 8
+let expanded = false
+function drawRoll() {
+  const st = STOPS[active]
+  const roll = rolls[st.country] || { year: "", photos: [] }
+  $("country").innerHTML = `${flagSvg(st.country, 21)} ${st.country}`
+  $("year").textContent = roll.year
+  $("frames").textContent = `${roll.photos.length} frames`
+  const n = CITIES.filter((c) => c.country === st.country).length
+  $("cities").textContent = `${n} ${n === 1 ? "city" : "cities"}`
+  $("stopno").textContent = st.home ? "home" : `stop ${String(active).padStart(2, "0")}`
+  $("rollIdx").textContent = st.code
+  $("place").textContent = `${st.place} — ${Math.abs(st.lat).toFixed(2)}° ${st.lat >= 0 ? "N" : "S"}, ${Math.abs(st.lng).toFixed(2)}° ${st.lng >= 0 ? "E" : "W"}`
+  const list = expanded ? roll.photos : roll.photos.slice(0, SHOW)
+  let h = list.map((p, i) => {
+    const file = p.src.split("/").pop()
+    return `<button class="frame" data-i="${i}" aria-label="Open ${p.t.replace(/"/g, "&quot;")}"><span class="img"><img src="/images/interests/thumbs/${file}" alt="" loading="lazy" decoding="async"/></span><span class="edge"><span>${st.code}-${String(i + 1).padStart(2, "0")}</span><span>${p.y || roll.year}</span></span></button>`
+  }).join("")
+  if (!expanded && roll.photos.length > SHOW) h += `<button class="more" id="more">+${roll.photos.length - SHOW} more</button>`
+  $("grid").innerHTML = h
+  $("grid").querySelectorAll(".frame[data-i]").forEach((b) => (b.onclick = () => { stopTrip(); openLb(+b.dataset.i) }))
+  const more = $("more")
+  if (more) more.onclick = () => { expanded = true; drawRoll() }
+}
+
+function drawHud() {
+  const st = STOPS[active]
+  $("city").textContent = st.place
+  $("coords").innerHTML = `<b>${st.code}</b> · ${st.lat.toFixed(2)}, ${st.lng.toFixed(2)}`
+  const total = LEGS.reduce((a, l) => a + km(l.from, l.to), 0)
+  if (active === 0) {
+    $("legLabel").innerHTML = `<b>Leg 00</b> / ${STOPS.length}`
+    $("legRoute").textContent = "Home, Beograd"
+    $("legKm").innerHTML = `the whole loop · <b>${fmt(total)} km</b>`
+  } else {
+    const leg = LEGS[active - 1]
+    const so = LEGS.slice(0, active).reduce((a, l) => a + km(l.from, l.to), 0)
+    $("legLabel").innerHTML = `<b>Leg ${String(active).padStart(2, "0")}</b> / ${STOPS.length}`
+    $("legRoute").innerHTML = `${leg.from.place} <span>→</span> ${leg.to.place}`
+    $("legKm").innerHTML = `${fmt(km(leg.from, leg.to))} km · so far <b>${fmt(so)} km</b>`
+  }
+}
+
+function refreshGlobe() {
+  globe.pointsData(STOPS.slice())
+  globe.htmlElementsData(STOPS.concat(MARKERS))
+  globe.arcsData(LEGS.slice(0, STOPS.length - 1).concat(visitedTo >= STOPS.length ? [LEGS[STOPS.length - 1]] : []))
+  globe.ringsData([STOPS[active]])
+  STOPS.forEach((s, i) => s.el && s.el.classList.toggle("on", i === active))
+}
+
+function go(i, ms = 1600, focus) {
+  active = (i + STOPS.length) % STOPS.length
+  visitedTo = Math.max(visitedTo, active)
+  expanded = false
+  const st = STOPS[active]
+  if (focus) globe.pointOfView({ lat: focus.lat, lng: focus.lng, altitude: 0.35 }, ms)
+  else globe.pointOfView({ lat: st.lat - 6, lng: st.lng, altitude: (playing ? 1.75 : 1.95) + (stage.clientWidth < 600 ? 0.9 : 0) }, ms)
+  refreshGlobe()
+  drawRoute()
+  drawRoll()
+  drawHud()
+}
+
+// ---- first-visit trip ----
+function intro(big, small, hold = 1800) {
+  $("introBig").textContent = big
+  $("introSmall").textContent = small
+  $("intro").classList.remove("hide")
+  clearTimeout(intro.t)
+  intro.t = setTimeout(() => $("intro").classList.add("hide"), hold)
+}
+function playTrip() {
+  playing = true
+  visitedTo = 0
+  $("play").textContent = "Stop"
+  go(0, 1800)
+  intro("Departing Beograd", `${STOPS.length - 1} stops · one loop · back home`, 2300)
+  let i = 0
+  const step = () => {
+    if (!playing) return
+    i++
+    if (i < STOPS.length) {
+      go(i, 1900)
+      timer = setTimeout(step, 3300)
+    } else {
+      visitedTo = STOPS.length
+      go(0, 2400)
+      intro("Welcome home", "Beograd · drag the globe or pick a flag", 2800)
+      stopTrip()
+    }
+  }
+  timer = setTimeout(step, 2700)
+  try { localStorage.setItem("merak.seen", "1") } catch (e) {}
+}
+function stopTrip() {
+  playing = false
+  clearTimeout(timer)
+  $("play").textContent = "Play the trip"
+}
+$("play").onclick = () => (playing ? stopTrip() : playTrip())
+$("prev").onclick = () => { stopTrip(); go(active - 1) }
+$("next").onclick = () => { stopTrip(); go(active + 1) }
+
+// ---- lightbox ----
+let lbI = 0
+function openLb(i) {
+  const st = STOPS[active], roll = rolls[st.country]
+  lbI = (i + roll.photos.length) % roll.photos.length
+  const p = roll.photos[lbI]
+  $("lbImg").src = p.src
+  $("lbLbl").textContent = `${st.code}-${String(lbI + 1).padStart(2, "0")} · ${lbI + 1} of ${roll.photos.length} · ${st.country}`
+  $("lbTitle").textContent = p.t
+  $("lbDesc").textContent = p.d
+  $("lb").classList.add("open")
+}
+const closeLb = () => $("lb").classList.remove("open")
+$("lbX").onclick = closeLb
+$("lbP").onclick = () => openLb(lbI - 1)
+$("lbN").onclick = () => openLb(lbI + 1)
+$("lb").onclick = (e) => { if (e.target === $("lb")) closeLb() }
+addEventListener("keydown", (e) => {
+  if (!$("lb").classList.contains("open")) return
+  if (e.key === "Escape") closeLb()
+  if (e.key === "ArrowLeft") openLb(lbI - 1)
+  if (e.key === "ArrowRight") openLb(lbI + 1)
+})
+
+// ---- start ----
+fit()
+requestAnimationFrame(overlay)
+
+Promise.all([
+  fetch("rolls.json").then((r) => r.json()),
+  fetch("vendor/countries-50m.json").then((r) => r.json()),
+  document.fonts.load("26px Silkscreen").catch(() => {}),
+]).then(([data, topo]) => {
+  rolls = data
+  go(0, 0)
+  // paint after first frame so the page shows immediately
+  setTimeout(() => {
+    const tex = paintGlobe(topo, ATLAS)
+    globe.globeImageUrl(tex.toDataURL("image/jpeg", 0.92))
+    globe.onGlobeReady(() => mat.color.set("#ffffff"))
+    let seen = false
+    try { seen = localStorage.getItem("merak.seen") === "1" } catch (e) {}
+    if (!seen || location.hash === "#play") setTimeout(playTrip, 700)
+  }, 50)
+})
+</script>
+</body>
+</html>

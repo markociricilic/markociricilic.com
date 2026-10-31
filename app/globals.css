@@ -294,6 +294,8 @@ body {
 .cs-meta .cs-hint { margin-left: auto; }
 @media (max-width: 520px) { .cs-meta .cs-hint { display: none; } }
 
+.adventure-link { display: block; width: fit-content; margin: -6px 0 12px auto; color: var(--accent-deep); font-family: var(--font-px), monospace; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+.adventure-link:hover, .adventure-link:focus-visible { color: var(--accent); }
 .cs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px 10px; }
 @media (max-width: 420px) { .cs-grid { grid-template-columns: repeat(3, 1fr); gap: 8px 6px; } }
 .cs-frame { position: relative; display: block; padding: 5px 5px 0; background: #111; border: 0; cursor: zoom-in; text-align: left; }

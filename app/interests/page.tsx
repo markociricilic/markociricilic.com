@@ -3179,6 +3179,9 @@ export default function InterestsPage() {
             </Section>
 
             <Section id="photography" title="Photography" index="02">
+              <a className="adventure-link" href="/merak/index.html">
+                Click here to join me in my adventures 🌍
+              </a>
               <p className="muted">Life outtakes from all my adventures.</p>
               <ContactSheet
                 items={photographyItems}
