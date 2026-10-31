@@ -130,6 +130,7 @@
   .zoomed .pin .name { display: block; }
   .city-pin i { display: block; width: 8px; height: 8px; box-sizing: border-box; background: var(--bg); border: 1.5px solid var(--accent-2); box-shadow: 0 0 6px var(--accent); }
   .city-pin span { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-family: var(--px); font-size: 9px; text-transform: uppercase; color: var(--accent-2); white-space: nowrap; text-shadow: 0 0 4px #000, 0 0 8px #000; }
+  .city-pin.crowded:not(.on):not(:hover) span { display: none; }
   .city-pin:hover i { background: var(--accent); }
   .city-pin:hover span { color: #fff; }
 
@@ -265,7 +266,8 @@ const CITIES = [
   ["Costa Rica", "Manuel Antonio", 9.39, -84.14], ["Costa Rica", "La Fortuna", 10.47, -84.64], ["Costa Rica", "Guatuso", 10.67, -84.82],
   ["Bosnia and Herzegovina", "Višegrad", 43.78, 19.29], ["Bosnia and Herzegovina", "Dobrun", 43.76, 19.40],
   ["Chile", "Santiago", -33.45, -70.67], ["Chile", "San Pedro de Atacama", -22.91, -68.20], ["Chile", "Arica", -18.48, -70.32],
-  ["Peru", "Lima", -12.05, -77.04], ["Peru", "Ollantaytambo", -13.26, -72.26], ["Peru", "Machu Picchu", -13.16, -72.54], ["Peru", "Vinicunca", -13.87, -71.30],
+  ["Peru", "Lima", -12.05, -77.04], ["Peru", "Cusco", -13.52, -71.97], ["Peru", "Vinicunca", -13.87, -71.30], ["Peru", "Machu Picchu", -13.16, -72.54], ["Peru", "Aguas Calientes", -13.15, -72.53],
+  ["Peru", "Chinchero", -13.39, -72.05], ["Peru", "Moray", -13.33, -72.19], ["Peru", "Maras", -13.30, -72.15], ["Peru", "Ollantaytambo", -13.26, -72.26], ["Peru", "Pisac", -13.41, -71.85],
   ["Ecuador", "Montañita", -1.83, -80.75],
   ["Portugal", "Porto", 41.15, -8.61], ["Portugal", "Lisboa", 38.72, -9.14],
   ["Spain", "Sevilla", 37.39, -5.98], ["Spain", "Córdoba", 37.88, -4.78], ["Spain", "Madrid", 40.42, -3.70], ["Spain", "Barcelona", 41.39, 2.17],
@@ -279,6 +281,8 @@ const CITIES = [
 // the stop's own city already has its flag pin
 const MARKERS = CITIES.filter((c) => !STOPS.some((s) => s.place === c.place))
 const ZOOM_IN = 1.2 // camera altitude below which cities show
+// labels of cities this close would overlap, so they only show when active or hovered
+const crowded = (c) => CITIES.some((o) => o !== c && Math.hypot(o.lat - c.lat, o.lng - c.lng) < 0.35)
 
 const ATLAS = new Set(["Serbia", "United States of America", "Tunisia", "Greece", "Costa Rica", "Bosnia and Herz.", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican", "Germany", "United Kingdom"])
 
@@ -366,7 +370,7 @@ const globe = Globe()(el)
   .htmlElement((d) => {
     const n = document.createElement("div")
     if (d.city) {
-      n.className = "city-pin"
+      n.className = crowded(d) ? "city-pin crowded" : "city-pin"
       n.innerHTML = `<i></i><span>${d.place}</span>`
       n.title = `${d.place}, ${d.country}`
       n.onclick = () => { stopTrip(); showCity(d) }
