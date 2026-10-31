@@ -190,7 +190,7 @@ export function paintCloseup(topo, visited, [west, south, east, north], K) {
 }
 
 // Targeting reticle around the globe: a fine ring, a segmented ring turning
-// slowly, a compass of ticks and corner brackets.
+// slowly, and a compass of ticks.
 export function hudRing(ctx, cx, cy, R, t, heading = 0) {
   ctx.save()
   ctx.lineCap = "butt"
@@ -223,17 +223,6 @@ export function hudRing(ctx, cx, cy, R, t, heading = 0) {
     const r0 = R + 30, r1 = r0 + (d % 30 === 0 ? 9 : 4)
     ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0)
     ctx.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1)
-  }
-  ctx.stroke()
-
-  // corner brackets
-  const B = R + 46, L = Math.max(14, R * 0.12)
-  ctx.strokeStyle = "rgba(247,210,122,0.85)"
-  ctx.lineWidth = 2
-  ctx.beginPath()
-  for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
-    const x = cx + sx * B, y = cy + sy * B
-    ctx.moveTo(x, y - sy * L); ctx.lineTo(x, y); ctx.lineTo(x - sx * L, y)
   }
   ctx.stroke()
   ctx.restore()

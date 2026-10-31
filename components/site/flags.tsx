@@ -1,4 +1,4 @@
-// Small simplified flags (emblems omitted), drawn in a 30x20 box.
+// Small simplified flags (emblems reduced to a few shapes), drawn in a 30x20 box.
 // Emoji flags don't render on Windows, so these are plain SVG shapes.
 
 const H3 = (a: string, b: string, c: string) => (
@@ -85,20 +85,30 @@ const FLAGS: Record<string, React.ReactNode> = {
       <rect width="30" height="10" fill="#ffd100" />
       <rect y="10" width="30" height="5" fill="#034ea2" />
       <rect y="15" width="30" height="5" fill="#ed1c24" />
+      <ellipse cx="15" cy="10.8" rx="2.7" ry="3.5" fill="#7fc4e8" stroke="#c8a13a" strokeWidth=".6" />
+      <path d="M12.9 12.2 Q15 11 17.1 12.2 Q16.4 14 15 14.3 Q13.6 14 12.9 12.2 Z" fill="#2e8b3d" />
+      <path d="M10.6 5.6 L15 7.3 L19.4 5.6 L17.6 8 H12.4 Z" fill="#3a2a1a" />
     </>
   ),
   Portugal: (
     <>
       <rect width="12" height="20" fill="#006600" />
       <rect x="12" width="18" height="20" fill="#ff0000" />
-      <circle cx="12" cy="10" r="4" fill="#ffcc00" />
-      <circle cx="12" cy="10" r="2.2" fill="#ff0000" />
+      <circle cx="12" cy="10" r="4.4" fill="none" stroke="#ffcc00" strokeWidth="1.2" />
+      <path d="M10 7.4 H14 V11 Q14 12.8 12 13.4 Q10 12.8 10 11 Z" fill="#ff0000" stroke="#fff" strokeWidth=".3" />
+      <path d="M11 8.6 H13 V10.8 Q13 11.7 12 12 Q11 11.7 11 10.8 Z" fill="#fff" />
     </>
   ),
   Spain: (
     <>
       <rect width="30" height="20" fill="#aa151b" />
       <rect y="5" width="30" height="10" fill="#f1bf00" />
+      <path d="M8.7 6.4 V5.4 L9.5 5.9 L10 5.2 L10.5 5.9 L11.3 5.4 V6.4 Z" fill="#b8860b" />
+      <rect x="8" y="6.6" width="2" height="3.4" fill="#aa151b" />
+      <rect x="10" y="6.6" width="2" height="3.4" fill="#fff" />
+      <path d="M8 10 H10 V14 Q8.4 13.6 8 12 Z" fill="#f7dc6f" />
+      <path d="M10 10 H12 V12 Q11.6 13.6 10 14 Z" fill="#aa151b" />
+      <path d="M8 6.6 H12 V12 Q11.6 13.6 10 14 Q8.4 13.6 8 12 Z" fill="none" stroke="#8a5a00" strokeWidth=".35" />
     </>
   ),
   France: V3("#002395", "#fff", "#ed2939"),
@@ -113,7 +123,9 @@ const FLAGS: Record<string, React.ReactNode> = {
     <>
       <rect width="15" height="20" fill="#ffe000" />
       <rect x="15" width="15" height="20" fill="#fff" />
-      <circle cx="22.5" cy="10" r="2.4" fill="none" stroke="#b8a04a" strokeWidth="1" />
+      <path d="M21.2 7.2 Q22.5 2.4 23.8 7.2 Z" fill="#d4a017" />
+      <path d="M19.8 15.8 L25 8.4 M24.2 7.9 L25.8 9" fill="none" stroke="#d4a017" strokeWidth="1" />
+      <path d="M25.2 15.8 L20 8.4 M20.8 7.9 L19.2 9" fill="none" stroke="#8d949b" strokeWidth="1" />
     </>
   ),
   Germany: H3("#000", "#dd0000", "#ffce00"),
@@ -123,7 +135,19 @@ const FLAGS: Record<string, React.ReactNode> = {
       <path d="M0 0 L30 20 M30 0 L0 20" stroke="#fff" strokeWidth="3.2" />
     </>
   ),
-  Serbia: H3("#c6363c", "#0c4076", "#fff"),
+  Serbia: (
+    <>
+      {H3("#c6363c", "#0c4076", "#fff")}
+      <path d="M9.7 5.8 V3.4 L10.9 4.6 L11.7 3 L12.5 4.6 L13.7 3.4 V5.8 Z" fill="#edb92e" />
+      <path d="M8.4 6 H15 V12 Q15 15.4 11.7 16.6 Q8.4 15.4 8.4 12 Z" fill="#c6363c" stroke="#edb92e" strokeWidth=".4" />
+      <path
+        d="M11.7 8.6 L11.1 7.9 L10.6 7.2 L9.9 7.4 L10.4 7.9 L10.8 8.6 L9.2 8.2 V11.6 L10.7 11 L10.4 13.6 L11.7 13 L13 13.6 L12.7 11 L14.2 11.6 V8.2 L12.6 8.6 L13 7.9 L13.5 7.4 L12.8 7.2 L12.3 7.9 Z"
+        fill="#fff"
+      />
+      <path d="M11 9 H12.4 V10.4 Q12.4 11.2 11.7 11.5 Q11 11.2 11 10.4 Z" fill="#c6363c" />
+      <path d="M11.7 9.2 V11.2 M11.15 9.95 H12.25" stroke="#fff" strokeWidth=".3" />
+    </>
+  ),
   Ukraine: (
     <>
       <rect width="30" height="10" fill="#0057b7" />
