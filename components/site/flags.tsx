@@ -32,6 +32,17 @@ const FLAGS: Record<string, React.ReactNode> = {
       </g>
     </>
   ),
+  Canada: (
+    <>
+      <rect width="30" height="20" fill="#fff" />
+      <rect width="7.5" height="20" fill="#d52b1e" />
+      <rect x="22.5" width="7.5" height="20" fill="#d52b1e" />
+      <path
+        d="M15 3.6 L16.3 6 Q16.5 6.3 16.9 6.1 L18 5.5 L17.4 8.7 Q17.3 9.2 17.8 8.8 L19.1 7.4 L19.4 8.4 L21 8.1 L20.4 9.9 L21.2 10.3 L18.2 12.7 L18.5 13.7 L15.3 13.3 V16 H14.7 V13.3 L11.5 13.7 L11.8 12.7 L8.8 10.3 L9.6 9.9 L9 8.1 L10.6 8.4 L10.9 7.4 L12.2 8.8 Q12.7 9.2 12.6 8.7 L12 5.5 L13.1 6.1 Q13.5 6.3 13.7 6 Z"
+        fill="#d52b1e"
+      />
+    </>
+  ),
   Tunisia: (
     <>
       <rect width="30" height="20" fill="#e70013" />

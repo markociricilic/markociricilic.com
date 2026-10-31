@@ -1,5 +1,24 @@
 {
   "Serbia": { "Beograd": "212-238,241-247", "Zemun": "239-240" },
+  "Canada": {
+    "Coquitlam": "492-495",
+    "Surrey": "496,501-502,521,549",
+    "Langley": "497,506,508,564",
+    "Clayton Heights": "498-500,503,509,518,537,548,553",
+    "Strathcona": "504",
+    "Vancouver": "505,507,513,515-517,522-527,532-536",
+    "Grouse Mountain": "510-512",
+    "Pender Harbour": "514,528-531",
+    "Victoria": "519-520",
+    "Squamish": "538-541",
+    "Elk Mountain": "543-545",
+    "Golden": "546",
+    "Maple Creek": "547",
+    "Burnaby": "550",
+    "Point Roberts": "551-552,554",
+    "Pender Island": "555,562-563",
+    "Genoa Bay": "556-561"
+  },
   "United States": {
     "Līhuʻe": "373",
     "Hāʻena": "374-375",
