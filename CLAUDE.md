@@ -41,6 +41,7 @@ Fonts (next/font/google): Geist Mono (`--font-mono`, body), Silkscreen (`--font-
 
 - [public/images/](public/images/) — Portraits, interests photos (also used in the collages), Charlie animation frames.
 - [public/docs/](public/docs/) — PDF resume and project detail documents.
+- [public/merak/](public/merak/) — Standalone globe view of the photography section, linked from the interests page. `rolls.json` is generated before each build by [scripts/merak-rolls.mjs](scripts/merak-rolls.mjs) from `photographyItems`, with each photo's city from [scripts/merak-cities.json](scripts/merak-cities.json). A new country also needs a stop, flag and cities in `public/merak/index.html`.
 
 ### Path alias
 

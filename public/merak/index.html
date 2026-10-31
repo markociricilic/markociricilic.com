@@ -68,6 +68,13 @@
   .meta .country { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: var(--ink); }
   .meta .stopno { margin-left: auto; color: var(--accent); }
   .place { margin: 4px 0 14px; font-size: 11px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 14px; }
+  .chips:empty { display: none; }
+  .chip { padding: 4px 8px; border: 1px solid var(--line); background: transparent; font-family: var(--px); font-size: 10px; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+  .chip b { font-weight: 400; color: var(--accent); }
+  .chip:hover, .chip:focus-visible { color: var(--ink); border-color: var(--accent); }
+  .chip.on { color: #0b0b0b; background: var(--accent); border-color: var(--accent); }
+  .chip.on b { color: #0b0b0b; }
 
   /* contact sheet, as in the photography section on the main site */
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 10px; }
@@ -117,7 +124,9 @@
   .pin:hover .name { display: block; }
   /* city markers: hidden until you zoom in */
   .city-pin { display: none; position: relative; width: 8px; height: 8px; pointer-events: auto; cursor: pointer; }
-  .zoomed .city-pin { display: block; }
+  .zoomed .city-pin, .city-pin.on { display: block; }
+  .city-pin.on i { background: var(--accent); }
+  .city-pin.on span { color: #fff; }
   .zoomed .pin .name { display: block; }
   .city-pin i { display: block; width: 8px; height: 8px; box-sizing: border-box; background: var(--bg); border: 1.5px solid var(--accent-2); box-shadow: 0 0 6px var(--accent); }
   .city-pin span { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-family: var(--px); font-size: 9px; text-transform: uppercase; color: var(--accent-2); white-space: nowrap; text-shadow: 0 0 4px #000, 0 0 8px #000; }
@@ -182,6 +191,7 @@
         <span class="stopno" id="stopno"></span>
       </div>
       <p class="place" id="place"></p>
+      <div class="chips" id="chips"></div>
       <div class="grid" id="grid"></div>
     </div>
     <div class="foot">
@@ -245,17 +255,17 @@ const STOPS = [
 ]
 // every city the photos were taken in; shown as markers once you zoom in
 const CITIES = [
-  ["Serbia", "Beograd", 44.79, 20.45],
+  ["Serbia", "Beograd", 44.79, 20.45], ["Serbia", "Zemun", 44.84, 20.41],
   ["United States", "Līhuʻe", 21.97, -159.37], ["United States", "Hāʻena", 22.22, -159.56], ["United States", "Mountain View", 37.39, -122.08], ["United States", "Anaheim", 33.81, -117.92], ["United States", "Los Angeles", 34.10, -118.33],
   ["United States", "Santa Monica", 34.01, -118.50], ["United States", "Washington, D.C.", 38.90, -77.04], ["United States", "Half Moon Bay", 37.46, -122.43], ["United States", "San Francisco", 37.77, -122.42], ["United States", "Alcatraz", 37.83, -122.42],
   ["United States", "San Jose", 37.32, -121.95], ["United States", "Stanford", 37.42, -122.17], ["United States", "Garrapata", 36.46, -121.92], ["United States", "Carmel-by-the-Sea", 36.54, -121.93], ["United States", "New York", 40.73, -74.00],
-  ["Tunisia", "Mahdia", 35.50, 11.06], ["Tunisia", "El Jem", 35.30, 10.71], ["Tunisia", "Sidi Bou Said", 36.87, 10.35], ["Tunisia", "Kairouan", 35.68, 10.10],
+  ["Tunisia", "Mahdia", 35.50, 11.06], ["Tunisia", "El Jem", 35.30, 10.71], ["Tunisia", "Al-Maharas", 34.53, 10.50], ["Tunisia", "Kairouan", 35.68, 10.10],
   ["Tunisia", "Matmata", 33.54, 9.97], ["Tunisia", "Douz", 33.46, 9.02], ["Tunisia", "Chott el Djerid", 33.70, 8.43], ["Tunisia", "Tozeur", 33.92, 8.13], ["Tunisia", "Chebika", 34.32, 7.94],
   ["Greece", "Istro", 35.12, 25.74], ["Greece", "Kérkyra", 39.62, 19.92], ["Greece", "Vido", 39.64, 19.93], ["Greece", "Kassiopi", 39.79, 19.92],
   ["Costa Rica", "Manuel Antonio", 9.39, -84.14], ["Costa Rica", "La Fortuna", 10.47, -84.64], ["Costa Rica", "Guatuso", 10.67, -84.82],
   ["Bosnia and Herzegovina", "Višegrad", 43.78, 19.29], ["Bosnia and Herzegovina", "Dobrun", 43.76, 19.40],
   ["Chile", "Santiago", -33.45, -70.67], ["Chile", "San Pedro de Atacama", -22.91, -68.20], ["Chile", "Arica", -18.48, -70.32],
-  ["Peru", "Lima", -12.05, -77.04], ["Peru", "Cusco", -13.53, -71.97], ["Peru", "Ollantaytambo", -13.26, -72.26], ["Peru", "Machu Picchu", -13.16, -72.54], ["Peru", "Vinicunca", -13.87, -71.30],
+  ["Peru", "Lima", -12.05, -77.04], ["Peru", "Ollantaytambo", -13.26, -72.26], ["Peru", "Machu Picchu", -13.16, -72.54], ["Peru", "Vinicunca", -13.87, -71.30],
   ["Ecuador", "Montañita", -1.83, -80.75],
   ["Portugal", "Porto", 41.15, -8.61], ["Portugal", "Lisboa", 38.72, -9.14],
   ["Spain", "Sevilla", 37.39, -5.98], ["Spain", "Córdoba", 37.88, -4.78], ["Spain", "Madrid", 40.42, -3.70], ["Spain", "Barcelona", 41.39, 2.17],
@@ -301,15 +311,31 @@ const km = (a, b) => {
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLng / 2) ** 2
   return Math.round(2 * R * Math.asin(Math.sqrt(h)))
 }
-const LEGS = STOPS.map((s, i) => ({ from: s, to: STOPS[(i + 1) % STOPS.length], i }))
 const fmt = (n) => n.toLocaleString("en-US")
 
 let rolls = {}
 let active = 0
+let activeCity = null // the city being shown; null shows the whole country
 let playing = false
 let timer = null
-let visitedTo = 0 // furthest stop reached; legs up to here are lit
+let visitedTo = 0 // furthest country reached
+// the trip visits every city, country by country, in the order of their photos
+let TRIP = [], LEGS = []
+let tripPos = 0, visitedPos = 0 // current and furthest city; legs up to here are lit
 function $(id) { return document.getElementById(id) }
+
+function buildTrip() {
+  TRIP = STOPS.flatMap((st, stop) => {
+    const photos = rolls[st.country]?.photos ?? []
+    const first = (c) => photos.findIndex((p) => p.c === c.place)
+    return CITIES.filter((c) => c.country === st.country && first(c) >= 0)
+      .sort((a, b) => first(a) - first(b))
+      .map((c) => { c.stop = stop; return c })
+  })
+  LEGS = TRIP.map((from, i) => ({ from, to: TRIP[(i + 1) % TRIP.length], i }))
+}
+// the stop's flag stands in for its own city's marker
+const flagOn = (st) => STOPS.indexOf(st) === active && (!activeCity || activeCity.place === st.place)
 
 // ---- globe ----
 const stage = $("stage"), el = $("globe")
@@ -317,23 +343,23 @@ const globe = Globe()(el)
   .backgroundColor("rgba(0,0,0,0)")
   .showAtmosphere(true).atmosphereColor("#f0ac2e").atmosphereAltitude(0.13)
   .pointLat("lat").pointLng("lng")
-  .pointRadius((d) => (STOPS.indexOf(d) === active ? 0.24 : 0.14))
-  .pointAltitude((d) => (STOPS.indexOf(d) === active ? 0.22 : 0.07))
-  .pointColor((d) => (STOPS.indexOf(d) === active ? "#fff3cf" : "#f0ac2e"))
+  .pointRadius((d) => (flagOn(d) ? 0.24 : 0.14))
+  .pointAltitude((d) => (flagOn(d) ? 0.22 : 0.07))
+  .pointColor((d) => (flagOn(d) ? "#fff3cf" : "#f0ac2e"))
   .pointsTransitionDuration(600)
   .arcStartLat((d) => d.from.lat).arcStartLng((d) => d.from.lng)
   .arcEndLat((d) => d.to.lat).arcEndLng((d) => d.to.lng)
   .arcAltitudeAutoScale(0.45)
-  .arcStroke((d) => (d.i === active - 1 ? 0.8 : 0.4))
-  .arcColor((d) => (d.i === active - 1 ? ["#f0ac2e", "#fff3cf"] : d.i < visitedTo ? "rgba(240,172,46,.85)" : "rgba(240,172,46,.2)"))
-  .arcDashLength((d) => (d.i === active - 1 ? 0.35 : d.i < visitedTo ? 1 : 0.02))
-  .arcDashGap((d) => (d.i === active - 1 ? 0.06 : d.i < visitedTo ? 0 : 0.015))
-  .arcDashAnimateTime((d) => (d.i === active - 1 ? 1100 : 0))
+  .arcStroke((d) => (d.i === tripPos - 1 ? 0.8 : 0.4))
+  .arcColor((d) => (d.i === tripPos - 1 ? ["#f0ac2e", "#fff3cf"] : d.i < visitedPos ? "rgba(240,172,46,.85)" : "rgba(240,172,46,.2)"))
+  .arcDashLength((d) => (d.i === tripPos - 1 ? 0.35 : d.i < visitedPos ? 1 : 0.02))
+  .arcDashGap((d) => (d.i === tripPos - 1 ? 0.06 : d.i < visitedPos ? 0 : 0.015))
+  .arcDashAnimateTime((d) => (d.i === tripPos - 1 ? 1100 : 0))
   .ringLat("lat").ringLng("lng")
   .ringColor(() => (t) => `rgba(247,210,122,${0.95 * (1 - t)})`)
   .ringMaxRadius(3.2).ringPropagationSpeed(2).ringRepeatPeriod(900)
   .htmlLat("lat").htmlLng("lng")
-  .htmlAltitude((d) => (d.city ? 0.004 : STOPS.indexOf(d) === active ? 0.22 : 0.07))
+  .htmlAltitude((d) => (d.city ? 0.004 : flagOn(d) ? 0.22 : 0.07))
   .htmlTransitionDuration(600)
   .htmlElement((d) => {
     const n = document.createElement("div")
@@ -341,7 +367,8 @@ const globe = Globe()(el)
       n.className = "city-pin"
       n.innerHTML = `<i></i><span>${d.place}</span>`
       n.title = `${d.place}, ${d.country}`
-      n.onclick = () => { stopTrip(); go(STOPS.findIndex((s) => s.country === d.country), 1200, d) }
+      n.onclick = () => { stopTrip(); showCity(d) }
+      d.el = n
       return n
     }
     const i = STOPS.indexOf(d)
@@ -448,23 +475,37 @@ function drawRoute() {
 // ---- roll ----
 const SHOW = 8
 let expanded = false
+// the photos on show: the active city's, or the whole country's. n is the frame number in the full roll.
+function shownPhotos() {
+  const roll = rolls[STOPS[active].country] || { photos: [] }
+  const all = roll.photos.map((p, i) => ({ ...p, n: i + 1 }))
+  return activeCity ? all.filter((p) => p.c === activeCity.place) : all
+}
 function drawRoll() {
   const st = STOPS[active]
   const roll = rolls[st.country] || { year: "", photos: [] }
+  const shown = shownPhotos()
+  const here = activeCity || st
   $("country").innerHTML = `${flagSvg(st.country, 21)} ${st.country}`
-  $("year").textContent = roll.year
-  $("frames").textContent = `${roll.photos.length} frames`
-  const n = CITIES.filter((c) => c.country === st.country).length
+  $("year").textContent = activeCity ? [...new Set(shown.map((p) => p.y))].join(" · ") : roll.year
+  $("frames").textContent = `${shown.length} frames`
+  const stopCities = TRIP.filter((c) => c.stop === active)
+  const n = stopCities.length
   $("cities").textContent = `${n} ${n === 1 ? "city" : "cities"}`
   $("stopno").textContent = st.home ? "home" : `stop ${String(active).padStart(2, "0")}`
   $("rollIdx").textContent = st.code
-  $("place").textContent = `${st.place} — ${Math.abs(st.lat).toFixed(2)}° ${st.lat >= 0 ? "N" : "S"}, ${Math.abs(st.lng).toFixed(2)}° ${st.lng >= 0 ? "E" : "W"}`
-  const list = expanded ? roll.photos : roll.photos.slice(0, SHOW)
+  $("place").textContent = `${activeCity ? activeCity.place : "All cities"} — ${Math.abs(here.lat).toFixed(2)}° ${here.lat >= 0 ? "N" : "S"}, ${Math.abs(here.lng).toFixed(2)}° ${here.lng >= 0 ? "E" : "W"}`
+  const chip = (label, count, on, i) => `<button class="chip${on ? " on" : ""}" data-c="${i}" aria-pressed="${on}">${label} <b>${count}</b></button>`
+  $("chips").innerHTML = n > 1
+    ? chip("All", roll.photos.length, !activeCity, -1) + stopCities.map((c) => chip(c.place, roll.photos.filter((p) => p.c === c.place).length, c === activeCity, TRIP.indexOf(c))).join("")
+    : ""
+  $("chips").querySelectorAll(".chip").forEach((b) => (b.onclick = () => { stopTrip(); +b.dataset.c < 0 ? go(active) : showCity(TRIP[+b.dataset.c]) }))
+  const list = expanded ? shown : shown.slice(0, SHOW)
   let h = list.map((p, i) => {
     const file = p.src.split("/").pop()
-    return `<button class="frame" data-i="${i}" aria-label="Open ${p.t.replace(/"/g, "&quot;")}"><span class="img"><img src="/images/interests/thumbs/${file}" alt="" loading="lazy" decoding="async"/></span><span class="edge"><span>${st.code}-${String(i + 1).padStart(2, "0")}</span><span>${p.y || roll.year}</span></span></button>`
+    return `<button class="frame" data-i="${i}" aria-label="Open ${p.t.replace(/"/g, "&quot;")}"><span class="img"><img src="/images/interests/thumbs/${file}" alt="" loading="lazy" decoding="async"/></span><span class="edge"><span>${st.code}-${String(p.n).padStart(2, "0")}</span><span>${p.y || roll.year}</span></span></button>`
   }).join("")
-  if (!expanded && roll.photos.length > SHOW) h += `<button class="more" id="more">+${roll.photos.length - SHOW} more</button>`
+  if (!expanded && shown.length > SHOW) h += `<button class="more" id="more">+${shown.length - SHOW} more</button>`
   $("grid").innerHTML = h
   $("grid").querySelectorAll(".frame[data-i]").forEach((b) => (b.onclick = () => { stopTrip(); openLb(+b.dataset.i) }))
   const more = $("more")
@@ -472,19 +513,19 @@ function drawRoll() {
 }
 
 function drawHud() {
-  const st = STOPS[active]
-  $("city").textContent = st.place
-  $("coords").innerHTML = `<b>${st.code}</b> · ${st.lat.toFixed(2)}, ${st.lng.toFixed(2)}`
+  const st = STOPS[active], here = activeCity || st
+  $("city").textContent = activeCity ? activeCity.place : st.home ? st.place : st.country
+  $("coords").innerHTML = `<b>${st.code}</b> · ${here.lat.toFixed(2)}, ${here.lng.toFixed(2)}`
   const total = LEGS.reduce((a, l) => a + km(l.from, l.to), 0)
-  if (active === 0) {
-    $("legLabel").innerHTML = `<b>Leg 00</b> / ${STOPS.length}`
+  if (tripPos === 0) {
+    $("legLabel").innerHTML = `<b>Leg 00</b> / ${TRIP.length}`
     $("legRoute").textContent = "Home, Beograd"
     $("legKm").innerHTML = `the whole loop · <b>${fmt(total)} km</b>`
   } else {
-    const leg = LEGS[active - 1]
-    const so = LEGS.slice(0, active).reduce((a, l) => a + km(l.from, l.to), 0)
-    $("legLabel").innerHTML = `<b>Leg ${String(active).padStart(2, "0")}</b> / ${STOPS.length}`
-    $("legRoute").innerHTML = `${leg.from.place} <span>→</span> ${leg.to.place}`
+    const leg = LEGS[tripPos - 1]
+    const so = LEGS.slice(0, tripPos).reduce((a, l) => a + km(l.from, l.to), 0)
+    $("legLabel").innerHTML = `<b>Leg ${String(tripPos).padStart(2, "0")}</b> / ${TRIP.length}`
+    $("legRoute").innerHTML = `${leg.from.place} <span>→</span> ${activeCity ? leg.to.place : st.country}`
     $("legKm").innerHTML = `${fmt(km(leg.from, leg.to))} km · so far <b>${fmt(so)} km</b>`
   }
 }
@@ -492,22 +533,33 @@ function drawHud() {
 function refreshGlobe() {
   globe.pointsData(STOPS.slice())
   globe.htmlElementsData(STOPS.concat(MARKERS))
-  globe.arcsData(LEGS.slice(0, STOPS.length - 1).concat(visitedTo >= STOPS.length ? [LEGS[STOPS.length - 1]] : []))
-  globe.ringsData([STOPS[active]])
-  STOPS.forEach((s, i) => s.el && s.el.classList.toggle("on", i === active))
+  globe.arcsData(LEGS.slice(0, TRIP.length - 1).concat(visitedPos >= TRIP.length ? [LEGS[TRIP.length - 1]] : []))
+  globe.ringsData([activeCity || STOPS[active]])
+  STOPS.forEach((s) => s.el && s.el.classList.toggle("on", flagOn(s)))
+  MARKERS.forEach((c) => c.el && c.el.classList.toggle("on", c === activeCity))
 }
 
-function go(i, ms = 1600, focus) {
+// without a city, shows the whole country; alt is the camera height over the city
+function go(i, ms = 1600, focus, alt = 0.6) {
   active = (i + STOPS.length) % STOPS.length
+  activeCity = focus || null
+  tripPos = focus ? TRIP.indexOf(focus) : TRIP.findIndex((c) => c.stop === active)
   visitedTo = Math.max(visitedTo, active)
+  visitedPos = Math.max(visitedPos, tripPos)
   expanded = false
-  const st = STOPS[active]
-  if (focus) globe.pointOfView({ lat: focus.lat, lng: focus.lng, altitude: 0.35 }, ms)
-  else globe.pointOfView({ lat: st.lat - 6, lng: st.lng, altitude: (playing ? 1.75 : 1.95) + (stage.clientWidth < 600 ? 0.9 : 0) }, ms)
+  const st = STOPS[active], small = stage.clientWidth < 600
+  if (focus) globe.pointOfView({ lat: focus.lat, lng: focus.lng, altitude: alt + (small ? 0.4 : 0) }, ms)
+  else globe.pointOfView({ lat: st.lat - 6, lng: st.lng, altitude: (playing ? 1.75 : 1.95) + (small ? 0.9 : 0) }, ms)
   refreshGlobe()
   drawRoute()
   drawRoll()
   drawHud()
+}
+const showCity = (c) => go(c.stop, 1200, c)
+// fly to a city on the trip, higher up the further the hop
+function goTrip(p, ms = 1600) {
+  const c = TRIP[(p + TRIP.length) % TRIP.length]
+  go(c.stop, ms, c, Math.min(1.75, Math.max(0.5, km(activeCity || STOPS[active], c) / 2600)))
 }
 
 // ---- first-visit trip ----
@@ -521,18 +573,22 @@ function intro(big, small, hold = 1800) {
 function playTrip() {
   playing = true
   visitedTo = 0
+  visitedPos = 0
   $("play").textContent = "Stop"
-  go(0, 1800)
-  intro("Departing Beograd", `${STOPS.length - 1} stops · one loop · back home`, 2300)
-  let i = 0
+  goTrip(0, 1800)
+  intro("Departing Beograd", `${STOPS.length - 1} countries · ${TRIP.length} cities · back home`, 2300)
+  let p = 0
   const step = () => {
     if (!playing) return
-    i++
-    if (i < STOPS.length) {
-      go(i, 1900)
-      timer = setTimeout(step, 3300)
+    p++
+    if (p < TRIP.length) {
+      // quick hops inside a country, a longer flight between countries
+      const sameCountry = TRIP[p].stop === TRIP[p - 1].stop
+      goTrip(p, sameCountry ? 1100 : 1900)
+      timer = setTimeout(step, sameCountry ? 1600 : 3000)
     } else {
       visitedTo = STOPS.length
+      visitedPos = TRIP.length
       go(0, 2400)
       intro("Welcome home", "Beograd · drag the globe or pick a flag", 2800)
       stopTrip()
@@ -547,17 +603,18 @@ function stopTrip() {
   $("play").textContent = "Play the trip"
 }
 $("play").onclick = () => (playing ? stopTrip() : playTrip())
-$("prev").onclick = () => { stopTrip(); go(active - 1) }
-$("next").onclick = () => { stopTrip(); go(active + 1) }
+$("prev").onclick = () => { stopTrip(); goTrip(tripPos - 1) }
+// from a whole-country view, next starts at that country's first city
+$("next").onclick = () => { stopTrip(); goTrip(activeCity ? tripPos + 1 : tripPos) }
 
 // ---- lightbox ----
 let lbI = 0
 function openLb(i) {
-  const st = STOPS[active], roll = rolls[st.country]
-  lbI = (i + roll.photos.length) % roll.photos.length
-  const p = roll.photos[lbI]
+  const st = STOPS[active], shown = shownPhotos()
+  lbI = (i + shown.length) % shown.length
+  const p = shown[lbI]
   $("lbImg").src = p.src
-  $("lbLbl").textContent = `${st.code}-${String(lbI + 1).padStart(2, "0")} · ${lbI + 1} of ${roll.photos.length} · ${st.country}`
+  $("lbLbl").textContent = `${st.code}-${String(p.n).padStart(2, "0")} · ${lbI + 1} of ${shown.length} · ${activeCity ? `${activeCity.place}, ` : ""}${st.country}`
   $("lbTitle").textContent = p.t
   $("lbDesc").textContent = p.d
   $("lb").classList.add("open")
@@ -584,6 +641,7 @@ Promise.all([
   document.fonts.load("26px Silkscreen").catch(() => {}),
 ]).then(([data, topo]) => {
   rolls = data
+  buildTrip()
   go(0, 0)
   // paint after first frame so the page shows immediately
   setTimeout(() => {
