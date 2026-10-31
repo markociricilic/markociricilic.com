@@ -3758,7 +3758,7 @@ const photographyItems = [
     category: "photography" as const,
   },
   {
-    title: "Canada 2019: Elk Mountain",
+    title: "Canada 2024: Elk Mountain",
     description: "View of the Fraser Valley and its mountains from atop Elk Mountain",
     imageUrl: "/images/interests/photography-543.jpg",
     category: "photography" as const,
