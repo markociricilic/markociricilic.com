@@ -1014,6 +1014,12 @@ const photographyItems = [
     category: "photography" as const,
   },
   {
+    title: "United States 2019: At a Spanish restaurant",
+    description: "Dinner at a Spanish restaurant in San Francisco",
+    imageUrl: "/images/interests/photography-565.jpg",
+    category: "photography" as const,
+  },
+  {
     title: "France 2018: Rue Grégoire-de-Tours",
     description: "Narrow street in Saint-Germain-des-Prés lined with restaurants, cafés and a yellow newsstand",
     imageUrl: "/images/interests/photography-344.jpg",
@@ -3944,7 +3950,7 @@ export default function InterestsPage() {
               <p className="muted">Life outtakes from all my adventures.</p>
               <ContactSheet
                 items={photographyItems}
-                countries={["United States", "Canada", "Tunisia", "Greece", "Costa Rica", "Bosnia and Herzegovina", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
+                countries={["Canada", "United States", "Tunisia", "Greece", "Costa Rica", "Bosnia and Herzegovina", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
               />
             </Section>
 
