@@ -6,6 +6,7 @@ import { PhotoViewer, type ViewerItem } from "@/components/site/photo-viewer"
 type Artwork = {
   title: string
   description?: string
+  medium?: string
   imageUrl: string
 }
 
@@ -21,7 +22,7 @@ export function ArtWall({ items }: { items: Artwork[] }) {
   const viewerItems: ViewerItem[] = items.map((a, i) => ({
     src: a.imageUrl,
     title: a.title,
-    label: `${no(i)} · ${MEDIUM}`,
+    label: `${no(i)} · ${a.medium ?? MEDIUM}`,
     description: a.description || undefined,
   }))
 
@@ -38,8 +39,8 @@ export function ArtWall({ items }: { items: Artwork[] }) {
             <figcaption className="aw-label">
               <span className="aw-no">{no(i)}</span>
               <span className="aw-title">{a.title}</span>
-              <span className="aw-medium">{MEDIUM}</span>
-              <span className="aw-medium">MUNGYO Gallery pastels</span>
+              <span className="aw-medium">{a.medium ?? MEDIUM}</span>
+              {!a.medium && <span className="aw-medium">MUNGYO Gallery pastels</span>}
             </figcaption>
           </figure>
         ))}

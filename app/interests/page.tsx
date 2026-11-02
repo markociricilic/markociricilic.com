@@ -900,6 +900,12 @@ const photographyItems = [
     category: "photography" as const,
   },
   {
+    title: "Costa Rica 2016: Ripening Plátanos",
+    description: "A bunch of plátanos ripening near La Fortuna",
+    imageUrl: "/images/interests/photography-566.jpg",
+    category: "photography" as const,
+  },
+  {
     title: "Costa Rica 2016: Brazilian Red Cloak Flower",
     description: "A vibrant Brazilian red cloak flower in full bloom in Costa Rica's tropical lowlands",
     imageUrl: "/images/interests/photography-312.jpg",
@@ -927,6 +933,30 @@ const photographyItems = [
     title: "Costa Rica 2016: Sky Adventures Arenal Park",
     description: "Me zip-lining with the Sky Adventures Arenal zipline company through the Costa Rican rainforest canopy in the Arenal Volcano region, where the speed of the zip line ride can reach speeds of 40 to 80 km/h",
     imageUrl: "/images/interests/photography-316.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Costa Rica 2016: Swimming in the River",
+    description: "In the river on a rafting trip with Desafío Adventure Company",
+    imageUrl: "/images/interests/photography-567.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Costa Rica 2016: Rafting in Costa Rica",
+    description: "Rafting with my family under the rainforest canopy",
+    imageUrl: "/images/interests/photography-568.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Costa Rica 2016: Under the Bamboo",
+    description: "A bamboo pole over the river, while rafting with my family",
+    imageUrl: "/images/interests/photography-569.jpg",
+    category: "photography" as const,
+  },
+  {
+    title: "Costa Rica 2016: Fresh Fruit",
+    description: "Fresh watermelon and pineapple harvested during the rafting trip",
+    imageUrl: "/images/interests/photography-570.jpg",
     category: "photography" as const,
   },
   {
@@ -3895,23 +3925,30 @@ const artItems = [
   {
     title: "Untitled 1",
     description: "",
-    imageUrl: "/images/interests/art-1.jpg",
+    medium: "Pencil sketch on paper",
+    imageUrl: "/images/interests/art-7.jpg",
     category: "art" as const,
   },
   {
     title: "Untitled 2",
     description: "",
-    imageUrl: "/images/interests/art-2.jpg",
+    imageUrl: "/images/interests/art-1.jpg",
     category: "art" as const,
   },
   {
     title: "Untitled 3",
     description: "",
-    imageUrl: "/images/interests/art-3.jpg",
+    imageUrl: "/images/interests/art-2.jpg",
     category: "art" as const,
   },
   {
     title: "Untitled 4",
+    description: "",
+    imageUrl: "/images/interests/art-3.jpg",
+    category: "art" as const,
+  },
+  {
+    title: "Untitled 5",
     description: "",
     imageUrl: "/images/interests/art-4.jpg",
     category: "art" as const,
