@@ -7,6 +7,7 @@ import { ContactSheet } from "@/components/site/contact-sheet"
 import { RecipeSheets } from "@/components/site/recipe-sheets"
 import { ArtWall } from "@/components/site/art-wall"
 import { TicketStrip } from "@/components/site/ticket-strip"
+import { NyxPrints } from "@/components/site/nyx-prints"
 import { FooterBar } from "@/components/site/footer-bar"
 import { Horizon, Logo } from "@/components/site/horizon"
 // import { LogoStrip } from "@/components/site/horizon"
@@ -19,6 +20,7 @@ import { VISEGRAD_POEM } from "@/components/site/visegrad-poem"
 const navLinks = [
   { href: "#cooking", label: "Cooking" },
   { href: "#photography", label: "Photography", short: "Photos" },
+  { href: "#nyx", label: "Nyx" },
   { href: "#art", label: "Art" },
   { href: "#music", label: "Music" },
   { href: "#fashion", label: "Fashion" },
@@ -3990,6 +3992,9 @@ const artItems = [
   },
 ]
 
+// Nyx, my black cat: her as a tiny kitten first, then by date
+const nyxPhotos = Array.from({ length: 25 }, (_, i) => `/images/interests/nyx-${i + 1}.jpg`)
+
 // Concerts, oldest first; date is the month the photo was taken
 const concertItems = [
   { artist: "Journey", date: "2018-10", imageUrl: "/images/interests/concert-1.jpg" },
@@ -4041,12 +4046,17 @@ export default function InterestsPage() {
               />
             </Section>
 
-            <Section id="art" title="Art" index="03">
+            <Section id="nyx" title="Nyx" index="03">
+              <p className="muted">My angel</p>
+              <NyxPrints photos={nyxPhotos} />
+            </Section>
+
+            <Section id="art" title="Art" index="04">
               <p className="muted">I like painting with soft oil pastels.</p>
               <ArtWall items={artItems} />
             </Section>
 
-            <Section id="music" title="Music" index="04">
+            <Section id="music" title="Music" index="05">
               <Box label="Record collecting">
                 <p>
                   I&apos;ve been collecting vinyl records and CDs for many years, with a love for electronic music, folk, hip-hop, and alternative genres.
@@ -4057,7 +4067,7 @@ export default function InterestsPage() {
               <MusicPlayer items={musicItems} />
             </Section>
 
-            <Section id="fashion" title="Fashion" index="05">
+            <Section id="fashion" title="Fashion" index="06">
               <Box label="Style & brands">
                 <p>
                   Fashion is another form of self-expression for me. I dress both thrifted, vintage, streetwear and more avant-garde designers.
@@ -4068,7 +4078,7 @@ export default function InterestsPage() {
               </Box>
             </Section>
 
-            <Section id="films" title="Films" index="06">
+            <Section id="films" title="Films" index="07">
               <Box label="Favourite films">
                 <p>
                   Kill Bill (2003-2004), The Lord of the Rings (2001-2003), City of God (2002), All About Lily Chou-Chou (2001),
