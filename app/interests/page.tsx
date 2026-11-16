@@ -3990,10 +3990,36 @@ const artItems = [
     imageUrl: "/images/interests/art-6.jpg",
     category: "art" as const,
   },
+  {
+    title: "Untitled 7",
+    description: "",
+    imageUrl: "/images/interests/art-8.jpg",
+    category: "art" as const,
+  },
+  {
+    title: "Untitled 8",
+    description: "",
+    imageUrl: "/images/interests/art-9.jpg",
+    category: "art" as const,
+  },
+  {
+    title: "Untitled 9",
+    description: "",
+    imageUrl: "/images/interests/art-10.jpg",
+    category: "art" as const,
+  },
+  {
+    title: "Untitled 10",
+    description: "",
+    imageUrl: "/images/interests/art-11.jpg",
+    category: "art" as const,
+  },
 ]
 
-// Nyx, my black cat: her as a tiny kitten first, then by date
-const nyxPhotos = Array.from({ length: 25 }, (_, i) => `/images/interests/nyx-${i + 1}.jpg`)
+// Nyx, my black cat: her as a tiny kitten first, then by date (nyx-26 and nyx-27 were added later)
+const nyxPhotos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 26, 17, 18, 19, 20, 27, 21, 22, 23, 24, 25].map(
+  (n) => `/images/interests/nyx-${n}.jpg`,
+)
 
 // Concerts, oldest first; date is the month the photo was taken
 const concertItems = [
