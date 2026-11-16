@@ -9,7 +9,8 @@ const unescape = (t) => t.replace(/\\(.)/g, "$1")
 
 const items = []
 const re = /title: "((?:[^"\\]|\\.)*)",\s*description: "((?:[^"\\]|\\.)*)",\s*imageUrl: "([^"]+)"/g
-for (let m; (m = re.exec(body)); ) items.push({ title: unescape(m[1]), description: unescape(m[2]), imageUrl: m[3] })
+// "Untitled" photos are placeholders still waiting for a caption, so they stay hidden
+for (let m; (m = re.exec(body)); ) if (!m[1].endsWith(": Untitled")) items.push({ title: unescape(m[1]), description: unescape(m[2]), imageUrl: m[3] })
 
 // which city each photo number belongs to: { country: { city: "12-14,20" } }
 const cities = JSON.parse(readFileSync("scripts/merak-cities.json", "utf8"))
