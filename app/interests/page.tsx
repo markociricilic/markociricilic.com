@@ -513,6 +513,34 @@ const cookingItems = [
     imageUrl: "/images/interests/cooking-42.jpg",
     category: "cooking" as const,
   },
+  {
+    title: "Dried Citrus",
+    description: "Oven-dried citrus fruits for cocktails",
+    components: ["Lemons", "Limes", "Oranges", "Blood oranges"],
+    imageUrl: "/images/interests/cooking-47.jpg",
+    category: "cooking" as const,
+  },
+  {
+    title: "Chicken Thighs with Turmeric Rice and Sauce",
+    description: "Pan-roasted chicken thighs with turmeric and cardamom jasmine rice and a creamy olive, caper, Dijon sauce",
+    components: ["Chicken thighs", "Turmeric", "Cardamom", "Jasmine rice", "Kalamata olives", "Capers", "Dijon mustard", "Onions", "Heavy cream", "Lemon", "Parsley"],
+    imageUrl: "/images/interests/cooking-48.jpg",
+    category: "cooking" as const,
+  },
+  {
+    title: "Maple-Cinnamon Banana Bread",
+    description: "Banana bread with a maple-cinnamon glaze",
+    components: ["All-purpose flour", "Ripe bananas", "Baking powder", "Baking soda", "Salt", "White sugar", "Brown sugar", "Softened butter", "Eggs", "Maple syrup", "Cinnamon", "Sweetened condensed milk"],
+    imageUrl: "/images/interests/cooking-49.jpg",
+    category: "cooking" as const,
+  },
+  {
+    title: "Roast Beef with Mashed Potatoes",
+    description: "Sliced roast beef with mashed potatoes, honey roasted carrots and gravy",
+    components: ["Eye of round roast", "Potatoes", "Milk", "Butter", "Honey", "Carrots", "Onions", "Dijon mustard", "Cognac", "Heavy cream", "Parsley"],
+    imageUrl: "/images/interests/cooking-50.jpg",
+    category: "cooking" as const,
+  },
 ]
 
 const photographyItems = [
