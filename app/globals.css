@@ -401,6 +401,37 @@ body {
   .aw-mat { border-width: 5px; }
 }
 
+/* ---------- concert ticket stubs (components/site/ticket-strip.tsx) ---------- */
+.tk { margin: 18px 0 10px; }
+.tk-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-bottom: 10px; font-family: var(--font-px), monospace; font-size: 10px; text-transform: uppercase; color: var(--muted); }
+.tk-title { font-size: 13px; color: var(--ink); }
+.tk-hint { margin-left: auto; }
+.tk-strip {
+  display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 14px;
+  scroll-snap-type: x proximity; overscroll-behavior-x: contain;
+  scrollbar-width: thin; scrollbar-color: var(--accent) transparent;
+  mask-image: linear-gradient(90deg, #000 90%, transparent);
+}
+.tk-ticket { flex: 0 0 164px; display: flex; flex-direction: column; padding: 0; border: 0; background: none; text-align: left; cursor: zoom-in; scroll-snap-align: start; transition: transform .2s; }
+.tk-ticket:hover, .tk-ticket:focus-visible { transform: translateY(-3px); }
+.tk-ticket:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.tk-photo { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; background: #111; border-radius: 6px 6px 0 0; }
+.tk-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.15); transition: filter .25s; }
+.tk-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, var(--duo-light), var(--accent-2) 45%, var(--accent) 85%); mix-blend-mode: multiply; transition: opacity .25s; }
+.tk-ticket:hover .tk-photo img, .tk-ticket:focus-visible .tk-photo img { filter: none; }
+.tk-ticket:hover .tk-photo::after, .tk-ticket:focus-visible .tk-photo::after { opacity: 0; }
+/* paper stub, torn along a perforation with a notch cut from each side */
+.tk-stub {
+  flex: 1; display: grid; grid-template-rows: auto 1fr auto; gap: 3px; padding: 10px 11px 9px;
+  background: #f3e9d2; color: #1a1612; border-top: 2px dashed rgba(26, 22, 18, .4); border-radius: 0 0 6px 6px;
+  -webkit-mask: radial-gradient(circle 7px at 0 0, transparent 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle 7px at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 7px at 0 0, transparent 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle 7px at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.tk-row { display: flex; justify-content: space-between; gap: 6px; font-family: var(--font-px), monospace; font-size: 8px; text-transform: uppercase; color: #8f5400; }
+.tk-artist { font-family: var(--font-display), sans-serif; font-size: 15px; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+.tk-date { font-family: var(--font-px), monospace; font-size: 9px; text-transform: uppercase; color: #6b6052; }
+@media (max-width: 560px) { .tk-ticket { flex-basis: 140px; } .tk-hint { margin-left: 0; } }
+
 /* ---------- interests page collage (components/site/interests-collage.tsx) ---------- */
 .icollage .ic-cut { position: absolute; z-index: 2; height: auto; filter: drop-shadow(3px 5px 0 rgba(0, 0, 0, .35)); pointer-events: none; }
 /* background photo and the aligned cut-out share one crop */

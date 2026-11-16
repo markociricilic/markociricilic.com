@@ -6,6 +6,7 @@ import { InterestsCollage } from "@/components/site/interests-collage"
 import { ContactSheet } from "@/components/site/contact-sheet"
 import { RecipeSheets } from "@/components/site/recipe-sheets"
 import { ArtWall } from "@/components/site/art-wall"
+import { TicketStrip } from "@/components/site/ticket-strip"
 import { FooterBar } from "@/components/site/footer-bar"
 import { Horizon, Logo } from "@/components/site/horizon"
 // import { LogoStrip } from "@/components/site/horizon"
@@ -3961,6 +3962,27 @@ const artItems = [
   },
 ]
 
+// Concerts, oldest first; date is the month the photo was taken
+const concertItems = [
+  { artist: "Journey", date: "2018-10", imageUrl: "/images/interests/concert-1.jpg" },
+  { artist: "Denzel Curry", date: "2022-09", imageUrl: "/images/interests/concert-2.jpg" },
+  { artist: "Oddisee", date: "2022-12", imageUrl: "/images/interests/concert-3.jpg" },
+  { artist: "Men I Trust", date: "2023-10", imageUrl: "/images/interests/concert-4.jpg" },
+  { artist: "Little Simz", date: "2023-10", imageUrl: "/images/interests/concert-5.jpg" },
+  { artist: "WILLIS", date: "2024-04", imageUrl: "/images/interests/concert-6.jpg" },
+  { artist: "Shing02 (Nujabes Tribute)", date: "2024-08", imageUrl: "/images/interests/concert-7.jpg" },
+  { artist: "Okay Kaya", date: "2024-09", imageUrl: "/images/interests/concert-8.jpg" },
+  { artist: "Elyanna", date: "2024-10", imageUrl: "/images/interests/concert-9.jpg" },
+  { artist: "Machine Girl", date: "2024-12", imageUrl: "/images/interests/concert-10.jpg" },
+  { artist: "Jersey", date: "2025-01", imageUrl: "/images/interests/concert-11.jpg" },
+  { artist: "Candlelight Concert", date: "2025-08", imageUrl: "/images/interests/concert-12.jpg" },
+  { artist: "Yung Lean", date: "2025-10", imageUrl: "/images/interests/concert-13.jpg" },
+  { artist: "POiSON GiRL FRiEND", date: "2025-11", imageUrl: "/images/interests/concert-14.jpg" },
+  { artist: "fakemink", date: "2026-05", imageUrl: "/images/interests/concert-15.jpg" },
+  { artist: "Evanora Unlimited", date: "2026-05", imageUrl: "/images/interests/concert-16.jpg" },
+  { artist: "Ivy Lab", date: "2026-10", imageUrl: "/images/interests/concert-17.jpg" },
+]
+
 export default function InterestsPage() {
   return (
     <>
@@ -4003,6 +4025,7 @@ export default function InterestsPage() {
                 </p>
                 <p className="muted">Favourite Artists: Aphex Twin, Sade, Radiohead, Nujabes, Yung Lean</p>
               </Box>
+              <TicketStrip items={concertItems} />
               <MusicPlayer items={musicItems} />
             </Section>
 
