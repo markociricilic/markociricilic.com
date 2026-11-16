@@ -5489,7 +5489,7 @@ export default function InterestsPage() {
               </a>
               <p className="muted">Life outtakes from all my adventures.</p>
               <ContactSheet
-                items={photographyItems.filter((p) => !p.title.endsWith(": Untitled"))}
+                items={photographyItems}
                 countries={["Canada", "United States", "Tunisia", "Greece", "Costa Rica", "Bosnia and Herzegovina", "Chile", "Peru", "Ecuador", "Portugal", "Spain", "France", "Monaco", "Italy", "Vatican City", "Germany", "Scotland", "Serbia"]}
               />
             </Section>
